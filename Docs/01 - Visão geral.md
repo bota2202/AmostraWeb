@@ -1,3 +1,7 @@
+**Projeto: Sistema de Controle de Amostras**
+**Versão: 1.0**
+**Última atualização: 01/08/2026**
+
 # 01 - Visão geral
 
 ## Objetivo do sistema
@@ -19,3 +23,9 @@ Atualmente as amostras são registradas como pedidos de venda convencionais no E
 - Registro completo de auditoria;
 - Dashboard com indicadores;
 - Configuração do sistema.
+
+## Fora do escopo
+
+**Nesta primeira versão, não fazem parte do sistema:**
+
+- Integração automática com o ERP;
