@@ -24,4 +24,6 @@ Atualmente as amostras são registradas como pedidos de venda convencionais no E
 
 **Nesta primeira versão, não fazem parte do sistema:**
 
-- Integração automática com o ERP;
+- Tema claro/escuro;
+- Integração automática com ERP;
+- Notificações por e-mail;
