@@ -13,3 +13,4 @@ Toda a documentação do projeto encontra-se na pasta `docs`.
 - 02 - Glossário
 - 03 - Perfis de Usuário
 - 04 - Fluxo das Amostras
+- 05 - Regras de Negócio
