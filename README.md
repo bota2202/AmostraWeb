@@ -1,1 +1,15 @@
 # AmostraWeb
+
+Sistema desenvolvido para gerenciamento do ciclo de vida das amostras enviadas aos clientes.
+
+## Documentação
+
+Toda a documentação do projeto encontra-se na pasta `docs`.
+
+### Índice
+
+- 00 - Informações do Projeto
+- 01 - Visão Geral
+- 02 - Glossário
+- 03 - Perfis de Usuário
+- 04 - Fluxo das Amostras
