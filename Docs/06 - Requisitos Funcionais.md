@@ -4,6 +4,8 @@
 
 Este documento descreve todas as funcionalidades que deverão ser implementadas no sistema.
 
+---
+
 # Autenticação
 
 ### RF001 - Login
@@ -14,6 +16,8 @@ O sistema deverá permitir que usuários autenticados realizem login utilizando 
 
 O sistema deverá permitir que o usuário encerre sua sessão de forma segura.
 
+---
+
 # Dashboard
 
 ### RF003 - Dashboard Inicial
@@ -22,35 +26,39 @@ O sistema deverá apresentar um dashboard inicial após o login.
 
 ### RF004 - Dashboard Administrativo
 
-O sistema deverá disponibilizar um dashboard administrativo contendo indicadores e estatísticas das amostras, respeitando o escopo de visualização do usuário.
+O sistema deverá disponibilizar um dashboard administrativo contendo indicadores e estatísticas dos pedidos e das amostras, respeitando o escopo de visualização do usuário.
 
-# Usuários
+---
 
-### RF005 - Cadastro de Usuários
+# Pedidos
 
-O sistema deverá permitir o cadastro de novos usuários.
+### RF005 - Cadastro de Pedidos
 
-### RF006 - Consulta de Usuários
+O sistema deverá permitir o cadastro de novos pedidos.
 
-O sistema deverá permitir a consulta dos usuários cadastrados.
+### RF006 - Consulta de Pedidos
 
-### RF007 - Edição de Usuários
+O sistema deverá permitir consultar os pedidos cadastrados.
 
-O sistema deverá permitir a alteração das informações de usuários.
+### RF007 - Pesquisa de Pedidos
 
-### RF008 - Gerenciamento de Permissões
+O sistema deverá permitir pesquisar pedidos utilizando filtros.
 
-O sistema deverá permitir atribuir ou remover permissões individuais dos usuários.
+### RF008 - Visualização de Pedidos
 
-### RF009 - Definição de Cargo
+O sistema deverá permitir visualizar os detalhes de um pedido, incluindo todas as amostras vinculadas.
 
-O sistema deverá permitir definir o cargo do usuário.
+### RF009 - Alteração de Pedidos
+
+O sistema deverá permitir alterar as informações permitidas de um pedido.
+
+---
 
 # Amostras
 
-### RF010 - Cadastro de Amostras
+### RF010 - Geração de Amostras
 
-O sistema deverá permitir o cadastro de novas amostras.
+O sistema deverá gerar automaticamente uma amostra para cada produto informado durante o cadastro de um pedido.
 
 ### RF011 - Consulta de Amostras
 
@@ -84,36 +92,70 @@ O sistema deverá permitir registrar alterações de status das amostras.
 
 O sistema deverá permitir solicitar alteração do prazo de avaliação de uma amostra.
 
-### RF019 - Aprovação da Alteração de Prazo
+### RF019 - Aprovação de Alteração de Prazo
 
 O sistema deverá permitir aprovar ou reprovar solicitações de alteração de prazo.
 
+### RF020 - Histórico da Amostra
+
+O sistema deverá manter um histórico cronológico das alterações realizadas em cada amostra.
+
+---
+
+# Usuários
+
+### RF021 - Cadastro de Usuários
+
+O sistema deverá permitir o cadastro de novos usuários.
+
+### RF022 - Consulta de Usuários
+
+O sistema deverá permitir consultar os usuários cadastrados.
+
+### RF023 - Alteração de Usuários
+
+O sistema deverá permitir alterar as informações dos usuários.
+
+### RF024 - Definição de Perfil
+
+O sistema deverá permitir definir o perfil de cada usuário.
+
+### RF025 - Gerenciamento de Permissões
+
+O sistema deverá permitir atribuir ou remover permissões individuais dos usuários.
+
+---
+
 # Auditoria
 
-### RF020 - Registro de Auditoria
+### RF026 - Registro de Auditoria
 
 O sistema deverá registrar automaticamente as ações relevantes realizadas pelos usuários e pelo próprio sistema.
 
-### RF021 - Consulta de Auditoria
+### RF027 - Consulta de Auditoria
 
 O sistema deverá permitir consultar os registros de auditoria.
 
+---
+
 # Configurações
 
-### RF022 - Configurações do Usuário
+### RF028 - Configurações do Usuário
 
 O sistema deverá permitir que o usuário altere suas preferências pessoais.
 
-### RF023 - Configurações do Sistema
+### RF029 - Configurações do Sistema
 
 O sistema deverá permitir alterar as configurações gerais da aplicação.
 
-# Notificações
+---
 
-### RF024 - Alertas de Prazo
+# Alertas
 
-O sistema deverá informar quando existirem amostras com prazo vencido.
+### RF030 - Alertas de Prazo
 
-### RF025 - Solicitações Pendentes
+O sistema deverá informar quando existirem amostras com prazo vencido ou próximo do vencimento.
+
+### RF031 - Solicitações Pendentes
 
 O sistema deverá informar gestores ou administradores sobre solicitações de alteração de prazo pendentes de aprovação.

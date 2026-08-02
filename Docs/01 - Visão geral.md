@@ -2,7 +2,7 @@
 
 ## Objetivo do sistema
 
-O sistema tem como objetivo centralizar o cadastro, acompanhamento e gerenciamento das amostras enviadas aos clientes, fornecendo aos vendedores, gestores e administradores uma plataforma para acompanhar todo o ciclo de vida de cada amostra, registrar seu histórico, controlar permissões de acesso e visualizar indicadores gerenciais.
+O sistema tem como objetivo centralizar o cadastro, acompanhamento e gerenciamento dos pedidos de amostras enviados aos clientes, fornecendo aos vendedores, gestores e administradores uma plataforma para acompanhar todo o ciclo de vida de cada amostra, registrar seu histórico, controlar permissões de acesso e visualizar indicadores gerenciais.
 
 ## Problema
 
@@ -12,6 +12,8 @@ Atualmente as amostras são registradas como pedidos de venda convencionais no E
 
 **O sistema permitirá:**
 
+- Cadastro de pedidos;
+- Gerenciamento de pedidos;
 - Cadastro de amostras;
 - Gerenciamento de amostras;
 - Controle de usuários;
@@ -26,4 +28,4 @@ Atualmente as amostras são registradas como pedidos de venda convencionais no E
 
 - Tema claro/escuro;
 - Integração automática com ERP;
-- Notificações por e-mail;
+- Notificações por e-mail.

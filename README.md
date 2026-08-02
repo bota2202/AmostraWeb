@@ -8,7 +8,7 @@ Toda a documentação do projeto encontra-se na pasta `docs`.
 
 ### Índice
 
-- 00 - Informações do Projeto
+- 00 - Informações da Documentação
 - 01 - Visão Geral
 - 02 - Glossário
 - 03 - Perfis de Usuário

@@ -2,29 +2,30 @@
 
 ## Objetivo
 
-Este documento descreve o fluxo de vida de uma amostra dentro do sistema, desde seu cadastro até sua conclusão ou cancelamento.
+Este documento descreve o fluxo de cadastro e acompanhamento das amostras dentro do sistema.
 
 ## Fluxo Principal
 
-1. O vendedor realiza o cadastro da amostra.
+1. O vendedor realiza o cadastro de um pedido.
 
-2. O sistema gera automaticamente um código único para identificação da amostra.
+2. O vendedor informa os dados gerais do pedido, como cliente, data de envio e demais informações obrigatórias.
 
-3. O vendedor informa todos os dados necessários para o envio da amostra, incluindo cliente, produtos, prazo de avaliação e demais informações obrigatórias.
+3. O vendedor adiciona um ou mais produtos ao pedido.
 
-4. Após o cadastro, a amostra passa para o status **Em análise**.
+4. Para cada produto informado, o sistema gera automaticamente uma amostra com um código único de identificação.
 
-5. Durante o período de avaliação, o vendedor acompanha o andamento da amostra.
+5. Todas as amostras são iniciadas com o status **Em análise**.
 
-6. Caso o prazo de avaliação seja ultrapassado sem uma conclusão, o sistema altera automaticamente o status da amostra para **Atrasado**.
+6. Durante o período de avaliação, o vendedor acompanha individualmente cada amostra.
 
-7. A qualquer momento durante a avaliação, o resultado poderá ser informado, alterando o status para:
+7. Caso o prazo de avaliação de uma amostra seja ultrapassado sem conclusão, o sistema altera automaticamente seu status para **Atrasado**.
+
+8. A qualquer momento durante a avaliação, cada amostra poderá receber um dos seguintes status:
 
 - Aprovado;
 - Reprovado.
 
-8. Após a aprovação ou reprovação, a amostra é considerada finalizada.
-
+9. Após sua aprovação ou reprovação, a amostra é considerada finalizada.
 
 ## Fluxos Alternativos
 
@@ -34,16 +35,16 @@ Uma amostra poderá ser cancelada antes de sua conclusão.
 
 Após o cancelamento:
 
-- A amostra permanecerá registrada no sistema;
-- Não poderá mais ser alterada;
+- Permanecerá registrada no sistema;
+- Não poderá sofrer novas alterações;
 - Poderá ser excluída permanentemente apenas por usuários autorizados;
 - Todas as ações deverão permanecer registradas na auditoria.
 
 ### Prorrogação de Prazo
 
-Durante o período de avaliação, o vendedor poderá solicitar uma prorrogação do prazo.
+Durante o período de avaliação, o vendedor poderá solicitar uma prorrogação do prazo de uma amostra.
 
-O pedido deverá conter uma justificativa.
+A solicitação deverá conter uma justificativa.
 
 A alteração somente será realizada após aprovação do gestor responsável ou de um administrador.
 
@@ -61,6 +62,8 @@ Toda alteração deverá ser registrada na auditoria.
 
 ## Regras Gerais
 
+- Todo pedido deverá conter pelo menos uma amostra.
+- Cada produto informado no pedido gerará uma amostra individual.
 - Toda amostra deverá possuir um código único.
 - Toda alteração relevante deverá gerar um registro na auditoria.
 - O status **Atrasado** será definido automaticamente pelo sistema.
