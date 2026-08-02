@@ -23,12 +23,12 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 
 - Código
 - Cliente
-- Vendedor
-- Estabelecimento
 - Cidade
 - Estado
-- Data de Emissão
+- Usuário Responsável
 - Observação
+- Status
+- Data de Emissão
 
 ---
 
@@ -42,8 +42,7 @@ Representar um produto individual enviado para avaliação comercial por um clie
 
 - Controlar o ciclo de vida da amostra;
 - Registrar seu prazo de avaliação;
-- Armazenar o resultado da avaliação;
-- Manter seu histórico de alterações.
+- Armazenar o resultado da avaliação.
 
 ## Atributos
 
@@ -53,9 +52,6 @@ Representar um produto individual enviado para avaliação comercial por um clie
 - Quantidade
 - Status
 - Prazo de Avaliação
-- Data de Aprovação
-- Data de Reprovação
-- Data de Cancelamento
 
 ---
 
@@ -92,19 +88,18 @@ Representar uma autorização concedida a um usuário para executar determinadas
 ## Responsabilidades
 
 - Controlar o acesso às funcionalidades;
-- Permitir personalização das permissões individuais;
+- Permitir a personalização das permissões individuais;
 - Garantir a segurança operacional do sistema.
 
 ## Atributos
 
 - Nome
-- Descrição
 - Módulo
 - Ação
 
 ---
 
-# Log
+# Registro de Log
 
 ## Objetivo
 
@@ -122,7 +117,8 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 
 - Usuário
 - Módulo
-- Registro
+- Tipo do Registro
+- ID do Registro
 - Ação
 - Campo Alterado
 - Valor Anterior
@@ -148,9 +144,11 @@ Representar uma solicitação realizada pelo vendedor para alterar o prazo de av
 
 - Amostra
 - Solicitante
+- Aprovador
 - Justificativa
+- Prazo Atual
 - Novo Prazo
 - Situação
-- Aprovador
+- Motivo da Aprovação/Reprovação
 - Data da Solicitação
 - Data da Aprovação

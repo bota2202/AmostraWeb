@@ -17,3 +17,4 @@ Toda a documentação do projeto encontra-se na pasta `docs`.
 - 06 - Requisitos Funcionais
 - 07 - Requisitos Não Funcionais
 - 08 - Modelo Conceitual
+- 09 - Modelo Lógico do Banco de Dados

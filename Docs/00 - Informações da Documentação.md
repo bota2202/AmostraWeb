@@ -24,3 +24,4 @@ Otávio Saturnino da Silva
 |---------|------|------------|
 | 1.0.0 | 01/08/2026 | Criação da documentação inicial do projeto. |
 | 1.0.1 | 01/08/2026 | Revisão da modelagem do domínio com separação entre Pedidos e Amostras. Atualização dos documentos 01 ao 07. |
+| 1.0.2 | 01/08/2026 | Criação dos documentos 08 e 09. |
