@@ -34,3 +34,4 @@ A documentação é um artefato vivo e poderá ser alterada durante o desenvolvi
 - 04 - Fluxo das Amostras
 - 05 - Regras de Negócio
 - 06 - Requisitos Funcionais
+- 07 - Requisitos Não Funcionais
