@@ -28,45 +28,53 @@ O código será composto por seis dígitos numéricos, iniciando em **000001**.
 
 Um pedido somente poderá ser cadastrado por usuários que possuam a permissão correspondente.
 
-Todo pedido deverá conter, obrigatoriamente, pelo menos uma amostra.
+Um pedido deverá possuir pelo menos uma amostra vinculada para ser considerado válido.
 
 ---
 
 ### RN004 - Responsável pelo Pedido
 
-Todo pedido deverá possuir obrigatoriamente um vendedor responsável.
+Todo pedido deverá possuir obrigatoriamente um representante responsável.
 
 Após o cadastro, o responsável não poderá ser alterado, salvo por usuários autorizados.
 
-Todas as amostras pertencentes ao pedido serão vinculadas automaticamente ao mesmo responsável.
+---
+
+### RN005 - Cadastro de Amostras
+
+Uma amostra somente poderá ser cadastrada por usuários que possuam a permissão correspondente.
+
+A amostra poderá ser criada inicialmente sem vínculo com um pedido.
 
 ---
 
-### RN005 - Vínculo das Amostras
+### RN006 - Vínculo das Amostras
 
-Toda amostra deverá pertencer obrigatoriamente a um único pedido.
+Uma amostra poderá permanecer temporariamente sem vínculo com um pedido após seu cadastro.
+
+A amostra deverá ser vinculada a um pedido em até **24 horas** após sua criação.
+
+Após a vinculação, a amostra pertencerá a um único pedido.
 
 ---
 
-### RN006 - Produtos
+### RN007 - Produtos
 
-Nesta primeira versão, os produtos serão cadastrados manualmente durante a criação do pedido.
-
-Cada produto informado deverá gerar automaticamente uma amostra individual.
+Nesta primeira versão, os produtos serão cadastrados manualmente durante o cadastro da amostra.
 
 A futura integração com o ERP poderá substituir este comportamento.
 
 ---
 
-### RN007 - Prazo de Avaliação
+### RN008 - Prazo de Avaliação
 
-Cada amostra deverá possuir um prazo de avaliação informado durante o cadastro do pedido.
+Cada amostra deverá possuir um prazo de avaliação informado durante seu cadastro.
 
 ---
 
-### RN008 - Alteração de Prazo
+### RN009 - Alteração de Prazo
 
-O vendedor poderá solicitar a alteração do prazo de avaliação de uma amostra.
+O representante poderá solicitar a alteração do prazo de avaliação de uma amostra.
 
 A solicitação deverá conter uma justificativa obrigatória.
 
@@ -74,7 +82,7 @@ A alteração somente será efetivada após aprovação do gestor responsável o
 
 ---
 
-### RN009 - Status Atrasado
+### RN010 - Status Atrasado
 
 Quando a data atual ultrapassar o prazo de avaliação e a amostra não estiver:
 
@@ -86,19 +94,19 @@ o sistema deverá alterar automaticamente seu status para **Atrasado**.
 
 ---
 
-### RN010 - Aprovação
+### RN011 - Aprovação
 
 Uma amostra poderá ser aprovada mesmo estando com o status **Atrasado**.
 
 ---
 
-### RN011 - Reprovação
+### RN012 - Reprovação
 
 Uma amostra poderá ser reprovada mesmo estando com o status **Atrasado**.
 
 ---
 
-### RN012 - Independência das Amostras
+### RN013 - Independência das Amostras
 
 As amostras pertencentes ao mesmo pedido possuirão ciclo de vida independente.
 
@@ -106,7 +114,7 @@ A alteração de status de uma amostra não deverá alterar o status das demais 
 
 ---
 
-### RN013 - Cancelamento
+### RN014 - Cancelamento
 
 Uma amostra poderá ser cancelada por usuários autorizados.
 
@@ -118,23 +126,29 @@ Após o cancelamento:
 
 ---
 
-### RN014 - Exclusão
+### RN015 - Exclusão
 
 A exclusão permanente somente poderá ocorrer para amostras canceladas.
 
-Toda exclusão deverá permanecer registrada na auditoria.
+Toda exclusão deverá permanecer registrada no log.
 
 ---
 
-### RN015 - Auditoria
+### RN016 - Registro de Log
 
-Todas as ações relevantes realizadas pelos usuários ou automaticamente pelo sistema deverão ser registradas na auditoria.
+Todas as ações relevantes realizadas pelos usuários ou automaticamente pelo sistema deverão ser registradas no log.
 
----
+O registro deverá permitir identificar, quando aplicável:
 
-### RN016 - Histórico
-
-Toda alteração de status deverá gerar um novo registro no histórico da respectiva amostra.
+- Usuário responsável;
+- Módulo;
+- Registro afetado;
+- Ação realizada;
+- Campo alterado;
+- Valor anterior;
+- Valor novo;
+- Data e hora;
+- Observação.
 
 ---
 
@@ -142,7 +156,7 @@ Toda alteração de status deverá gerar um novo registro no histórico da respe
 
 O sistema deverá respeitar o escopo de visualização definido pelo perfil do usuário.
 
-- O vendedor visualizará apenas seus próprios pedidos e amostras.
+- O representante visualizará apenas seus próprios pedidos e amostras.
 - O gestor visualizará os pedidos e amostras pertencentes ao seu estabelecimento.
 - O administrador poderá visualizar todos os registros do sistema.
 
@@ -150,9 +164,9 @@ O sistema deverá respeitar o escopo de visualização definido pelo perfil do u
 
 ### RN018 - Estabelecimento
 
-O estabelecimento do pedido será definido automaticamente de acordo com o estabelecimento vinculado ao vendedor responsável.
+O estabelecimento do pedido será definido automaticamente de acordo com o estabelecimento vinculado ao representante responsável.
 
-As amostras herdarão automaticamente essa informação.
+As amostras vinculadas ao pedido estarão associadas ao mesmo estabelecimento.
 
 ---
 
@@ -164,12 +178,14 @@ Todos os usuários serão identificados pelo código de usuário utilizado na em
 
 ### RN020 - Registro de Alterações
 
-Todas as alterações realizadas em pedidos e amostras deverão registrar:
+Todas as alterações realizadas em pedidos e amostras deverão ser registradas no log, contendo, quando aplicável:
 
 - Usuário responsável;
 - Data e hora;
 - Ação realizada;
-- Informações alteradas.
+- Campo alterado;
+- Valor anterior;
+- Valor novo.
 
 ---
 
@@ -205,6 +221,8 @@ Não será permitido remover todas as amostras de um pedido já existente.
 
 ### RN024 - Integridade das Amostras
 
-Toda amostra deverá estar vinculada a um único pedido durante todo o seu ciclo de vida.
+Uma amostra poderá ser criada sem vínculo com um pedido.
 
-Não será permitido transferir uma amostra para outro pedido após sua criação.
+Após ser vinculada, a amostra deverá permanecer vinculada ao mesmo pedido durante todo o seu ciclo de vida.
+
+Não será permitido transferir uma amostra para outro pedido após sua vinculação.

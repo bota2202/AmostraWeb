@@ -2,32 +2,50 @@
 
 ## Objetivo
 
-Este documento descreve o fluxo de cadastro e acompanhamento das amostras dentro do sistema.
+Este documento descreve o fluxo de cadastro, vinculação e acompanhamento das amostras dentro do sistema.
 
 ## Fluxo Principal
 
-1. O vendedor realiza o cadastro de um pedido.
+1. O representante realiza o cadastro de uma amostra.
 
-2. O vendedor informa os dados gerais do pedido, como cliente, data de envio e demais informações obrigatórias.
+2. O representante informa os dados necessários da amostra, incluindo produto, quantidade e prazo de avaliação.
 
-3. O vendedor adiciona um ou mais produtos ao pedido.
+3. O sistema gera automaticamente um código único para identificação da amostra.
 
-4. Para cada produto informado, o sistema gera automaticamente uma amostra com um código único de identificação.
+4. A amostra é criada inicialmente sem vínculo com um pedido.
 
-5. Todas as amostras são iniciadas com o status **Em análise**.
+5. O representante deverá vincular a amostra a um pedido em até 24 horas após seu cadastro.
 
-6. Durante o período de avaliação, o vendedor acompanha individualmente cada amostra.
+6. Para realizar a vinculação, o pedido deverá possuir um cliente cadastrado e selecionado.
 
-7. Caso o prazo de avaliação de uma amostra seja ultrapassado sem conclusão, o sistema altera automaticamente seu status para **Atrasado**.
+7. Após a vinculação ao pedido, a amostra passa a fazer parte do respectivo envio e fica associada ao cliente do pedido.
 
-8. A qualquer momento durante a avaliação, cada amostra poderá receber um dos seguintes status:
+8. A amostra é iniciada com o status **Em análise**.
+
+9. Durante o período de avaliação, o representante acompanha individualmente cada amostra.
+
+10. Caso o prazo de avaliação de uma amostra seja ultrapassado sem conclusão, o sistema altera automaticamente seu status para **Atrasado**.
+
+11. A qualquer momento durante a avaliação, cada amostra poderá receber um dos seguintes status:
 
 - Aprovado;
 - Reprovado.
 
-9. Após sua aprovação ou reprovação, a amostra é considerada finalizada.
+12. Após sua aprovação ou reprovação, a amostra é considerada finalizada.
 
 ## Fluxos Alternativos
+
+### Vinculação ao Pedido
+
+Uma amostra poderá ser criada sem vínculo com um pedido.
+
+Após o cadastro:
+
+- A amostra deverá ser vinculada a um pedido em até 24 horas;
+- O pedido deverá possuir um cliente cadastrado;
+- Ao ser vinculada, a amostra ficará associada ao cliente definido no pedido;
+- O sistema deverá identificar amostras que permaneçam sem vínculo após esse prazo;
+- A amostra poderá ser vinculada posteriormente, conforme as regras definidas para o controle de prazo.
 
 ### Cancelamento
 
@@ -38,34 +56,36 @@ Após o cancelamento:
 - Permanecerá registrada no sistema;
 - Não poderá sofrer novas alterações;
 - Poderá ser excluída permanentemente apenas por usuários autorizados;
-- Todas as ações deverão permanecer registradas na auditoria.
+- Todas as ações deverão permanecer registradas no log.
 
 ### Prorrogação de Prazo
 
-Durante o período de avaliação, o vendedor poderá solicitar uma prorrogação do prazo de uma amostra.
+Durante o período de avaliação, o representante poderá solicitar uma prorrogação do prazo de uma amostra.
 
 A solicitação deverá conter uma justificativa.
 
 A alteração somente será realizada após aprovação do gestor responsável ou de um administrador.
 
-Toda alteração deverá ser registrada na auditoria.
+Toda alteração deverá ser registrada no log.
 
 ## Ciclo de Vida da Amostra
 
-| Status | Descrição |
-|---------|-----------|
+| Status     | Descrição                                            |
+| ---------- | ---------------------------------------------------- |
 | Em análise | A amostra está em período de avaliação pelo cliente. |
-| Atrasado | O prazo de avaliação foi excedido sem conclusão. |
-| Aprovado | A amostra foi aprovada pelo cliente. |
-| Reprovado | A amostra foi reprovada pelo cliente. |
-| Cancelada | A amostra foi cancelada antes de sua conclusão. |
+| Atrasado   | O prazo de avaliação foi excedido sem conclusão.     |
+| Aprovado   | A amostra foi aprovada pelo cliente.                 |
+| Reprovado  | A amostra foi reprovada pelo cliente.                |
+| Cancelada  | A amostra foi cancelada antes de sua conclusão.      |
 
 ## Regras Gerais
 
-- Todo pedido deverá conter pelo menos uma amostra.
-- Cada produto informado no pedido gerará uma amostra individual.
+- Uma amostra poderá ser criada sem vínculo com um pedido.
+- Toda amostra deverá ser vinculada a um pedido em até 24 horas após seu cadastro.
+- Todo pedido deverá possuir um cliente cadastrado.
+- A amostra estará associada ao cliente por meio do pedido ao qual estiver vinculada.
 - Toda amostra deverá possuir um código único.
-- Toda alteração relevante deverá gerar um registro na auditoria.
+- Toda alteração relevante deverá gerar um registro no log.
 - O status **Atrasado** será definido automaticamente pelo sistema.
 - Uma amostra atrasada poderá ser aprovada ou reprovada posteriormente.
 - O cancelamento não remove o registro da base de dados.

@@ -16,7 +16,8 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 
 - Registrar os dados gerais do envio;
 - Agrupar as amostras pertencentes ao pedido;
-- Identificar o vendedor responsável;
+- Identificar o representante responsável;
+- Identificar o estabelecimento responsável;
 - Permitir o acompanhamento geral do pedido.
 
 ## Atributos
@@ -25,7 +26,8 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 - Cliente
 - Cidade
 - Estado
-- Usuário Responsável
+- Estabelecimento
+- Representante Responsável
 - Observação
 - Status
 - Data de Emissão
@@ -93,7 +95,6 @@ Representar uma autorização concedida a um usuário para executar determinadas
 
 ## Atributos
 
-- Nome
 - Módulo
 - Ação
 
@@ -118,7 +119,7 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 - Usuário
 - Módulo
 - Tipo do Registro
-- ID do Registro
+- Registro
 - Ação
 - Campo Alterado
 - Valor Anterior
@@ -132,7 +133,7 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 
 ## Objetivo
 
-Representar uma solicitação realizada pelo vendedor para alterar o prazo de avaliação de uma amostra.
+Representar uma solicitação realizada pelo representante para alterar o prazo de avaliação de uma amostra.
 
 ## Responsabilidades
 
@@ -152,3 +153,32 @@ Representar uma solicitação realizada pelo vendedor para alterar o prazo de av
 - Motivo da Aprovação/Reprovação
 - Data da Solicitação
 - Data da Aprovação
+
+---
+
+# Estabelecimento
+
+## Objetivo
+
+Representar uma das unidades da empresa, contendo usuários e pedidos vinculados à unidade.
+
+## Responsabilidades
+
+- Conter os pedidos realizados pela unidade;
+- Registrar os usuários vinculados à unidade;
+- Identificar o gestor responsável pela unidade.
+
+## Atributos
+
+- Razão Social
+- CNPJ
+- CEP
+- Estado
+- Cidade
+- Bairro
+- Rua
+- Número
+- Gestor
+
+---
+

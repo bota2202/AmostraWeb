@@ -38,9 +38,8 @@ Representa um envio realizado para um cliente, podendo conter uma ou mais amostr
 - ID
 - Código
 - Cliente
-- Cidade
-- Estado
 - Usuário Responsável
+- Estabelecimento
 - Observação
 - Status
 - Data de Emissão
@@ -92,8 +91,9 @@ Tabela responsável por relacionar usuários às permissões atribuídas.
 
 ## Campos
 
-- Usuário
-- Permissão
+- ID
+- Usuário ID
+- Permissão ID
 
 ---
 
@@ -106,9 +106,9 @@ Registra todas as solicitações de alteração de prazo realizadas para uma amo
 ## Campos
 
 - ID
-- Amostra
-- Solicitante
-- Aprovador
+- Amostra ID
+- Solicitante ID
+- Aprovador ID
 - Justificativa
 - Prazo Atual
 - Novo Prazo
@@ -128,7 +128,7 @@ Registra todas as ações relevantes executadas por usuários ou automaticamente
 ## Campos
 
 - ID
-- Usuário
+- Usuário ID
 - Módulo
 - Tipo do Registro
 - ID do Registro
@@ -141,15 +141,40 @@ Registra todas as ações relevantes executadas por usuários ou automaticamente
 
 ---
 
-# Relacionamentos
+# Estabelecimento
 
-| Origem | Cardinalidade | Destino |
-|---------|---------------|---------|
-| Usuário | 1 : N | Pedido |
-| Pedido | 1 : N | Amostra |
-| Usuário | N : N | Permissão |
-| Usuário | 1 : N | Registro de Log |
-| Amostra | 1 : N | Solicitação de Alteração de Prazo |
-|Usuário | 1:N | Solicitação de Alteração|
+## Descrição
+
+Registra todas as unidades da empresa para um controle mais preciso.
+
+## Campos
+
+- ID
+- Razão Social
+- CNPJ
+- CEP
+- Estado
+- Cidade
+- Bairro
+- Rua
+- Número
+- Gestor ID
+- Data de Criação
+- Data de Atualização
 
 ---
+
+# Relacionamentos
+
+| Origem          | Cardinalidade | Destino                                      |
+|-----------------|---------------|----------------------------------------------|
+| Estabelecimento | 1 : N         | Usuário                                      |
+| Estabelecimento | 1 : N         | Pedido                                       |
+| Estabelecimento | 1 : 1         | Usuário (Gestor)                             |
+| Usuário         | 1 : N         | Pedido                                       |
+| Pedido          | 1 : N         | Amostra                                      |
+| Usuário         | N : N         | Permissão                                    |
+| Usuário         | 1 : N         | Registro de Log                              |
+| Amostra         | 1 : N         | Solicitação de Alteração de Prazo            |
+| Usuário         | 1 : N         | Solicitação como Solicitante                 |
+| Usuário         | 1 : N         | Solicitação como Aprovador                   |
