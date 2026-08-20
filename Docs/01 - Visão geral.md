@@ -20,12 +20,13 @@ Atualmente as amostras são registradas como pedidos de venda convencionais no E
 - Gerenciamento de permissões;
 - Registro completo de auditoria;
 - Dashboard com indicadores;
-- Configuração do sistema.
+- Configuração do sistema;
+- Gerenciamento de produtos;
+- Gerenciamento de clientes.
 
 ## Fora do escopo
 
 **Nesta primeira versão, não fazem parte do sistema:**
 
 - Tema claro/escuro;
-- Integração automática com ERP;
 - Notificações por e-mail.

@@ -16,8 +16,7 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 
 - Registrar os dados gerais do envio;
 - Agrupar as amostras pertencentes ao pedido;
-- Identificar o representante responsável;
-- Identificar o estabelecimento responsável;
+- Identificar o vendedor responsável;
 - Permitir o acompanhamento geral do pedido.
 
 ## Atributos
@@ -26,8 +25,7 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 - Cliente
 - Cidade
 - Estado
-- Estabelecimento
-- Representante Responsável
+- Usuário Responsável
 - Observação
 - Status
 - Data de Emissão
@@ -95,6 +93,7 @@ Representar uma autorização concedida a um usuário para executar determinadas
 
 ## Atributos
 
+- Nome
 - Módulo
 - Ação
 
@@ -119,7 +118,7 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 - Usuário
 - Módulo
 - Tipo do Registro
-- Registro
+- ID do Registro
 - Ação
 - Campo Alterado
 - Valor Anterior
@@ -133,7 +132,7 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 
 ## Objetivo
 
-Representar uma solicitação realizada pelo representante para alterar o prazo de avaliação de uma amostra.
+Representar uma solicitação realizada pelo vendedor para alterar o prazo de avaliação de uma amostra.
 
 ## Responsabilidades
 
@@ -156,29 +155,70 @@ Representar uma solicitação realizada pelo representante para alterar o prazo 
 
 ---
 
-# Estabelecimento
+# Produto
 
 ## Objetivo
 
-Representar uma das unidades da empresa, contendo usuários e pedidos vinculados à unidade.
+Representar um produto comercializado pela empresa e utilizado no cadastro de amostras.
 
 ## Responsabilidades
 
-- Conter os pedidos realizados pela unidade;
-- Registrar os usuários vinculados à unidade;
-- Identificar o gestor responsável pela unidade.
+- Registrar os produtos que podem ser utilizados em amostras;
+- Armazenar as informações de identificação e classificação do produto;
+- Permitir o controle da situação do produto no sistema.
 
 ## Atributos
 
-- Razão Social
-- CNPJ
-- CEP
-- Estado
-- Cidade
-- Bairro
-- Rua
-- Número
-- Gestor
+- Código do Produto
+- Descrição
+- Família
+- Subfamília
+- Grupo
+- Categoria do Produto
+- NBS
+- Tipo
+- NCM
+- Serviço
+- CEST
+- ANP
+- Aplicação de Entrada
+- Aplicação de Saída
+- Origem da Mercadoria
+- Controle de Verba
+- Status
+- Marca
+- Data de Revisão
+- Classe
+- C.A.
+- ID Categoria
+- ID Preço
+- Tributação do Município
 
 ---
 
+# Cliente
+
+## Objetivo
+
+Representar uma pessoa ou empresa que recebe pedidos e amostras.
+
+## Responsabilidades
+
+- Registrar os dados cadastrais do cliente;
+- Receber pedidos;
+- Receber amostras.
+
+## Atributos
+
+- Código da Empresa
+- Razão Social
+- Nome Fantasia
+- Status
+- Tipo
+- Grupo Fiscal
+- Tipo de Empresa
+- Grupo Econômico
+- CNPJ/CPF
+- Endereço Completo
+- Telefone
+- E-mail

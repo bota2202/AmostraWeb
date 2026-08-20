@@ -28,53 +28,41 @@ O código será composto por seis dígitos numéricos, iniciando em **000001**.
 
 Um pedido somente poderá ser cadastrado por usuários que possuam a permissão correspondente.
 
-Um pedido deverá possuir pelo menos uma amostra vinculada para ser considerado válido.
+Todo pedido deverá conter, obrigatoriamente, pelo menos uma amostra.
 
 ---
 
 ### RN004 - Responsável pelo Pedido
 
-Todo pedido deverá possuir obrigatoriamente um representante responsável.
+Todo pedido deverá possuir obrigatoriamente um vendedor responsável.
 
 Após o cadastro, o responsável não poderá ser alterado, salvo por usuários autorizados.
 
----
-
-### RN005 - Cadastro de Amostras
-
-Uma amostra somente poderá ser cadastrada por usuários que possuam a permissão correspondente.
-
-A amostra poderá ser criada inicialmente sem vínculo com um pedido.
+Todas as amostras pertencentes ao pedido serão vinculadas automaticamente ao mesmo responsável.
 
 ---
 
-### RN006 - Vínculo das Amostras
+### RN005 - Vínculo das Amostras
 
-Uma amostra poderá permanecer temporariamente sem vínculo com um pedido após seu cadastro.
-
-A amostra deverá ser vinculada a um pedido em até **24 horas** após sua criação.
-
-Após a vinculação, a amostra pertencerá a um único pedido.
+Toda amostra deverá pertencer obrigatoriamente a um único pedido.
 
 ---
 
-### RN007 - Produtos
+### RN006 - Produtos
 
-Nesta primeira versão, os produtos serão cadastrados manualmente durante o cadastro da amostra.
-
-A futura integração com o ERP poderá substituir este comportamento.
+Os produtos poderão ser cadastrados manualmente ou com um CSV gerado pelo ERP.
 
 ---
 
-### RN008 - Prazo de Avaliação
+### RN007 - Prazo de Avaliação
 
-Cada amostra deverá possuir um prazo de avaliação informado durante seu cadastro.
+Cada amostra deverá possuir um prazo de avaliação informado durante o cadastro do pedido.
 
 ---
 
-### RN009 - Alteração de Prazo
+### RN008 - Alteração de Prazo
 
-O representante poderá solicitar a alteração do prazo de avaliação de uma amostra.
+O vendedor poderá solicitar a alteração do prazo de avaliação de uma amostra.
 
 A solicitação deverá conter uma justificativa obrigatória.
 
@@ -82,7 +70,7 @@ A alteração somente será efetivada após aprovação do gestor responsável o
 
 ---
 
-### RN010 - Status Atrasado
+### RN009 - Status Atrasado
 
 Quando a data atual ultrapassar o prazo de avaliação e a amostra não estiver:
 
@@ -94,19 +82,19 @@ o sistema deverá alterar automaticamente seu status para **Atrasado**.
 
 ---
 
-### RN011 - Aprovação
+### RN010 - Aprovação
 
 Uma amostra poderá ser aprovada mesmo estando com o status **Atrasado**.
 
 ---
 
-### RN012 - Reprovação
+### RN011 - Reprovação
 
 Uma amostra poderá ser reprovada mesmo estando com o status **Atrasado**.
 
 ---
 
-### RN013 - Independência das Amostras
+### RN012 - Independência das Amostras
 
 As amostras pertencentes ao mesmo pedido possuirão ciclo de vida independente.
 
@@ -114,7 +102,7 @@ A alteração de status de uma amostra não deverá alterar o status das demais 
 
 ---
 
-### RN014 - Cancelamento
+### RN013 - Cancelamento
 
 Uma amostra poderá ser cancelada por usuários autorizados.
 
@@ -126,29 +114,23 @@ Após o cancelamento:
 
 ---
 
-### RN015 - Exclusão
+### RN014 - Exclusão
 
 A exclusão permanente somente poderá ocorrer para amostras canceladas.
 
-Toda exclusão deverá permanecer registrada no log.
+Toda exclusão deverá permanecer registrada na auditoria.
 
 ---
 
-### RN016 - Registro de Log
+### RN015 - Auditoria
 
-Todas as ações relevantes realizadas pelos usuários ou automaticamente pelo sistema deverão ser registradas no log.
+Todas as ações relevantes realizadas pelos usuários ou automaticamente pelo sistema deverão ser registradas na auditoria.
 
-O registro deverá permitir identificar, quando aplicável:
+---
 
-- Usuário responsável;
-- Módulo;
-- Registro afetado;
-- Ação realizada;
-- Campo alterado;
-- Valor anterior;
-- Valor novo;
-- Data e hora;
-- Observação.
+### RN016 - Histórico
+
+Toda alteração de status deverá gerar um novo registro no histórico da respectiva amostra.
 
 ---
 
@@ -156,7 +138,7 @@ O registro deverá permitir identificar, quando aplicável:
 
 O sistema deverá respeitar o escopo de visualização definido pelo perfil do usuário.
 
-- O representante visualizará apenas seus próprios pedidos e amostras.
+- O vendedor visualizará apenas seus próprios pedidos e amostras.
 - O gestor visualizará os pedidos e amostras pertencentes ao seu estabelecimento.
 - O administrador poderá visualizar todos os registros do sistema.
 
@@ -164,9 +146,9 @@ O sistema deverá respeitar o escopo de visualização definido pelo perfil do u
 
 ### RN018 - Estabelecimento
 
-O estabelecimento do pedido será definido automaticamente de acordo com o estabelecimento vinculado ao representante responsável.
+O estabelecimento do pedido será definido automaticamente de acordo com o estabelecimento vinculado ao vendedor responsável.
 
-As amostras vinculadas ao pedido estarão associadas ao mesmo estabelecimento.
+As amostras herdarão automaticamente essa informação.
 
 ---
 
@@ -178,14 +160,12 @@ Todos os usuários serão identificados pelo código de usuário utilizado na em
 
 ### RN020 - Registro de Alterações
 
-Todas as alterações realizadas em pedidos e amostras deverão ser registradas no log, contendo, quando aplicável:
+Todas as alterações realizadas em pedidos e amostras deverão registrar:
 
 - Usuário responsável;
 - Data e hora;
 - Ação realizada;
-- Campo alterado;
-- Valor anterior;
-- Valor novo.
+- Informações alteradas.
 
 ---
 
@@ -221,8 +201,12 @@ Não será permitido remover todas as amostras de um pedido já existente.
 
 ### RN024 - Integridade das Amostras
 
-Uma amostra poderá ser criada sem vínculo com um pedido.
+Toda amostra deverá estar vinculada a um único pedido durante todo o seu ciclo de vida.
 
-Após ser vinculada, a amostra deverá permanecer vinculada ao mesmo pedido durante todo o seu ciclo de vida.
+Não será permitido transferir uma amostra para outro pedido após sua criação.
 
-Não será permitido transferir uma amostra para outro pedido após sua vinculação.
+---
+
+### RN025 - Cliente
+
+Os clientes poderão ser cadastrados manualmente ou com um CSV gerado pelo ERP.

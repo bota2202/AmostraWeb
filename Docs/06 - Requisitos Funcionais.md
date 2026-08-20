@@ -159,3 +159,51 @@ O sistema deverá informar quando existirem amostras com prazo vencido ou próxi
 ### RF031 - Solicitações Pendentes
 
 O sistema deverá informar gestores ou administradores sobre solicitações de alteração de prazo pendentes de aprovação.
+
+---
+
+# Produtos
+
+### RF031 - Cadastro de produtos
+
+O sistema deverá permitir o cadastro manual de produtos.
+
+### RF032 - Consulta de produtos
+
+O sistema deverá permitir a consulta dos produtos.
+
+### RF033 - Inativação de produtos
+
+O sistema deverá permitir inativar produtos.
+
+### RF034 - Edição de produtos
+
+O sistema deverá permitir editar produtos.
+
+### RF035 - Importação de produtos
+
+O sistema deverá permitir a importação de arquivo .csv para cadastro rápido de produtos.
+
+---
+
+# Clientes
+
+### RF036 - Cadastro de clientes
+
+O sistema deverá permitir o cadastro manual de clientes.
+
+### RF037 - Consulta de clientes
+
+O sistema deverá permitir a consulta dos clientes.
+
+### RF038 - Inativação de clientes
+
+O sistema deverá permitir inativar clientes.
+
+### RF039 - Edição de clientes
+
+O sistema deverá permitir editar clientes.
+
+### RF040 - Importação de clientes
+
+O sistema deverá permitir a importação de arquivo .csv para cadastro rápido de clientes.

@@ -38,8 +38,8 @@ Representa um envio realizado para um cliente, podendo conter uma ou mais amostr
 - ID
 - Código
 - Cliente
-- Usuário Responsável
 - Estabelecimento
+- Usuário Responsável
 - Observação
 - Status
 - Data de Emissão
@@ -52,7 +52,7 @@ Representa um envio realizado para um cliente, podendo conter uma ou mais amostr
 
 ## Descrição
 
-Representa um produto individual pertencente a um pedido.
+Representa um produto individual que poderá ser vinculado a um pedido.
 
 ## Campos
 
@@ -63,6 +63,70 @@ Representa um produto individual pertencente a um pedido.
 - Quantidade
 - Status
 - Prazo de Avaliação
+- Data de Criação
+- Data de Atualização
+
+---
+
+# Produtos
+
+## Descrição
+
+Armazena os produtos comercializados pela empresa que podem ser utilizados no cadastro de amostras.
+
+## Campos
+
+- ID
+- Código do Produto
+- Descrição
+- Família
+- Subfamília
+- Grupo
+- Categoria do Produto
+- NBS
+- Tipo
+- NCM
+- Serviço
+- CEST
+- ANP
+- Aplicação de Entrada
+- Aplicação de Saída
+- Origem da Mercadoria
+- Controle de Verba
+- Status
+- Marca
+- Data de Revisão
+- Classe
+- C.A.
+- ID Categoria
+- ID Preço
+- Tributação do Município
+- Data de Criação
+- Data de Atualização
+
+---
+
+# Clientes
+
+## Descrição
+
+Armazena os clientes que podem receber pedidos e amostras.
+
+## Campos
+
+- ID
+- Código da Empresa
+- Razão Social
+- Nome Fantasia
+- Status
+- Tipo
+- Grupo Fiscal
+- Tipo de Empresa
+- Grupo Econômico
+- CNPJ/CPF
+- Endereço Completo
+- Telefone
+- E-mail
 - Data de Criação
 - Data de Atualização
 
@@ -91,7 +155,6 @@ Tabela responsável por relacionar usuários às permissões atribuídas.
 
 ## Campos
 
-- ID
 - Usuário ID
 - Permissão ID
 
@@ -141,7 +204,7 @@ Registra todas as ações relevantes executadas por usuários ou automaticamente
 
 ---
 
-# Estabelecimento
+# Estabelecimentos
 
 ## Descrição
 
@@ -166,15 +229,17 @@ Registra todas as unidades da empresa para um controle mais preciso.
 
 # Relacionamentos
 
-| Origem          | Cardinalidade | Destino                                      |
-|-----------------|---------------|----------------------------------------------|
-| Estabelecimento | 1 : N         | Usuário                                      |
-| Estabelecimento | 1 : N         | Pedido                                       |
-| Estabelecimento | 1 : 1         | Usuário (Gestor)                             |
-| Usuário         | 1 : N         | Pedido                                       |
-| Pedido          | 1 : N         | Amostra                                      |
-| Usuário         | N : N         | Permissão                                    |
-| Usuário         | 1 : N         | Registro de Log                              |
-| Amostra         | 1 : N         | Solicitação de Alteração de Prazo            |
-| Usuário         | 1 : N         | Solicitação como Solicitante                 |
-| Usuário         | 1 : N         | Solicitação como Aprovador                   |
+| Origem | Cardinalidade | Destino |
+|---|---:|---|
+| Estabelecimento | 1 : N | Usuário |
+| Estabelecimento | 1 : N | Pedido |
+| Estabelecimento | 1 : 1 | Usuário (Gestor) |
+| Usuário | 1 : N | Pedido |
+| Cliente | 1 : N | Pedido |
+| Pedido | 1 : N | Amostra |
+| Produto | 1 : N | Amostra |
+| Usuário | N : N | Permissão |
+| Usuário | 1 : N | Registro de Log |
+| Amostra | 1 : N | Solicitação de Alteração de Prazo |
+| Usuário | 1 : N | Solicitação como Solicitante |
+| Usuário | 1 : N | Solicitação como Aprovador | 
