@@ -16,15 +16,14 @@ Representar um envio de um ou mais produtos para um cliente, agrupando todas as 
 
 - Registrar os dados gerais do envio;
 - Agrupar as amostras pertencentes ao pedido;
-- Identificar o vendedor responsável;
+- Identificar o representante responsável;
 - Permitir o acompanhamento geral do pedido.
 
 ## Atributos
 
 - Código
 - Cliente
-- Cidade
-- Estado
+- Estabelecimento
 - Usuário Responsável
 - Observação
 - Status
@@ -79,6 +78,30 @@ Representar um usuário autenticado do sistema.
 
 ---
 
+# Estabelecimento
+
+## Objetivo
+
+Representar uma das unidades da empresa, contendo usuários e pedidos vinculados à unidade.
+
+## Responsabilidades
+
+- Conter os pedidos realizados pela unidade;
+- Registrar os usuários vinculados à unidade;
+- Identificar o gestor responsável pela unidade.
+
+## Atributos
+
+- Razão Social
+- CNPJ
+- CEP
+- Estado
+- Cidade
+- Bairro
+- Rua
+- Número
+- Gestor
+
 # Permissão
 
 ## Objetivo
@@ -132,7 +155,7 @@ Representar o registro de todas as ações relevantes realizadas pelos usuários
 
 ## Objetivo
 
-Representar uma solicitação realizada pelo vendedor para alterar o prazo de avaliação de uma amostra.
+Representar uma solicitação realizada pelo representante para alterar o prazo de avaliação de uma amostra.
 
 ## Responsabilidades
 
