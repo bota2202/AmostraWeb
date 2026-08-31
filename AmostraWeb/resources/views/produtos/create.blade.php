@@ -7,9 +7,16 @@
 </head>
 <body>
     <form action="/produtos/store" method="post">
+        @csrf
         <h1>Cadastrar produto</h1>
-        <input type="text" name="codigo_produto" placeholder="Digite o código do produto">
-        <input type="text" name="descricao" placeholder="Digite a descrição do produto">
+        @error('codigo_produto')
+            <p>{{ $message }}</p>
+        @enderror
+        <input type="text" name="codigo_produto" placeholder="Digite o código do produto" value="{{ old('codigo_produto') }}">
+        @error('descricao')
+            <p>{{ $message }}</p>
+        @enderror
+        <input type="text" name="descricao" placeholder="Digite a descrição do produto" value="{{ old('descricao') }}">
         <button type="submit">Cadatrar</button>
     </form>
 </body>
