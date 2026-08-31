@@ -12,7 +12,10 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        //
+        $produtos=Produto::all();
+        return view('produtos.index',[
+            'produtos'=>$produtos,
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('produtos.create');
     }
 
     /**

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('nbs')->nullable();
             $table->string('tipo')->nullable();
             $table->string('ncm')->nullable();
-            $table->boolean('servico')->default(false);
+            $table->string('servico')->nullable();
             $table->string('cest')->nullable();
             $table->string('anp')->nullable();
             $table->string('aplicacao_entrada')->nullable();
