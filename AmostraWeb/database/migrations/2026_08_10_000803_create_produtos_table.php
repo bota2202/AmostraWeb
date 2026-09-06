@@ -19,25 +19,15 @@ return new class extends Migration
             $table->string('familia')->nullable();
             $table->string('subfamilia')->nullable();
             $table->string('grupo')->nullable();
-            $table->string('categoria_produto')->nullable();
-            $table->string('nbs')->nullable();
             $table->string('tipo')->nullable();
             $table->string('ncm')->nullable();
-            $table->string('servico')->nullable();
-            $table->string('cest')->nullable();
-            $table->string('anp')->nullable();
             $table->string('aplicacao_entrada')->nullable();
             $table->string('aplicacao_saida')->nullable();
             $table->string('origem_mercadoria')->nullable();
-            $table->boolean('controle_verba')->default(false);
+            $table->string('controle_verba')->nullable();
             $table->boolean('status')->default(true);
             $table->string('marca')->nullable();
             $table->date('data_revisao')->nullable();
-            $table->string('classe')->nullable();
-            $table->string('ca')->nullable();
-            $table->string('id_categoria')->nullable();
-            $table->string('id_preco')->nullable();
-            $table->string('tributacao_municipio')->nullable();
 
             $table->timestamps();
         });

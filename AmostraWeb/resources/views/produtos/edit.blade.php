@@ -7,8 +7,9 @@
 </head>
 <body>
     <h1>Editar produto</h1>
-    <form action="/produtos/{{ $produto->id }}/update" method="post">
+    <form action="{{ route('produtos.update',$produto) }}" method="post">
         @csrf
+        @method('PUT')
         @error('codigo_produto')
             <p>{{ $message }}</p>
         @enderror

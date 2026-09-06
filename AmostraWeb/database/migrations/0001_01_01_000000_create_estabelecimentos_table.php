@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('cnpj', 18)->unique();
             $table->string('uf', 2);
             $table->string('cidade');
-            $table->string('bairro');
-            $table->string('rua');
-            $table->string('numero');
+            $table->string('bairro')->nullable();
+            $table->string('rua')->nullable();
+            $table->string('numero')->nullable();
             $table->string('cep', 10)->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

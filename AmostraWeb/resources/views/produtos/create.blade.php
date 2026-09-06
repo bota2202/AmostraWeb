@@ -6,7 +6,7 @@
     <title>Produtos - Create - Teste</title>
 </head>
 <body>
-    <form action="/produtos/store" method="post">
+    <form action="{{ route('produtos.store') }}" method="post">
         @csrf
         <h1>Cadastrar produto</h1>
         @error('codigo_produto')

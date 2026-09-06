@@ -9,7 +9,7 @@
     <p>{{ $produto->codigo_produto }}</p>
     <p>{{ $produto->descricao }}</p>
 
-    <form action="/produtos/{{ $produto->id }}/destroy" method="post">
+    <form action="{{ route('produtos.destroy',$produto) }}" method="post">
         @csrf
         @method('DELETE')
         

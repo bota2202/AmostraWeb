@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estabelecimento;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreEstabelecimentoRequest;
+use App\Http\Requests\UpdateEstabelecimentoRequest;
 
 class EstabelecimentoController extends Controller
 {
@@ -12,7 +13,10 @@ class EstabelecimentoController extends Controller
      */
     public function index()
     {
-        //
+        $estabelecimentos=Estabelecimento::paginate(10);
+        return view('estabelecimentos.index',[
+            'estabelecimentos'=>$estabelecimentos,
+        ]);
     }
 
     /**
@@ -20,15 +24,16 @@ class EstabelecimentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('estabelecimentos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEstabelecimentoRequest $request)
     {
-        //
+        Estabelecimento::create($request->validated());
+        return redirect('/estabelecimentos')->with('success','Estabelecimento criado com sucesso');
     }
 
     /**
@@ -36,7 +41,9 @@ class EstabelecimentoController extends Controller
      */
     public function show(Estabelecimento $estabelecimento)
     {
-        //
+        return view('estabelecimentos.show',[
+            'estabelecimento'=>$estabelecimento,
+        ]);
     }
 
     /**
@@ -44,15 +51,18 @@ class EstabelecimentoController extends Controller
      */
     public function edit(Estabelecimento $estabelecimento)
     {
-        //
+        return view('estabelecimentos.edit',[
+            'estabelecimento'=>$estabelecimento,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Estabelecimento $estabelecimento)
+    public function update(UpdateEstabelecimentoRequest $request, Estabelecimento $estabelecimento)
     {
-        //
+        $estabelecimento->update($request->validated());
+        return redirect('/estabelecimentos')->with('success','Estabelecimento de id '.$estabelecimento->id.' atualizado com sucesso');
     }
 
     /**
@@ -60,6 +70,8 @@ class EstabelecimentoController extends Controller
      */
     public function destroy(Estabelecimento $estabelecimento)
     {
-        //
+        $id=$estabelecimento->id;
+        $estabelecimento->delete();
+        return redirect('/estabelecimentos')->with('success','Estabelecimento de id '.$id.' excluído com sucesso');
     }
 }

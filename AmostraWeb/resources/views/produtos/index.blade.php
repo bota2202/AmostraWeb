@@ -11,7 +11,7 @@
     @if (session('success'))
     <p>{{ session('success') }}</p>
     @endif
-    <a href="/produtos/create">Novo</a>
+    <a href="{{ route('produtos.create') }}">Novo</a>
     <h1>Produtos:</h1>
     <table>
     <thead>
@@ -27,11 +27,12 @@
             <td>{{ $produto->codigo_produto }}</td>
             <td>{{ $produto->descricao }}</td>
             <td>
-                <a href="/produtos/{{ $produto->id }}">Expandir</a>
-                <a href="/produtos/{{ $produto->id }}/edit">Editar</a>
+                <a href="{{ route('produtos.show',$produto) }}">Expandir</a>
+                <a href="{{ route('produtos.edit',$produto) }}">Editar</a>
             </td>
         </tr>
         @endforeach
+        {{ $produtos->links() }}
     </tbody>
 </table>
 </body>

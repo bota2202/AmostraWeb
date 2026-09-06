@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('codigo_usuario')->unique();
-            $table->enum('cargo',['admin','gestor','representante']);
-            $table->boolean('is_active')->default(true);
+            $table->enum('cargo',['admin','gestor','representante'])->default('representante');
+            $table->boolean('status')->default(true);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

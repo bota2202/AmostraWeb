@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreProdutoRequest;
+use App\Http\Requests\UpdateProdutoRequest;
 
 class ProdutoController extends Controller
 {
@@ -12,7 +13,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        $produtos = Produto::all();
+        $produtos = Produto::paginate(20);
         return view('produtos.index', [
             'produtos' => $produtos,
         ]);
@@ -29,36 +30,9 @@ class ProdutoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProdutoRequest $request)
     {
-        $dados = $request->validate([
-            'codigo_produto' => 'required|unique:produtos,codigo_produto',
-            'descricao' => 'required',
-            'familia' => 'nullable',
-            'subfamilia' => 'nullable',
-            'grupo' => 'nullable',
-            'categoria_produto' => 'nullable',
-            'nbs' => 'nullable',
-            'tipo' => 'nullable',
-            'ncm' => 'nullable',
-            'servico' => 'nullable',
-            'cest' => 'nullable',
-            'anp' => 'nullable',
-            'aplicacao_entrada' => 'nullable',
-            'aplicacao_saida' => 'nullable',
-            'origem_mercadoria' => 'nullable',
-            'controle_verba' => 'nullable',
-            'status' => 'boolean|nullable',
-            'marca' => 'nullable',
-            'data_revisao' => 'nullable',
-            'classe' => 'nullable',
-            'ca' => 'nullable',
-            'id_categoria' => 'nullable',
-            'id_preco' => 'nullable',
-            'tributacao_municipio' => 'nullable',
-        ]);
-
-        Produto::create($dados);
+        Produto::create($request->validated());
 
         return redirect('/produtos')->with('success', 'Produto cadastrado com sucesso!');
     }
@@ -86,36 +60,9 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produto $produto)
+    public function update(UpdateProdutoRequest $request, Produto $produto)
     {
-        $dados = $request->validate([
-            'descricao' => 'required',
-            'familia' => 'nullable',
-            'subfamilia' => 'nullable',
-            'grupo' => 'nullable',
-            'categoria_produto' => 'nullable',
-            'nbs' => 'nullable',
-            'tipo' => 'nullable',
-            'ncm' => 'nullable',
-            'servico' => 'nullable',
-            'cest' => 'nullable',
-            'anp' => 'nullable',
-            'aplicacao_entrada' => 'nullable',
-            'aplicacao_saida' => 'nullable',
-            'origem_mercadoria' => 'nullable',
-            'controle_verba' => 'nullable',
-            'status' => 'boolean|nullable',
-            'marca' => 'nullable',
-            'data_revisao' => 'nullable',
-            'classe' => 'nullable',
-            'ca' => 'nullable',
-            'id_categoria' => 'nullable',
-            'id_preco' => 'nullable',
-            'tributacao_municipio' => 'nullable',
-        ]);
-
-        $produto->update($dados);
-
+        $produto->update($request->validated());
         return redirect('/produtos')->with('success', 'Produto de código ' . $produto->codigo_produto . ' atualizado com sucesso');
     }
 
