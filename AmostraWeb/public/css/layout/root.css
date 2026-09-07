@@ -1,0 +1,12 @@
+:root {
+    --azul-marca: #0d3b66;
+    --azul-marca-claro: #256aac;
+    --azul-marca-escuro: #082948;
+    --laranja-marca: #fe8a1e;
+    --laranja-marca-escuro: #e37711;
+    --cinza-claro: #f5f6f8;
+    --cinza-borda: #e2e5ea;
+    --cinza-texto: #5c6470;
+    --branco: #ffffff;
+    --box-shadow: 0 20px 50px rgba(13, 59, 102, 0.15);
+}

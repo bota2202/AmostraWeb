@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
+@extends('layouts.app')
 
-        <button type="submit">Sair</button>
-    </form>
-</body>
-</html>
+@section('title', 'Dashboard - ' . config('amostraweb.name'))
+
+@section('texto')
+    Olá {{ explode(' ', auth()->user()->name)[0] }}!
+@endsection
+
+@section('content')
+    <section></section>
+    <section></section>
+@endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/dashboard/dashboard.css') }}">
+@endpush

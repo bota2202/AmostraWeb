@@ -1,0 +1,181 @@
+:root{
+    --azul-marca: #0d3b66;
+    --azul-marca-escuro: #082948;
+    --laranja-marca: #fe8a1e;
+    --laranja-marca-escuro: #e37711;
+    --cinza-claro: #f5f6f8;
+    --cinza-borda: #e2e5ea;
+    --cinza-texto: #5c6470;
+    --branco: #ffffff;
+}
+
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cinza-claro);
+}
+
+main{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 100%;
+    background-color: var(--branco);
+    min-height: 480px;
+    height: 70%;
+    min-width: 600px;
+    width: 60%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(13, 59, 102, 0.15);
+}
+
+main > section#section_esquerda_login{
+    grid-column: 1;
+    background: linear-gradient(160deg, var(--azul-marca-escuro) 0%, var(--azul-marca) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.marca{
+    text-align: center;
+    padding: 0 10%;
+    z-index: 1;
+}
+
+.logo_marca{
+    max-width: 160px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.marca_slogan{
+    color: var(--branco);
+    opacity: 0.85;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+main > section#section_direita_login{
+    display: grid;
+    grid-template-rows: 15% 1fr 10%;
+    grid-template-columns: 10% 1fr 10%;
+    grid-column: 2;
+    background-color: var(--branco);
+}
+
+main > section#section_direita_login > form{
+    display: flex;
+    grid-row: 2;
+    grid-column: 2;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form_cabecalho{
+    margin-bottom: 24px;
+}
+
+.form_cabecalho h1{
+    color: var(--azul-marca);
+    font-size: 1.6rem;
+    margin: 0 0 6px 0;
+}
+
+.form_cabecalho p{
+    color: var(--cinza-texto);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.campo_grupo{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo_grupo label{
+    font-size: 0.85rem;
+    color: var(--azul-marca);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+main > section#section_direita_login > form input{
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1.5px solid var(--cinza-borda);
+    background-color: var(--cinza-claro);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+main > section#section_direita_login > form input::placeholder{
+    color: #9aa3ad;
+}
+
+main > section#section_direita_login > form input:focus{
+    outline: none;
+    border-color: var(--laranja-marca);
+    background-color: var(--branco);
+}
+
+main > section#section_direita_login > form button{
+    margin-top: 8px;
+    height: 46px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--laranja-marca);
+    color: var(--branco);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+main > section#section_direita_login > form button:hover{
+    background-color: var(--laranja-marca-escuro);
+}
+
+main > section#section_direita_login > form button:active{
+    transform: scale(0.98);
+}
+
+.mensagem_erro{
+    background-color: #fdecea;
+    color: #c0392b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 0 0 16px 0;
+} 
+
+@media (max-width: 700px){
+    main{
+        grid-template-columns: 1fr;
+        grid-template-rows: 30% 70%;
+        min-width: 90%;
+        width: 90%;
+    }
+    main > section#section_esquerda_login{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    main > section#section_direita_login{
+        grid-column: 1;
+        grid-row: 2;
+    }
+}

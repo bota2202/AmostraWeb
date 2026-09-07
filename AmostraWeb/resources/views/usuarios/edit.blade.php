@@ -55,5 +55,9 @@
 
     </form>
 
+    <form action="{{ route('logout') }}" method="post">
+        <button type="submit">Sair</button>
+    </form>
+
 </body>
 </html>

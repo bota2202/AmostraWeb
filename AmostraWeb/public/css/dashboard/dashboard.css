@@ -1,0 +1,23 @@
+@import url('../layout/root.css');
+
+/* =========================
+   MAIN
+   ========================= */
+
+main {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 15px;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+main section {
+    background-color: var(--branco);
+    box-shadow: var(--box-shadow);
+    border-radius: 7px;
+    grid-column: 1;
+    min-height: 100px;
+}

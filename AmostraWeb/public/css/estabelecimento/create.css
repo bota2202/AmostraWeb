@@ -1,0 +1,30 @@
+@import url("../layout/root.css");
+@import url("../layout/pagination.css");
+
+main {
+    background-color: var(--branco);
+    border-radius: 7px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.toolbar h1,.toolbar a {
+    color: var(--azul-marca);
+    text-decoration: none;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.toolbar a:hover{
+    color: var(--azul-marca-claro);
+    text-decoration: underline;
+}
+
