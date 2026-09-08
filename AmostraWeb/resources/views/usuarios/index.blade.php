@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Users</title>
-</head>
+@section('texto','Usuários')
 
-<body>
+@section('')
+
+
+
+
+
+
+
+
+
+
+
+<!-- <body>
     @if (session('success'))
         <p>{{ session('success') }}</p>
     @endif
@@ -37,6 +44,4 @@
             {{ $users->links() }}
         </tbody>
     </table>
-</body>
-
-</html>
+</body> -->

@@ -179,3 +179,11 @@ main > section#section_direita_login > form button:active{
         grid-row: 2;
     }
 }
+
+#codigo_usuario{
+    text-transform: uppercase;
+}
+
+#codigo_usuario::placeholder{
+    text-transform: capitalize !important;
+}

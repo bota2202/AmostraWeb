@@ -100,3 +100,11 @@
 .badge-status > i {
     font-size: 0.65rem;
 }
+
+#uf{
+    text-transform: uppercase;
+}
+
+.label-input input{
+    text-transform: capitalize;
+}
