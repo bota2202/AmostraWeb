@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/estabelecimento/index.css') }}">
 @endpush
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/layout/table.css') }}">
+@endpush
+
 @section('title','Estabelecimentos - '. config('amostraweb.name'))
 
 @section('texto','Estabelecimentos')

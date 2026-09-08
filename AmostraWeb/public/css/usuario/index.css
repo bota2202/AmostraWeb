@@ -1,0 +1,9 @@
+td:nth-child(2) {
+    text-transform: uppercase;
+}
+
+td:nth-child(5),
+td:nth-child(6){
+    text-align: center;
+    text-transform: capitalize;
+}
