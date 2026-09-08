@@ -1,30 +1,125 @@
-@import url("../layout/root.css");
-@import url("../layout/pagination.css");
+@import url('../layout/root.css');
 
 main {
     background-color: var(--branco);
     border-radius: 7px;
     box-shadow: var(--box-shadow);
-    overflow: hidden;
+    overflow: hidden;  
 }
 
-.toolbar {
+.form-estabelecimento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 24px;
+}
+
+.form-grupo {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--cinza-borda);
+    flex-direction: column;
 }
 
-.toolbar h1,.toolbar a {
+.grupo-full {
+    grid-column: 1 / -1;
+}
+
+.form-grupo label {
+    font-size: 0.85rem;
     color: var(--azul-marca);
-    text-decoration: none;
-    font-size: 1.4rem;
-    margin: 0;
+    font-weight: 600;
+    margin-bottom: 6px;
 }
 
-.toolbar a:hover{
-    color: var(--azul-marca-claro);
-    text-decoration: underline;
+.form-grupo input,
+.form-grupo select {
+    height: 42px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1.5px solid var(--cinza-borda);
+    background-color: var(--cinza-claro);
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #1a1a1a;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-grupo input::placeholder {
+    color: #9aa3ad;
+}
+
+.form-grupo input:focus,
+.form-grupo select:focus {
+    outline: none;
+    border-color: var(--laranja-marca);
+    background-color: var(--branco);
+}
+
+.erro-campo {
+    color: #c0392b;
+    font-size: 0.78rem;
+    margin: 0px 0 0 0;
+    padding: 0 0 !important;
+}
+
+.grupo-checkbox {
+    justify-content: center;
+    justify-self: start;
+}
+
+.label-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    width: fit-content;   
+}
+
+.label-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--laranja-marca);
+    cursor: pointer;
+}
+
+.form-acoes {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--cinza-borda);
+}
+
+.botao-cancelar {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: var(--cinza-texto);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.15s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: var(--cinza-claro);
+}
+
+.botao-salvar {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--laranja-marca);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.botao-salvar:hover {
+    background-color: var(--laranja-marca-escuro);
 }
 

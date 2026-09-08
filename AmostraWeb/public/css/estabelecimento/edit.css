@@ -1,0 +1,76 @@
+@import url('../layout/root.css');
+
+/* =========================
+   INPUTS EDITÁVEIS
+   ========================= */
+
+.label-input input:not(:disabled),
+.label-input select {
+    background-color: var(--branco);
+    color: #1a1a1a;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.label-input input:not(:disabled):focus,
+.label-input select:focus {
+    outline: none;
+    border-color: var(--azul-marca-claro);
+    box-shadow: 0 0 0 3px rgba(37, 106, 172, 0.15);
+}
+
+.label-input select {
+    height: 42px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1.5px solid var(--cinza-borda);
+    font-size: 0.95rem;
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235c6470'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+/* =========================
+   MENSAGEM DE ERRO
+   ========================= */
+
+.erro-campo {
+    color: #c0392b;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 6px;
+}
+
+.label-input input.is-invalid,
+.label-input select.is-invalid {
+    border-color: #c0392b;
+}
+
+/* =========================
+   TOOLBAR - AÇÕES
+   ========================= */
+
+.acoes-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.botao-toolbar {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.botao-secundario {
+    background-color: var(--cinza-claro);
+    color: var(--cinza-texto);
+    border: 1.5px solid var(--cinza-borda);
+}
+
+.botao-secundario:hover {
+    background-color: var(--cinza-borda);
+}

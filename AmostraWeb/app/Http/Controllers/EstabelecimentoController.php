@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estabelecimento;
+use App\Models\User;
 use App\Http\Requests\StoreEstabelecimentoRequest;
 use App\Http\Requests\UpdateEstabelecimentoRequest;
 
@@ -24,7 +25,10 @@ class EstabelecimentoController extends Controller
      */
     public function create()
     {
-        return view('estabelecimentos.create');
+        $gestores=User::where('cargo','gestor')->get();
+        return view('estabelecimentos.create',[
+            'gestores'=>$gestores,
+        ]);
     }
 
     /**
@@ -51,7 +55,9 @@ class EstabelecimentoController extends Controller
      */
     public function edit(Estabelecimento $estabelecimento)
     {
+        $gestores=User::where('cargo','gestor')->get();
         return view('estabelecimentos.edit',[
+            'gestores'=>$gestores,
             'estabelecimento'=>$estabelecimento,
         ]);
     }

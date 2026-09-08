@@ -5,7 +5,6 @@ main {
     background-color: var(--branco);
     border-radius: 7px;
     box-shadow: var(--box-shadow);
-    overflow: hidden;
 }
 
 table {
@@ -16,6 +15,7 @@ table {
 td:nth-child(1),
 td:nth-child(5),
 td:nth-child(4), 
+td:nth-child(6), 
 td:nth-child(7) { 
     text-align: center;
 }
@@ -91,38 +91,6 @@ tbody tr:hover {
     color: var(--cinza-texto);
 }
 
-.toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--cinza-borda);
-}
-
-.toolbar h1 {
-    color: var(--azul-marca);
-    font-size: 1.4rem;
-    margin: 0;
-}
-
-.botao-novo {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--laranja-marca);
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: background-color 0.15s ease;
-}
-
-.botao-novo:hover {
-    background-color: var(--laranja-marca-escuro);
-}
-
 td.acoes {
     text-align: center;
     white-space: nowrap;
@@ -146,3 +114,6 @@ td.acoes a:hover {
     color: var(--laranja-marca);
 }
 
+main{
+    overflow-y: hidden !important;
+}

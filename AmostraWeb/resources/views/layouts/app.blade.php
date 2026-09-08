@@ -39,7 +39,6 @@
             <a href="{{ route('produtos.index') }}" class="botao-aside {{ request()->routeIs('produtos.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-tags"></i> Produtos</a>
             <a href="{{ route('usuarios.index') }}" class="botao-aside {{ request()->routeIs('usuarios.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-user"></i> Usuários</a>
         </section>
-        <!-- Em produção, aqui ficarão os botões de redirecionamento para outras abas -->
     </aside>
 
     <main>

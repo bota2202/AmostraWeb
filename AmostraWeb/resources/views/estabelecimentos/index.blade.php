@@ -11,7 +11,7 @@
 @section('content')
 <div class="toolbar">
     <h1>Estabelecimentos</h1>
-    <a href="{{ route('estabelecimentos.create') }}" class="botao-novo">
+    <a href="{{ route('estabelecimentos.create') }}" class="botao-toolbar">
         <i class="fa-solid fa-plus"></i> Novo Estabelecimento
     </a>
 </div>
@@ -37,7 +37,7 @@
             <td>{{ $estab->cnpj }}</td>
             <td>{{ $estab->uf }}</td>
             <td>{{ $estab->cidade }}</td>
-            <td class="{{ $estab->gestor_id ? '' : 'sem-gestor' }}">{{ $estab->gestor_id ?: '-' }}</td>
+            <td class="{{ $estab->gestor_id ? '' : 'sem-gestor' }}">{{ $estab->gestor_id ? $estab->gestor->codigo_usuario : '-' }}</td>
             <td><span class="status status-{{ $estab->status == 1 ? 'ativo' : 'inativo' }}">{{ $estab->status == 1 ? 'Ativo' : 'Inativo' }}</span></td>
             <td class="acoes">
                 <a href="{{ route('estabelecimentos.show', $estab) }}" title="Ver detalhes">

@@ -1,0 +1,102 @@
+@import url('../layout/root.css');
+
+#dados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+}
+
+.card-secao {
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-secao > h3 {
+    margin: 0;
+    padding: 14px 24px;
+    background-color: var(--cinza-claro);
+    border-bottom: 1.5px solid var(--cinza-borda);
+    color: var(--azul-marca);
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-secao > h3 > i {
+    color: var(--laranja-marca);
+    font-size: 0.95rem;
+}
+
+.campos-secao {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px 24px;
+}
+
+.campo-full {
+    grid-column: 1 / -1;
+}
+
+.label-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.label-input label {
+    font-size: 0.85rem;
+    color: var(--azul-marca);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.label-input input {
+    height: 42px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1.5px solid var(--cinza-borda);
+    background-color: var(--cinza-claro);
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #1a1a1a;
+}
+
+.label-input input:disabled {
+    color: var(--cinza-texto);
+    cursor: default;
+    opacity: 1;
+    -webkit-text-fill-color: var(--cinza-texto);
+}
+
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.badge-status.ativo {
+    background-color: #e5f7ec;
+    color: #1f9254;
+}
+
+.badge-status.inativo {
+    background-color: #fdecec;
+    color: #c0392b;
+}
+
+.badge-status > i {
+    font-size: 0.65rem;
+}

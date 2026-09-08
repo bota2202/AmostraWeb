@@ -1,4 +1,4 @@
-@import url('../layout/root.css');
+@import url("../layout/root.css");
 
 html,
 body {
@@ -16,6 +16,8 @@ body {
     padding: 8px;
     box-sizing: border-box;
     background-color: var(--cinza-claro);
+    height: 100vh;    
+    overflow: hidden;  
 }
 
 /* =========================
@@ -23,6 +25,7 @@ body {
    ========================= */
 
 header {
+    position: sticky;
     grid-column: 2;
     grid-row: 1;
     background-color: var(--branco);
@@ -52,7 +55,9 @@ header > a {
     background-color: var(--branco);
     font-size: 2.4rem;
     border: none;
-    transition: color 0.15s ease, transform 0.15s ease;
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 
 header > a:hover {
@@ -108,13 +113,15 @@ aside > section:last-child > a {
     padding: 14px 24px;
     border-radius: 6px;
     margin: 2px 8px;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 }
 
 aside > section:last-child > a > i {
     width: 18px;
     text-align: center;
-    color: var(--cinza-texto);
+    color: var(--azul-marca-escuro);
     transition: color 0.15s ease;
 }
 
@@ -127,17 +134,70 @@ aside > section:last-child > a:hover > i {
     color: var(--laranja-marca);
 }
 
-.section-ativa{
+.section-ativa {
     background-color: var(--laranja-marca);
 }
 
-.section-ativa:hover{
-    background-color: var(--cinza-texto) !important;
+.section-ativa:hover {
+    background-color: var(--azul-marca-escuro) !important;
 }
 
+/* =========================
+   MAIN
+   ========================= */
 
-
-main{
+main {
+    background-color: var(--branco);
+    box-shadow: var(--box-shadow);
     grid-column: 2;
     grid-row: 2;
+    border-radius: 7px;
+    overflow-y: auto;  
+    min-height: 0;   
+}
+
+/* ========================
+   TOOLBAR
+   ======================== */
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.toolbar h1 {
+    color: var(--azul-marca);
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.toolbar h1 a {
+    color: var(--cinza-texto);
+    text-decoration: none;
+}
+
+.toolbar h1 a:hover {
+    color: var(--laranja-marca);
+}
+
+.botao-toolbar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--laranja-marca);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.15s ease;
+}
+
+.botao-toolbar:hover {
+    background-color: var(--laranja-marca-escuro);
 }
