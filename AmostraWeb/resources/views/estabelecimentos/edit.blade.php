@@ -7,6 +7,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/estabelecimento/show.css') }}">
 <link rel="stylesheet" href="{{ asset('css/estabelecimento/edit.css') }}">
+<link rel="stylesheet" href="{{ asset('css/layout/form-excluir.css') }}">
 @endpush
 
 @section('content')
@@ -30,7 +31,7 @@
     @csrf
     @method('PUT')
 
-    <div id="dados">
+    <div class="dados">
         <section class="card-secao" id="identificacao">
             <h3><i class="fa-solid fa-id-card"></i> Identificação</h3>
             <div class="campos-secao">
@@ -144,4 +145,11 @@
         </section>
     </div>
 </form>
+
+<section id="excluir-form">
+    <form action="{{ route('estabelecimentos.destroy',$estabelecimento) }}" class="form-excluir card-secao">
+        <button type="submit"><i class="fa-solid fa-trash"></i>Excluir</button>
+    </form>
+</section>
+
 @endsection

@@ -1,0 +1,33 @@
+@import url("../layout/root.css");
+
+/* ==============================
+   FORM EXCLUIR
+   ============================== */
+
+.form-excluir {
+  padding: 0.8%;
+  margin-left: 24px;
+  margin-right: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-excluir > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--laranja-marca);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 21px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.15s ease;
+  border: 0;
+}
+
+.form-excluir>button:hover{
+    cursor: pointer;
+    background-color: var(--laranja-marca-escuro);
+}

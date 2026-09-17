@@ -1,6 +1,6 @@
 @import url('../layout/root.css');
 
-#dados {
+.dados {
     display: flex;
     flex-direction: column;
     gap: 20px;
