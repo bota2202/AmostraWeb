@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
-use Illuminate\Http\Request;
 
+/**
+ * Logs são apenas consultados; não são criados ou alterados pela tela.
+ */
 class LogController extends Controller
 {
     /**
@@ -12,23 +14,11 @@ class LogController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $logs = Log::with('user')->latest('data_hora')->paginate(30);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('logs.index', [
+            'logs' => $logs,
+        ]);
     }
 
     /**
@@ -36,30 +26,10 @@ class LogController extends Controller
      */
     public function show(Log $log)
     {
-        //
-    }
+        $log->load('user');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Log $log)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Log $log)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Log $log)
-    {
-        //
+        return view('logs.show', [
+            'log' => $log,
+        ]);
     }
 }

@@ -6,8 +6,6 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/estabelecimento/show.css') }}">
-<link rel="stylesheet" href="{{ asset('css/estabelecimento/edit.css') }}">
-<link rel="stylesheet" href="{{ asset('css/layout/form-excluir.css') }}">
 @endpush
 
 @section('content')
@@ -146,10 +144,11 @@
     </div>
 </form>
 
-<section id="excluir-form">
-    <form action="{{ route('estabelecimentos.destroy',$estabelecimento) }}" class="form-excluir card-secao">
-        <button type="submit"><i class="fa-solid fa-trash"></i>Excluir</button>
-    </form>
-</section>
+@include('partials.acoes-registro', [
+    'rotaStatus' => route('estabelecimentos.status', $estabelecimento),
+    'ativo' => $estabelecimento->status,
+    'rotaExcluir' => route('estabelecimentos.destroy', $estabelecimento),
+    'descricao' => 'o estabelecimento #'.$estabelecimento->id,
+])
 
 @endsection

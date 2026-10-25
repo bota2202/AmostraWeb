@@ -1,29 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Usuário</title>
-</head>
+@section('title','Novo Usuário - '.config('amostraweb.name'))
 
-<body>
-    <form action="{{ route('usuarios.store') }}" method="post">
-        @csrf
+@section('texto','Usuários')
 
-        <input type="text" name="estabelecimento_id" placeholder="ID do estabelecimento">
-        <input type="text" name="name" placeholder="Nome">
-        <input type="text" name="email" placeholder="E-mail">
-        <input type="text" name="codigo_usuario" placeholder="Código de usuário">
-        <select name="cargo" id="cargo_users_create">
-            <option value="" disabled selected hidden>Selecione o cargo do usuário</option>
-            <option value="representante">Representante</option>
-            <option value="gestor">Gestor</option>
-            <option value="admin">Administrador</option>
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/layout/form.css') }}">
+@endpush
+
+@section('content')
+<div class="toolbar">
+    <h1><a href="{{ route('usuarios.index') }}">Usuários</a> > Novo</h1>
+</div>
+
+<form action="{{ route('usuarios.store') }}" method="post" class="form-cadastro">
+    @csrf
+
+    <div class="form-grupo">
+        <label for="name">Nome</label>
+        <input type="text" name="name" required id="name" placeholder="Digite o nome completo" value="{{ old('name') }}">
+        @error('name')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-grupo">
+        <label for="codigo_usuario">Código de usuário</label>
+        <input type="text" name="codigo_usuario" required id="codigo_usuario" placeholder="Ex.: nome.sobrenome" value="{{ old('codigo_usuario') }}">
+        @error('codigo_usuario')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-grupo">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" required id="email" placeholder="email@empresa.com.br" value="{{ old('email') }}">
+        @error('email')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-grupo">
+        <label for="estabelecimento_id">Estabelecimento</label>
+        <select name="estabelecimento_id" id="estabelecimento_id" required>
+            <option value="">Selecione</option>
+            @foreach ($estabelecimentos as $estab)
+            <option value="{{ $estab->id }}" @selected(old('estabelecimento_id')==$estab->id)>#{{ $estab->id }} - {{ $estab->razao_social }}</option>
+            @endforeach
         </select>
-        <input type="password" name="password" placeholder="Senha">
-        <button type="submit">Cadastrar</button>
-    </form>
-</body>
+        @error('estabelecimento_id')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
 
-</html>
+    <div class="form-grupo">
+        <label for="cargo">Cargo</label>
+        <select name="cargo" id="cargo" required>
+            <option value="">Selecione</option>
+            @foreach (\App\Models\User::CARGOS as $valor => $nome)
+            <option value="{{ $valor }}" @selected(old('cargo')==$valor)>{{ $nome }}</option>
+            @endforeach
+        </select>
+        @error('cargo')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-grupo">
+        <label for="password">Senha</label>
+        <input type="password" name="password" required id="password" placeholder="Mínimo de 6 caracteres">
+        @error('password')
+        <p class="erro-campo">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-grupo grupo-full grupo-checkbox">
+        <input type="hidden" name="status" value="0">
+        <label for="status" class="label-checkbox">
+            <input type="checkbox" name="status" id="status" value="1" @checked(old('status', true))>
+            Ativo
+        </label>
+    </div>
+
+    <div class="form-acoes">
+        <a href="{{ route('usuarios.index') }}" class="botao-cancelar">Cancelar</a>
+        <button type="submit" class="botao-salvar">Salvar</button>
+    </div>
+</form>
+@endsection

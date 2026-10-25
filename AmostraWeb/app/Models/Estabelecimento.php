@@ -27,8 +27,14 @@ class Estabelecimento extends Model
     {
         return $this->hasMany(User::class);
     }
+
     public function gestor()
     {
         return $this->belongsTo(User::class, 'gestor_id');
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class);
     }
 }

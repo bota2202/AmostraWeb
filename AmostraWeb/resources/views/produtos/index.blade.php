@@ -1,40 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos - Index - Teste</title>
-</head>
+@section('title','Produtos - '.config('amostraweb.name'))
 
-<body>
-    @if (session('success'))
-    <p>{{ session('success') }}</p>
-    @endif
-    <a href="{{ route('produtos.create') }}">Novo</a>
-    <h1>Produtos:</h1>
-    <table>
+@section('texto','Produtos')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/layout/table.css') }}">
+@endpush
+
+@section('content')
+<div class="toolbar">
+    <h1>Produtos</h1>
+    <a href="{{ route('produtos.create') }}" class="botao-toolbar">
+        <i class="fa-solid fa-plus"></i> Novo Produto
+    </a>
+</div>
+
+<table>
     <thead>
         <tr>
             <th>Código</th>
             <th>Descrição</th>
+            <th>Família</th>
+            <th>Marca</th>
+            <th>NCM</th>
+            <th>Status</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($produtos as $produto)
+        @forelse ($produtos as $produto)
         <tr>
-            <td>{{ $produto->codigo_produto }}</td>
+            <td class="centro">{{ $produto->codigo_produto }}</td>
             <td>{{ $produto->descricao }}</td>
-            <td>
-                <a href="{{ route('produtos.show',$produto) }}">Expandir</a>
-                <a href="{{ route('produtos.edit',$produto) }}">Editar</a>
+            <td class="centro">{{ $produto->familia ?? '-' }}</td>
+            <td class="centro">{{ $produto->marca ?? '-' }}</td>
+            <td class="centro">{{ $produto->ncm ?? '-' }}</td>
+            <td class="centro"><span class="status status-{{ $produto->status ? 'ativo' : 'inativo' }}">{{ $produto->status ? 'Ativo' : 'Inativo' }}</span></td>
+            <td class="acoes">
+                <a href="{{ route('produtos.show',$produto) }}" title="Ver detalhes"><i class="fa-solid fa-eye"></i></a>
+                <a href="{{ route('produtos.edit',$produto) }}" title="Editar"><i class="fa-solid fa-pen"></i></a>
             </td>
         </tr>
-        @endforeach
-        {{ $produtos->links() }}
+        @empty
+        <tr>
+            <td colspan="7" class="vazio">Nenhum produto cadastrado</td>
+        </tr>
+        @endforelse
     </tbody>
 </table>
-</body>
-
-</html>
+{{ $produtos->links() }}
+@endsection

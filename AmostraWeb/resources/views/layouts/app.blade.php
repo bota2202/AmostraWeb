@@ -20,9 +20,7 @@
             src="{{ config('amostraweb.logo_azul') }}"
             alt="{{ config('amostraweb.name') }}">
         <p>@yield('texto')</p>
-        <a href="{{ route('usuarios.edit', auth()->user()) }}">
-            <i class="fa-regular fa-circle-user"></i>
-        </a>
+        <a href="{{ route('perfil') }}" title="Meu perfil" class="avatar-topo">{{ auth()->user()->iniciais }}</a>
     </header>
 
     <aside>
@@ -35,15 +33,23 @@
             <a href="{{ route('dashboard') }}" class="botao-aside {{ request()->routeIs('dashboard') ? 'section-ativa' : '' }}"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="{{ route('estabelecimentos.index') }}" class="botao-aside {{ request()->routeIs('estabelecimentos.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-shop"></i> Estabelecimentos</a>
             <a href="{{ route('pedidos.index') }}" class="botao-aside {{ request()->routeIs('pedidos.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-cart-shopping"></i> Pedidos</a>
-            <a href="{{ route('permissoes.index') }}" class="botao-aside {{ request()->routeIs('permissoes.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-unlock"></i> Permissões</a>
+            <a href="{{ route('grupos.index') }}" class="botao-aside {{ request()->routeIs('grupos.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-unlock"></i> Permissões</a>
             <a href="{{ route('produtos.index') }}" class="botao-aside {{ request()->routeIs('produtos.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-tags"></i> Produtos</a>
             <a href="{{ route('usuarios.index') }}" class="botao-aside {{ request()->routeIs('usuarios.*') ? 'section-ativa' : '' }}"><i class="fa-solid fa-user"></i> Usuários</a>
         </section>
     </aside>
 
     <main>
+        @if (session('success'))
+        <div class="alerta alerta-sucesso"><i class="fa-solid fa-circle-check"></i> {{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+        <div class="alerta alerta-erro"><i class="fa-solid fa-circle-exclamation"></i> {{ session('error') }}</div>
+        @endif
         @yield('content')
     </main>
+
+    @stack('scripts')
 </body>
 
 </html>

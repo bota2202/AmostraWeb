@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
             'estabelecimento_id'=>['integer','required','exists:estabelecimentos,id'],
             'name'=>['required','string','max:255'],
             'email'=>['required','email','max:255'],
-            'cargo'=>['required','string','max:100'],
+            'cargo'=>['required','in:admin,gestor,representante'],
         ];
     }
 }

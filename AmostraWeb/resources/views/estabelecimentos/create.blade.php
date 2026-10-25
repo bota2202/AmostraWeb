@@ -13,7 +13,7 @@
     <h1><a href="{{ route('estabelecimentos.index') }}">Estabelecimentos</a> > Novo</h1>
 </div>
 
-<form action="{{ route('estabelecimentos.store') }}" method="post" class="form-estabelecimento">
+<form action="{{ route('estabelecimentos.store') }}" method="post" class="form-cadastro">
     @csrf
 
     <div class="form-grupo grupo-full">

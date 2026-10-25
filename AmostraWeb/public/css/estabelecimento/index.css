@@ -1,13 +1,6 @@
 @import url("../layout/root.css");
 @import url("../layout/pagination.css");
 
-main {
-    background-color: var(--branco);
-    border-radius: 7px;
-    box-shadow: var(--box-shadow);
-    overflow-y: hidden !important;
-}
-
 .sem-gestor {
     color: black;
     text-align: center;

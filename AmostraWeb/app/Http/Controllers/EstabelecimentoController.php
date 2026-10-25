@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estabelecimento;
 use App\Models\User;
+use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\StoreEstabelecimentoRequest;
 use App\Http\Requests\UpdateEstabelecimentoRequest;
 
@@ -14,7 +15,7 @@ class EstabelecimentoController extends Controller
      */
     public function index()
     {
-        $estabelecimentos=Estabelecimento::paginate(10);
+        $estabelecimentos=Estabelecimento::with('gestor')->paginate(10);
         return view('estabelecimentos.index',[
             'estabelecimentos'=>$estabelecimentos,
         ]);
@@ -72,10 +73,24 @@ class EstabelecimentoController extends Controller
     }
 
     /**
+     * Ativa ou inativa o estabelecimento.
+     */
+    public function alterarStatus(ChangeStatusRequest $request, Estabelecimento $estabelecimento)
+    {
+        $estabelecimento->update($request->validated());
+        $texto = $estabelecimento->status ? 'ativado' : 'inativado';
+        return redirect()->route('estabelecimentos.edit', $estabelecimento)->with('success', 'Estabelecimento '.$texto.' com sucesso');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Estabelecimento $estabelecimento)
     {
+        if ($estabelecimento->users()->exists() || $estabelecimento->pedidos()->exists()) {
+            return back()->with('error', 'Não é possível excluir: o estabelecimento possui usuários ou pedidos vinculados. Inative-o em vez de excluir.');
+        }
+
         $id=$estabelecimento->id;
         $estabelecimento->delete();
         return redirect('/estabelecimentos')->with('success','Estabelecimento de id '.$id.' excluído com sucesso');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\StoreProdutoRequest;
 use App\Http\Requests\UpdateProdutoRequest;
 
@@ -13,7 +14,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        $produtos = Produto::paginate(20);
+        $produtos = Produto::orderBy('codigo_produto')->paginate(20);
         return view('produtos.index', [
             'produtos' => $produtos,
         ]);
@@ -67,13 +68,27 @@ class ProdutoController extends Controller
     }
 
     /**
+     * Ativa ou inativa o produto.
+     */
+    public function alterarStatus(ChangeStatusRequest $request, Produto $produto)
+    {
+        $produto->update($request->validated());
+        $texto = $produto->status ? 'ativado' : 'inativado';
+        return redirect()->route('produtos.edit', $produto)->with('success', 'Produto '.$texto.' com sucesso');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Produto $produto)
     {
+        if ($produto->amostras()->exists()) {
+            return back()->with('error', 'Não é possível excluir: o produto possui amostras. Inative-o em vez de excluir.');
+        }
+
         $codigo = $produto->codigo_produto;
         $produto->delete();
 
-        return redirect('/produtos')->with('success','Produto de código '. $codigo. ' excluido com sucesso');
+        return redirect('/produtos')->with('success','Produto de código '. $codigo. ' excluído com sucesso');
     }
 }

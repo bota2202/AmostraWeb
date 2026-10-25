@@ -1,33 +1,47 @@
 @import url("../layout/root.css");
 
 /* ==============================
-   FORM EXCLUIR
+   AÇÕES DO REGISTRO (ativar / inativar / excluir)
    ============================== */
 
-.form-excluir {
-  padding: 0.8%;
-  margin-left: 24px;
-  margin-right: 24px;
+.zona-acoes {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
+  padding: 0 24px 24px;
 }
 
-.form-excluir > button {
+.zona-acoes form {
+  margin: 0;
+}
+
+.zona-acoes button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--laranja-marca);
   color: #fff;
-  text-decoration: none;
   padding: 12px 21px;
   border-radius: 6px;
+  font-family: inherit;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: background-color 0.15s ease;
   border: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-.form-excluir>button:hover{
-    cursor: pointer;
-    background-color: var(--laranja-marca-escuro);
+.zona-acoes .botao-status {
+  background-color: var(--azul-marca);
+}
+
+.zona-acoes .botao-status:hover {
+  background-color: var(--azul-marca-escuro);
+}
+
+.zona-acoes .botao-excluir {
+  background-color: var(--laranja-marca);
+}
+
+.zona-acoes .botao-excluir:hover {
+  background-color: var(--laranja-marca-escuro);
 }

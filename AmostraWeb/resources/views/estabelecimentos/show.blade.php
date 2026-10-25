@@ -14,7 +14,7 @@
     <a class="botao-toolbar" href="{{ route('estabelecimentos.edit',$estabelecimento) }}"><i class="fa-solid fa-pen"></i> Editar Estabelecimento</a>
 </div>
 
-<div id="dados">
+<div class="dados">
     <section class="card-secao" id="identificacao">
         <h3><i class="fa-solid fa-id-card"></i> Identificação</h3>
         <div class="campos-secao">

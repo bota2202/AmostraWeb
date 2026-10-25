@@ -1,0 +1,29 @@
+@import url('../layout/root.css');
+
+/* =========================
+   FORMULÁRIOS DE SOLICITAÇÃO DE PRAZO
+   ========================= */
+
+.form-solicitacao {
+    padding: 20px 24px;
+    border-top: 1.5px solid var(--cinza-borda);
+}
+
+.form-solicitacao h4 {
+    margin: 0 0 14px;
+    color: var(--azul-marca);
+    font-size: 0.95rem;
+}
+
+.campos-solicitacao {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+}
+
+.acoes-form-solicitacao {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+}

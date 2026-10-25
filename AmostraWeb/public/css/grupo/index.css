@@ -1,0 +1,115 @@
+@import url('../layout/root.css');
+
+.grade-grupos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 24px;
+}
+
+.cartao-grupo {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cartao-grupo:hover {
+    border-color: #f6c491;
+    transform: translateY(-2px);
+}
+
+.cartao-grupo .topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 18px 10px;
+}
+
+.cartao-grupo .icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background-color: #fff1e2;
+    color: var(--laranja-marca);
+    font-size: 1.1rem;
+}
+
+.cartao-grupo h3 {
+    margin: 0;
+    color: var(--azul-marca);
+    font-size: 1.05rem;
+}
+
+.cartao-grupo p {
+    flex: 1;
+    margin: 0;
+    padding: 0 18px 14px;
+    color: var(--cinza-texto);
+    font-size: 0.88rem;
+}
+
+.cartao-grupo .numeros {
+    display: flex;
+    gap: 18px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--cinza-borda);
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+}
+
+.cartao-grupo .numeros strong {
+    color: var(--azul-marca);
+}
+
+.cartao-grupo .rodape {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    padding: 8px 12px;
+    background-color: var(--cinza-claro);
+    border-top: 1px solid var(--cinza-borda);
+}
+
+.cartao-grupo .rodape a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--azul-marca);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cartao-grupo .rodape a:hover {
+    background-color: var(--branco);
+    color: var(--laranja-marca);
+}
+
+.sem-grupos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 220px;
+    margin: 24px;
+    padding: 24px;
+    text-align: center;
+    color: var(--cinza-texto);
+    border: 1.5px dashed var(--cinza-borda);
+    border-radius: 12px;
+}
+
+.sem-grupos i {
+    font-size: 2rem;
+    color: var(--laranja-marca);
+}

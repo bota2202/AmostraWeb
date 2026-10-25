@@ -1,23 +1,61 @@
 @import url('../layout/root.css');
 
 /* =========================
-   MAIN
+   CARDS DE RESUMO
    ========================= */
 
-main {
+.cards-resumo {
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
+    padding: 24px 24px 0;
+}
+
+.card-resumo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--azul-marca);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+a.card-resumo:hover {
+    border-color: var(--laranja-marca);
+    transform: translateY(-2px);
+}
+
+.card-resumo > i {
+    font-size: 1.6rem;
+    color: var(--laranja-marca);
+    width: 32px;
+    text-align: center;
+}
+
+.card-resumo.alerta-card > i {
+    color: #c0392b;
+}
+
+.card-resumo strong {
+    display: block;
+    font-size: 1.8rem;
+    line-height: 1.1;
+}
+
+.card-resumo span {
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
 }
 
 /* =========================
-   SECTIONS
+   PAINÉIS
    ========================= */
 
-main section {
-    background-color: var(--branco);
-    box-shadow: var(--box-shadow);
-    border-radius: 7px;
-    grid-column: 1;
-    min-height: 100px;
+.paineis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
 }

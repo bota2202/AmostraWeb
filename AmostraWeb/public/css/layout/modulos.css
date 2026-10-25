@@ -1,0 +1,387 @@
+@import url('../layout/root.css');
+
+/* =========================
+   MÓDULOS EXPANSÍVEIS (permissões)
+   Usado na tela de Permissões e na aba Permissões do usuário
+   ========================= */
+
+.lista-modulos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+}
+
+.modulo {
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+.modulo[open] {
+    border-color: #f6c491;
+}
+
+.modulo > summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background-color: var(--cinza-claro);
+    color: var(--azul-marca);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.modulo > summary::-webkit-details-marker {
+    display: none;
+}
+
+.modulo > summary > .icone-modulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: #fff1e2;
+    color: var(--laranja-marca);
+    font-size: 0.9rem;
+}
+
+.modulo > summary > .contador {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--cinza-borda);
+    background-color: var(--branco);
+    color: var(--cinza-texto);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.modulo > summary > .contador.cheio {
+    background-color: #e5f7ec;
+    border-color: #bfe8cf;
+    color: #1f9254;
+}
+
+.modulo > summary > .seta {
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+    transition: transform 0.2s ease;
+}
+
+.modulo[open] > summary {
+    border-bottom: 1.5px solid var(--cinza-borda);
+}
+
+.modulo[open] > summary > .seta {
+    transform: rotate(180deg);
+}
+
+/* linhas de ação dentro do módulo */
+
+.acoes-modulo {
+    list-style: none;
+    margin: 0;
+    padding: 4px 20px;
+}
+
+.acao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cinza-borda);
+    color: #1a1a1a;
+    font-size: 0.95rem;
+}
+
+.acao:last-child {
+    border-bottom: none;
+}
+
+.acao > .nome-acao {
+    flex: 1;
+    font-weight: 500;
+}
+
+.acao > .usuarios-acao {
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+}
+
+.acao-icones {
+    display: flex;
+    gap: 2px;
+}
+
+.acao-icones form {
+    margin: 0;
+}
+
+.acao-icones a,
+.acao-icones button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--azul-marca);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.acao-icones a:hover,
+.acao-icones button:hover {
+    background-color: var(--cinza-claro);
+    color: var(--laranja-marca);
+}
+
+.acao-icones button.excluir:hover {
+    color: #c0392b;
+}
+
+/* checkbox (aba Permissões do usuário) */
+
+label.acao {
+    cursor: pointer;
+}
+
+.acao input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--laranja-marca);
+    cursor: pointer;
+}
+
+.acao.marcar-todas {
+    color: var(--azul-marca);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* rodapé do módulo e estados vazios */
+
+.rodape-modulo {
+    padding: 10px 20px 14px;
+    border-top: 1px dashed var(--cinza-borda);
+}
+
+.link-adicionar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--laranja-marca);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.link-adicionar:hover {
+    color: var(--laranja-marca-escuro);
+}
+
+.vazio-modulo {
+    margin: 0;
+    padding: 14px 20px;
+    color: var(--cinza-texto);
+    font-size: 0.9rem;
+}
+
+/* permissão que vem de um grupo (travada) */
+.via-grupo {
+    margin-left: auto;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: #e3eefa;
+    color: var(--azul-marca-claro);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.acao input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+}
+
+/* modo somente leitura (telas de detalhes) */
+.acao.liberada > i {
+    color: #1f9254;
+}
+
+.acao.bloqueada {
+    color: var(--cinza-texto);
+}
+
+.acao.bloqueada > i {
+    color: #c5cbd3;
+}
+
+.titulo-bloco {
+    margin: 0;
+    padding: 20px 24px 0;
+    color: var(--azul-marca);
+    font-size: 1rem;
+}
+
+.subtitulo-bloco.espacado {
+    padding-top: 14px;
+}
+
+.subtitulo-bloco {
+    margin: 4px 0 0;
+    padding: 0 24px;
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+}
+
+/* =========================
+   MEMBROS DO GRUPO
+   ========================= */
+
+.busca-membros {
+    position: relative;
+    margin: 20px 24px 0;
+}
+
+.busca-membros > i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cinza-texto);
+}
+
+.busca-membros input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px 0 40px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1.5px solid var(--cinza-borda);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.busca-membros input:focus {
+    outline: none;
+    border-color: var(--azul-marca-claro);
+    box-shadow: 0 0 0 3px rgba(37, 106, 172, 0.15);
+}
+
+.lista-membros {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 16px 24px 24px;
+}
+
+.membro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.membro:hover {
+    border-color: #f6c491;
+}
+
+.membro:has(input:checked) {
+    border-color: var(--laranja-marca);
+    background-color: #fff6ec;
+}
+
+.membro[hidden] {
+    display: none;
+}
+
+.membro input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--laranja-marca);
+}
+
+.avatar-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: var(--azul-marca);
+    color: var(--branco);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.membro-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.membro-info strong {
+    display: block;
+    color: #1a1a1a;
+    font-size: 0.95rem;
+}
+
+.membro-info span {
+    color: var(--cinza-texto);
+    font-size: 0.8rem;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 24px;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 6px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 999px;
+    color: var(--azul-marca);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+}
+
+a.chip:hover {
+    border-color: var(--laranja-marca);
+}
+
+.chip .avatar-mini {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+}
+
+.chip.chip-grupo {
+    padding: 6px 14px;
+}
+
+.chip.chip-grupo > i {
+    color: var(--laranja-marca);
+}

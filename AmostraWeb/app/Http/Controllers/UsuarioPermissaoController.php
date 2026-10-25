@@ -2,64 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario_Permissao;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUsuarioPermissaoRequest;
+use App\Models\User;
 
+/**
+ * Salva as permissões extras do usuário (aba "Permissões" da edição do usuário).
+ * Os grupos do usuário são definidos na edição do grupo (aba Membros).
+ */
 class UsuarioPermissaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function update(UpdateUsuarioPermissaoRequest $request, User $usuario)
     {
-        //
-    }
+        $usuario->permissoes()->sync($request->validated('permissoes') ?? []);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Usuario_Permissao $usuario_Permissao)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Usuario_Permissao $usuario_Permissao)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Usuario_Permissao $usuario_Permissao)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Usuario_Permissao $usuario_Permissao)
-    {
-        //
+        return redirect()->to(route('usuarios.edit', $usuario).'#permissoes')
+            ->with('success', 'Permissões do usuário '.$usuario->codigo_usuario.' atualizadas com sucesso');
     }
 }

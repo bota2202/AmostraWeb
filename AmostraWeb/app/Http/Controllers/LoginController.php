@@ -16,7 +16,8 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if (!Auth::attempt($request->validated())) {
+        // Usuários inativos não podem entrar
+        if (!Auth::attempt([...$request->validated(), 'status' => true])) {
             return redirect()->route('showLogin')->with('error', 'Credenciais inválidas!');
         }
         $request->session()->regenerate();

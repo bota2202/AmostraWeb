@@ -19,6 +19,7 @@ class Produto extends Model
         'origem_mercadoria',
         'controle_verba',
         'status',
+        'marca',
         'data_revisao',
     ];
 
@@ -26,4 +27,9 @@ class Produto extends Model
         'status' => 'boolean',
         'data_revisao' => 'date',
     ];
+
+    public function amostras()
+    {
+        return $this->hasMany(Amostra::class);
+    }
 }

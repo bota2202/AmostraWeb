@@ -1,46 +1,91 @@
 @import url("../layout/root.css");
+@import url("../layout/pagination.css");
+
+/* =========================
+   TABELA
+   ========================= */
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+    color: #1a1a1a;
 }
 
+/* tabela principal das listagens: vira um card com margem */
+main > table {
+    width: calc(100% - 48px);
+    box-sizing: border-box; /* a borda entra na largura, senão passa da tela */
+    margin: 20px 24px 0;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    overflow: hidden;
+}
 
 th,
 td {
-    border-bottom: 1px solid var(--azul-marca);
-    border-right: 1px solid var(--azul-marca);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--cinza-borda);
 }
 
+/* textos longos quebram linha (entre palavras) para a tabela caber na tela */
 td {
-    text-align: left;
-    padding: 0px 10px;
+    overflow-wrap: break-word;
 }
 
 th {
     text-align: center;
-    padding: 8px 10px;
-    background-color: var(--laranja-marca);
-    color: #ffffff;
-    font-weight: bold;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-th:last-child,
-td:last-child {
-    border-right: none;
-}
-
-th {
-    background-color: var(--laranja-marca);
-    color: #ffffff;
-    font-weight: bold;
-}
-
-
-
-tbody tr:nth-child(even) {
     background-color: var(--cinza-claro);
+    color: var(--azul-marca);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    /* cabeçalhos quebram entre palavras; hífen só em último caso */
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+/* telas estreitas: células mais compactas para a tabela caber */
+@media (max-width: 1200px) {
+    main > table {
+        width: calc(100% - 32px);
+        margin: 16px 16px 0;
+    }
+
+    th,
+    td {
+        padding: 8px 8px;
+    }
+
+    th {
+        letter-spacing: 0;
+    }
+
+    .status {
+        padding: 4px 8px;
+    }
+}
+
+/* telas bem estreitas: fonte um pouco menor */
+@media (max-width: 1000px) {
+    table {
+        font-size: 0.82rem;
+    }
+
+    th {
+        font-size: 0.66rem;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+    }
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tbody tr {
@@ -48,39 +93,48 @@ tbody tr {
 }
 
 tbody tr:hover {
-    background-color: #fdf1e4;
+    background-color: #fdf6ee;
+}
+
+/* coluna de ações: só o espaço dos ícones */
+th:last-child,
+td.acoes {
+    width: 1%;
+    text-align: center;
+    white-space: nowrap;
 }
 
 td.acoes {
-    text-align: center;
-    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 td.acoes a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 6px;
     color: var(--azul-marca);
     text-decoration: none;
     transition:
         background-color 0.15s ease,
         color 0.15s ease;
-    margin: 0 2px;
 }
 
 td.acoes a:hover {
     background-color: var(--cinza-claro);
     color: var(--laranja-marca);
 }
+
 .status {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .status-ativo {
@@ -91,4 +145,60 @@ td.acoes a:hover {
 .status-inativo {
     background-color: #f0f1f3;
     color: var(--cinza-texto);
+}
+
+.status-em_analise {
+    background-color: #e3eefa;
+    color: var(--azul-marca-claro);
+}
+
+.status-aprovada {
+    background-color: #e3f6e8;
+    color: #1e824c;
+}
+
+.status-atrasada,
+.status-reprovada {
+    background-color: #fdecec;
+    color: #c0392b;
+}
+
+.status-aberto,
+.status-pendente {
+    background-color: #fff1e2;
+    color: var(--laranja-marca-escuro);
+}
+
+.status-cancelada,
+.status-fechado {
+    background-color: #f0f1f3;
+    color: var(--cinza-texto);
+}
+
+/* =========================
+   UTILITÁRIOS
+   ========================= */
+
+th.centro,
+td.centro {
+    text-align: center;
+}
+
+td.maiusculo {
+    text-transform: uppercase;
+}
+
+td.capitalizado {
+    text-transform: capitalize;
+}
+
+td.vazio {
+    text-align: center;
+    padding: 24px 10px;
+    color: var(--cinza-texto);
+}
+
+td.prazo-vencido {
+    color: #c0392b;
+    font-weight: 600;
 }
