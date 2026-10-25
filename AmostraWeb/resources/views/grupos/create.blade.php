@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="toolbar">
-    <h1><a href="{{ route('grupos.index') }}">Grupos</a> > Novo</h1>
+    <h1><a href="{{ route('grupos.index') }}">Grupos</a> › Novo</h1>
 </div>
 
 <form action="{{ route('grupos.store') }}" method="post" class="form-cadastro">

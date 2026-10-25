@@ -25,7 +25,7 @@ class StoreUserRequest extends FormRequest
         return [
             'estabelecimento_id'=>['integer','required','exists:estabelecimentos,id'],
             'name'=>['required','string','max:255'],
-            'email'=>['required','email','max:255'],
+            'email'=>['required','email','max:255','unique:users,email'],
             'codigo_usuario'=>['required','string','max:255','unique:users,codigo_usuario'],
             'cargo'=>['required','in:admin,gestor,representante'],
             'status'=>['nullable','boolean'],

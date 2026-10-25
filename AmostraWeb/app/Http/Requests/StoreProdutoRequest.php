@@ -2,41 +2,45 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Produto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProdutoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'codigo_produto' => ['required','unique:produtos,codigo_produto','digits:6'],
-            'descricao' => ['required','string','max:255','min:3'],
-            'familia' => ['nullable','string','max:20'],
-            'subfamilia' => ['nullable','string','max:20'],
-            'grupo' => ['nullable','string','max:20'],
-            'tipo' => ['nullable','string','max:20'],
-            'ncm' => ['nullable','string','max:50'],
-            'aplicacao_entrada' => ['nullable','string','max:20'],
-            'aplicacao_saida' => ['nullable','string','max:20'],
-            'origem_mercadoria' => ['nullable','string','max:20'],
-            'controle_verba' => ['nullable','string','max:20'],
-            'status' => ['boolean','nullable'],
-            'marca' => ['nullable','string','max:255'],
-            'data_revisao' => ['nullable','date'],
+            // formato do ERP: ex. 110.30949
+            'codigo_produto' => ['required', 'string', 'max:30', 'regex:/^[A-Za-z0-9.\-\/]+$/', 'unique:produtos,codigo_produto'],
+            ...self::regrasComuns(),
+            'status' => ['nullable', 'boolean'],
         ];
+    }
+
+    /**
+     * Regras compartilhadas entre cadastro e edição.
+     */
+    public static function regrasComuns(): array
+    {
+        $regras = [
+            'descricao' => ['required', 'string', 'min:3', 'max:255'],
+            'marca' => ['nullable', 'string', 'max:255'],
+            'data_revisao' => ['nullable', 'date'],
+        ];
+
+        foreach (array_keys(Produto::camposOpcionais()) as $campo) {
+            $regras[$campo] = ['nullable', 'string', 'max:255'];
+        }
+
+        return $regras;
     }
 }

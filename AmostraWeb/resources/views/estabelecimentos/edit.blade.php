@@ -11,16 +11,14 @@
 @section('content')
 <div class="toolbar">
     <h1>
-        <a href="{{ route('estabelecimentos.index') }}">Estabelecimentos</a> >
-        <a href="{{ route('estabelecimentos.show',$estabelecimento) }}">#{{ $estabelecimento->id }}</a> >
-        Editar
+        <a href="{{ route('estabelecimentos.index') }}">Estabelecimentos</a> › <a href="{{ route('estabelecimentos.show',$estabelecimento) }}">#{{ $estabelecimento->id }}</a> › Editar
     </h1>
     <div class="acoes-toolbar">
         <a class="botao-toolbar botao-secundario" href="{{ route('estabelecimentos.show',$estabelecimento) }}">
-            <i class="fa-solid fa-xmark"></i> Cancelar
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i> Cancelar
         </a>
         <button type="submit" form="form-estabelecimento" class="botao-toolbar">
-            <i class="fa-solid fa-check"></i> Salvar Alterações
+            <i class="fa-solid fa-check" aria-hidden="true"></i> Salvar alterações
         </button>
     </div>
 </div>
@@ -31,7 +29,7 @@
 
     <div class="dados">
         <section class="card-secao" id="identificacao">
-            <h3><i class="fa-solid fa-id-card"></i> Identificação</h3>
+            <h2><i class="fa-solid fa-id-card" aria-hidden="true"></i> Identificação</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="razao_social">Razão Social</label>
@@ -48,17 +46,17 @@
                 </div>
                 <div class="label-input">
                     <label for="cnpj">CNPJ</label>
-                    <input type="text" id="cnpj" disabled value="{{ $estabelecimento->cnpj }}">
+                    <input type="text" id="cnpj" readonly value="{{ $estabelecimento->cnpj }}">
                 </div>
                 <span class="badge-status {{ $estabelecimento->status == 1 ? 'ativo' : 'inativo' }}">
-                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle" aria-hidden="true"></i>
                     {{ $estabelecimento->status == 1 ? 'Ativo' : 'Inativo' }}
                 </span>
             </div>
         </section>
 
         <section class="card-secao" id="gestao">
-            <h3><i class="fa-solid fa-user-tie"></i> Gestão</h3>
+            <h2><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Gestão</h2>
             <div class="campos-secao">
                 <div class="label-input campo-full">
                     <label for="gestor_id">Gestor</label>
@@ -80,15 +78,15 @@
         </section>
 
         <section class="card-secao" id="endereco">
-            <h3><i class="fa-solid fa-location-dot"></i> Endereço</h3>
+            <h2><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Endereço</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="uf">Estado</label>
-                    <input type="text" id="uf" disabled value="{{ $estabelecimento->uf }}">
+                    <input type="text" id="uf" readonly value="{{ $estabelecimento->uf }}">
                 </div>
                 <div class="label-input">
                     <label for="cidade">Cidade</label>
-                    <input type="text" id="cidade" disabled value="{{ $estabelecimento->cidade }}">
+                    <input type="text" id="cidade" readonly value="{{ $estabelecimento->cidade }}">
                 </div>
                 <div class="label-input">
                     <label for="bairro">Bairro</label>
@@ -131,7 +129,7 @@
                     <input
                         type="text"
                         id="cep"
-                        name="cep"
+                        name="cep" data-mascara="cep" inputmode="numeric"
                         value="{{ old('cep', $estabelecimento->cep) }}"
                         placeholder="00000-000"
                         maxlength="9">
@@ -147,7 +145,7 @@
 @include('partials.acoes-registro', [
     'rotaStatus' => route('estabelecimentos.status', $estabelecimento),
     'ativo' => $estabelecimento->status,
-    'rotaExcluir' => route('estabelecimentos.destroy', $estabelecimento),
+    'rotaExcluir' => auth()->user()->temPermissao('estabelecimentos', 'excluir') ? route('estabelecimentos.destroy', $estabelecimento) : null,
     'descricao' => 'o estabelecimento #'.$estabelecimento->id,
 ])
 

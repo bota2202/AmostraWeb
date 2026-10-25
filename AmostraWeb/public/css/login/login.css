@@ -1,13 +1,4 @@
-:root{
-    --azul-marca: #0d3b66;
-    --azul-marca-escuro: #082948;
-    --laranja-marca: #fe8a1e;
-    --laranja-marca-escuro: #e37711;
-    --cinza-claro: #f5f6f8;
-    --cinza-borda: #e2e5ea;
-    --cinza-texto: #5c6470;
-    --branco: #ffffff;
-}
+@import url("../layout/root.css");
 
 body, html{
     height: 100%;
@@ -124,7 +115,7 @@ main > section#section_direita_login > form input{
 }
 
 main > section#section_direita_login > form input::placeholder{
-    color: #9aa3ad;
+    color: var(--cinza-placeholder);
 }
 
 main > section#section_direita_login > form input:focus{
@@ -139,7 +130,8 @@ main > section#section_direita_login > form button{
     border: none;
     border-radius: 8px;
     background-color: var(--laranja-marca);
-    color: var(--branco);
+    color: var(--azul-marca-escuro);
+    font-weight: 700;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -147,7 +139,7 @@ main > section#section_direita_login > form button{
 }
 
 main > section#section_direita_login > form button:hover{
-    background-color: var(--laranja-marca-escuro);
+    background-color: var(--laranja-marca-claro);
 }
 
 main > section#section_direita_login > form button:active{
@@ -155,8 +147,8 @@ main > section#section_direita_login > form button:active{
 }
 
 .mensagem_erro{
-    background-color: #fdecea;
-    color: #c0392b;
+    background-color: var(--vermelho-fundo);
+    color: var(--vermelho);
     padding: 10px 14px;
     border-radius: 6px;
     font-size: 0.85rem;
@@ -186,4 +178,74 @@ main > section#section_direita_login > form button:active{
 
 #codigo_usuario::placeholder{
     text-transform: capitalize !important;
+}
+main > section#section_direita_login > form input:focus-visible,
+main > section#section_direita_login > form button:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}
+
+main > section#section_direita_login > form input[aria-invalid="true"] {
+    border-color: var(--vermelho);
+}
+
+.ajuda_login {
+    margin: 16px 0 0;
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* mensagens e links das telas de senha */
+.mensagem_sucesso {
+    background-color: var(--verde-fundo);
+    color: var(--verde);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 0 0 16px 0;
+}
+
+.erro_campo {
+    color: var(--vermelho);
+    font-size: 0.8rem;
+    margin: 6px 0 0;
+}
+
+.ajuda_login a {
+    color: var(--azul-marca);
+    font-weight: 600;
+}
+
+.ajuda_login a:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.ajuda_login span {
+    margin: 0 6px;
+}
+
+main > section#section_direita_login > form input.campo_codigo {
+    font-size: 1.3rem;
+    letter-spacing: 6px;
+    text-align: center;
+}
+
+/* telas com mais campos: a caixa cresce conforme o conteúdo */
+body.form-longo main {
+    height: auto;
+    min-height: 480px;
+    margin: 24px 0;
+}
+
+body.form-longo main > section#section_direita_login {
+    grid-template-rows: 32px 1fr 32px;
 }

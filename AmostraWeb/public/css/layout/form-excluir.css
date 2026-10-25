@@ -6,9 +6,12 @@
 
 .zona-acoes {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
-  padding: 0 24px 24px;
+  margin: 0 24px 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--cinza-borda);
 }
 
 .zona-acoes form {
@@ -19,12 +22,11 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #fff;
-  padding: 12px 21px;
+  padding: 11px 20px;
   border-radius: 6px;
   font-family: inherit;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   border: 0;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -32,16 +34,27 @@
 
 .zona-acoes .botao-status {
   background-color: var(--azul-marca);
+  color: var(--branco);
 }
 
 .zona-acoes .botao-status:hover {
   background-color: var(--azul-marca-escuro);
 }
 
+/* ação destrutiva em vermelho */
 .zona-acoes .botao-excluir {
-  background-color: var(--laranja-marca);
+  background-color: var(--branco);
+  color: var(--vermelho);
+  border: 1.5px solid #f5c6c0;
 }
 
 .zona-acoes .botao-excluir:hover {
-  background-color: var(--laranja-marca-escuro);
+  background-color: var(--vermelho);
+  color: var(--branco);
+}
+
+@media (max-width: 900px) {
+  .zona-acoes {
+    margin: 0 16px 16px;
+  }
 }

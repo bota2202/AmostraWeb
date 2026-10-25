@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGrupoRequest;
 use App\Http\Requests\UpdateGrupoRequest;
 use App\Models\Grupo;
+use App\Models\Log;
 use App\Models\Permissao;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -81,13 +82,25 @@ class GrupoController extends Controller
      */
     public function update(UpdateGrupoRequest $request, Grupo $grupo)
     {
-        DB::transaction(function () use ($request, $grupo) {
+        $nomeMembro = fn (User $u) => $u->codigo_usuario.' ('.$u->name.')';
+        $nomePermissao = fn (Permissao $p) => $p->nome ?? $p->modulo.'.'.$p->acao;
+
+        // nome, membros e permissões aparecem no log como uma ação só
+        Log::emLote(fn () => DB::transaction(function () use ($request, $grupo, $nomeMembro, $nomePermissao) {
             $grupo->update($request->safe()->only(['nome', 'descricao']));
+
+            // membros e permissões ficam na auditoria com a lista de antes e depois
+            $membrosAntes = $grupo->users()->get()->map($nomeMembro)->all();
+            $permissoesAntes = $grupo->permissoes()->get()->map($nomePermissao)->all();
+
             $grupo->users()->sync($request->validated('usuarios') ?? []);
             $grupo->permissoes()->sync($request->validated('permissoes') ?? []);
-        });
 
-        return redirect()->route('grupos.show', $grupo)->with('success', 'Grupo '.$grupo->nome.' atualizado com sucesso');
+            Log::registrarLista($grupo, 'membros', 'membros', $membrosAntes, $grupo->users()->get()->map($nomeMembro)->all());
+            Log::registrarLista($grupo, 'permissoes', 'permissoes', $permissoesAntes, $grupo->permissoes()->get()->map($nomePermissao)->all());
+        }));
+
+        return redirect()->route('grupos.show', $grupo)->with('success', 'Grupo '.$grupo->nome.' atualizado.');
     }
 
     /**

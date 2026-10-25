@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * Permissão = módulo + ação (ex.: amostras / criar).
@@ -15,21 +17,21 @@ class Permissao extends Model
     protected $table = 'permissoes';
 
     protected $fillable = [
+        'nome',
         'modulo',
         'acao',
     ];
 
     // Ícones dos módulos (mesmos da sidebar)
     public const ICONES_MODULOS = [
-        'amostras' => 'fa-flask',
-        'clientes' => 'fa-people-group',
-        'dashboard' => 'fa-chart-line',
-        'estabelecimentos' => 'fa-shop',
         'pedidos' => 'fa-cart-shopping',
-        'permissoes' => 'fa-unlock',
-        'produtos' => 'fa-tags',
-        'usuarios' => 'fa-user',
+        'amostras' => 'fa-flask',
         'solicitacoes_prazo' => 'fa-calendar-plus',
+        'clientes' => 'fa-people-group',
+        'produtos' => 'fa-tags',
+        'estabelecimentos' => 'fa-shop',
+        'usuarios' => 'fa-user',
+        'permissoes' => 'fa-unlock',
         'logs' => 'fa-clock-rotate-left',
     ];
 
@@ -39,22 +41,45 @@ class Permissao extends Model
      */
     public static function sincronizarPadrao(): void
     {
-        DB::transaction(function () {
+        $temNome = Schema::hasColumn('permissoes', 'nome');
+
+        DB::transaction(function () use ($temNome) {
             $validas = [];
 
             foreach (config('amostraweb.permissoes_padrao') as $modulo => $acoes) {
                 foreach ($acoes as $acao) {
-                    $validas[] = self::firstOrCreate(['modulo' => $modulo, 'acao' => $acao])->id;
+                    $permissao = self::firstOrCreate(['modulo' => $modulo, 'acao' => $acao]);
+
+                    if ($temNome) {
+                        $permissao->update(['nome' => self::nomePadrao($modulo, $acao)]);
+                    }
+
+                    $validas[] = $permissao->id;
                 }
             }
 
             $antigas = self::whereNotIn('id', $validas)->pluck('id');
             if ($antigas->isNotEmpty()) {
-                DB::table('usuario_permissoes')->whereIn('permissao_id', $antigas)->delete();
-                DB::table('grupo_permissoes')->whereIn('permissao_id', $antigas)->delete();
+                if (Schema::hasTable('usuario_permissoes')) {
+                    DB::table('usuario_permissoes')->whereIn('permissao_id', $antigas)->delete();
+                }
+                if (Schema::hasTable('grupo_permissoes')) {
+                    DB::table('grupo_permissoes')->whereIn('permissao_id', $antigas)->delete();
+                }
                 self::whereIn('id', $antigas)->delete();
             }
         });
+    }
+
+    /**
+     * Ex.: "Cancelar amostras", "Aprovar solicitações de prazo".
+     */
+    public static function nomePadrao(string $modulo, string $acao): string
+    {
+        $acaoNome = config('amostraweb.acoes')[$acao] ?? $acao;
+        $moduloNome = config('amostraweb.modulos')[$modulo] ?? $modulo;
+
+        return $acaoNome.' '.Str::lower($moduloNome);
     }
 
     /**
@@ -73,12 +98,6 @@ class Permissao extends Model
                 fn (Permissao $a, Permissao $b) => array_search($a->acao, $ordemAcoes) <=> array_search($b->acao, $ordemAcoes),
             ])
             ->groupBy('modulo');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'usuario_permissoes', 'permissao_id', 'user_id')
-            ->withTimestamps();
     }
 
     public function grupos()

@@ -1,58 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AmostraWeb
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema para gerenciar o ciclo de vida das amostras enviadas aos clientes:
+pedidos, amostras, prazos de avaliação, solicitações de prorrogação, cadastros
+(clientes, produtos, estabelecimentos, usuários), permissões e auditoria.
 
-## About Laravel
+A documentação funcional está na pasta `Docs/` na raiz do repositório.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.3 ou superior
+- Composer
+- MySQL 8 (ou SQLite para desenvolvimento)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalação
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Configure o banco no `.env` (`DB_CONNECTION`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`) e rode:
 
-## Contributing
+```bash
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+As migrations também criam a lista padrão de permissões (CRUD de cada módulo).
 
-## Code of Conduct
+### Dados de exemplo
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Security Vulnerabilities
+> **Atenção:** `migrate:fresh` apaga todas as tabelas antes de recriar.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+O seed cria estabelecimentos, usuários de exemplo (admin, gestores e vendedores), clientes,
+produtos, pedidos, amostras em todos os status, solicitações de prazo e os grupos
+"Gestores" e "Vendedores". A senha dos usuários de exemplo está em
+`database/seeders/UsuarioExemploSeeder.php`. Exemplos de login: `ana.ribeiro` (administradora),
+`carla.mendes` (gestora) e `bruno.lima` (vendedor).
 
-## License
+## E-mail (redefinição de senha)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+O "Esqueci minha senha" envia um código por e-mail. Em desenvolvimento, com `MAIL_MAILER=log`,
+o e-mail é gravado em `storage/logs/laravel.log`. Para enviar de verdade, configure o SMTP no `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.suaempresa.com.br
+MAIL_PORT=587
+MAIL_USERNAME=usuario
+MAIL_PASSWORD=senha
+MAIL_FROM_ADDRESS="nao-responda@suaempresa.com.br"
+```
+
+## Rodando
+
+```bash
+php artisan serve
+```
+
+### Rotina automática (status "Atrasada")
+
+Amostras em análise com o prazo vencido passam para **Atrasada** automaticamente (RN009).
+Isso acontece de duas formas:
+
+1. A cada 10 minutos, na primeira requisição de um usuário logado (funciona sem configuração).
+2. Pelo agendador do Laravel, de hora em hora. Em produção, configure o cron do servidor:
+
+```bash
+* * * * * cd /caminho/do/projeto && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Para rodar manualmente: `php artisan amostras:atualizar-atrasadas`.
+
+## Testes
+
+```bash
+php artisan test
+```
+
+Os testes usam SQLite em memória e cobrem login, permissões, escopo por perfil,
+pedidos, ciclo de vida da amostra, solicitações de prazo, importação do ERP,
+redefinição de senha, logs e a abertura de todas as telas.
+
+## Onde fica cada coisa
+
+| O quê | Onde |
+|---|---|
+| Nome, logos, módulos e permissões padrão | `config/amostraweb.php` |
+| Regras de cada entidade | `app/Models` (ex.: `Amostra::alterarStatus`, `Pedido::visivelPara`) |
+| Logs automáticos (com IP) | `app/Models/Concerns/Auditavel.php` e `app/Models/Log.php` |
+| Código sequencial (000001…) | `app/Models/Concerns/GeraCodigoSequencial.php` |
+| Bloqueio por permissão | `app/Http/Middleware/VerificarPermissao.php` + `routes/web.php` |
+| Importação CSV do ERP | `app/Services/Importacao` |
+| Menu lateral | `app/View/Composers/MenuComposer.php` |
+| Traduções (pt-BR) | `lang/pt_BR` |
+| Estilos e cores | `public/css/layout` (cores em `root.css`) |
+| Comportamentos comuns (abas, máscaras, menu) | `public/js/app.js` |

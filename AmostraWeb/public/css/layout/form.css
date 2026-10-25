@@ -7,7 +7,7 @@
 .form-cadastro,
 .form-estabelecimento {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 15px;
     padding: 24px;
 }
@@ -15,6 +15,7 @@
 .form-grupo {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .grupo-duplo {
@@ -25,6 +26,22 @@
     grid-column: 1 / -1;
 }
 
+.form-titulo-secao {
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--cinza-borda);
+    color: var(--azul-marca);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-titulo-secao > i {
+    color: var(--laranja-texto);
+}
+
 .form-grupo label {
     font-size: 0.85rem;
     color: var(--azul-marca);
@@ -32,19 +49,24 @@
     margin-bottom: 6px;
 }
 
+.obrigatorio {
+    color: var(--vermelho);
+    margin-left: 2px;
+}
+
 .form-grupo input,
 .form-grupo select,
 .form-grupo textarea {
+    width: 100%;
     height: 42px;
     padding: 0 14px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1.5px solid var(--cinza-borda);
-    background-color: var(--cinza-claro);
+    border-radius: var(--raio);
+    border: 1.5px solid var(--cinza-borda-forte);
+    background-color: var(--branco);
     font-size: 0.95rem;
     font-family: inherit;
-    color: #1a1a1a;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    color: var(--texto);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-grupo textarea {
@@ -54,28 +76,38 @@
     resize: vertical;
 }
 
-.form-grupo input::placeholder,
-.form-grupo textarea::placeholder {
-    color: #9aa3ad;
-}
-
 .form-grupo input:focus,
 .form-grupo select:focus,
 .form-grupo textarea:focus {
     outline: none;
-    border-color: var(--laranja-marca);
-    background-color: var(--branco);
+    border-color: var(--foco);
+    box-shadow: 0 0 0 3px rgba(37, 106, 172, 0.2);
 }
 
+.form-grupo input[readonly],
 .form-grupo input:disabled {
-    color: var(--cinza-texto);
+    background-color: var(--cinza-claro);
+    border-color: var(--cinza-borda);
+    color: var(--neutro-texto);
+}
+
+.form-grupo input[aria-invalid="true"],
+.form-grupo select[aria-invalid="true"],
+.form-grupo textarea[aria-invalid="true"] {
+    border-color: var(--vermelho);
 }
 
 .erro-campo {
-    color: #c0392b;
-    font-size: 0.78rem;
-    margin: 4px 0 0 0;
-    padding: 0 0 !important;
+    color: var(--vermelho);
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin: 4px 0 0;
+}
+
+.dica-campo {
+    margin: 4px 0 0;
+    color: var(--cinza-texto);
+    font-size: 0.8rem;
 }
 
 .grupo-checkbox {
@@ -94,16 +126,17 @@
 .label-checkbox input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: var(--laranja-marca);
+    accent-color: var(--laranja-marca-escuro);
     cursor: pointer;
 }
 
 .form-acoes {
     grid-column: 1 / -1;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 8px;
+    padding-top: 12px;
     border-top: 1px solid var(--cinza-borda);
 }
 
@@ -112,7 +145,7 @@
     align-items: center;
     padding: 10px 20px;
     border-radius: 6px;
-    color: var(--cinza-texto);
+    color: var(--neutro-texto);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
@@ -123,18 +156,15 @@
     background-color: var(--cinza-claro);
 }
 
-.botao-salvar {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--laranja-marca);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-}
+@media (max-width: 900px) {
+    .form-cadastro,
+    .form-estabelecimento {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 16px;
+    }
 
-.botao-salvar:hover {
-    background-color: var(--laranja-marca-escuro);
+    .grupo-duplo,
+    .grupo-full {
+        grid-column: auto;
+    }
 }

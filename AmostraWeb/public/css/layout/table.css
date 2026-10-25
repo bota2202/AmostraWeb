@@ -10,11 +10,12 @@ table {
     border-collapse: separate;
     border-spacing: 0;
     font-size: 0.9rem;
-    color: #1a1a1a;
+    color: var(--texto);
 }
 
 /* tabela principal das listagens: vira um card com margem */
-main > table {
+main > table,
+.tabela-card {
     width: calc(100% - 48px);
     box-sizing: border-box; /* a borda entra na largura, senão passa da tela */
     margin: 20px 24px 0;
@@ -47,9 +48,144 @@ th {
     overflow-wrap: break-word;
 }
 
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+tbody tr:hover {
+    background-color: #fdf6ee;
+}
+
+/* coluna de ações: só o espaço dos ícones */
+th:last-child.acoes,
+td.acoes {
+    width: 1%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+td.acoes {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+td.acoes form {
+    display: inline;
+    margin: 0;
+}
+
+td.acoes a,
+td.acoes button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--azul-marca);
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+td.acoes a:hover,
+td.acoes button:hover {
+    background-color: var(--cinza-claro);
+    color: var(--laranja-texto);
+}
+
+/* =========================
+   SELOS DE STATUS
+   ========================= */
+
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-ativo,
+.status-aprovada {
+    background-color: var(--verde-fundo);
+    color: var(--verde);
+}
+
+.status-inativo,
+.status-cancelada,
+.status-fechado {
+    background-color: var(--neutro-fundo);
+    color: var(--neutro-texto);
+}
+
+.status-em_analise {
+    background-color: var(--azul-info-fundo);
+    color: var(--azul-info);
+}
+
+.status-atrasada,
+.status-reprovada {
+    background-color: var(--vermelho-fundo);
+    color: var(--vermelho);
+}
+
+.status-aberto,
+.status-pendente {
+    background-color: var(--alerta-fundo);
+    color: var(--alerta-texto);
+}
+
+/* =========================
+   UTILITÁRIOS
+   ========================= */
+
+th.centro,
+td.centro {
+    text-align: center;
+}
+
+td.maiusculo {
+    text-transform: uppercase;
+}
+
+td.capitalizado {
+    text-transform: capitalize;
+}
+
+td.nao-quebra {
+    white-space: nowrap;
+}
+
+td.vazio {
+    text-align: center;
+    padding: 32px 10px;
+    color: var(--cinza-texto);
+}
+
+td.prazo-vencido {
+    color: var(--vermelho);
+    font-weight: 600;
+}
+
+.texto-secundario {
+    display: block;
+    color: var(--cinza-texto);
+    font-size: 0.8rem;
+}
+
 /* telas estreitas: células mais compactas para a tabela caber */
 @media (max-width: 1200px) {
-    main > table {
+    main > table,
+    .tabela-card {
         width: calc(100% - 32px);
         margin: 16px 16px 0;
     }
@@ -84,121 +220,26 @@ th {
     }
 }
 
-tbody tr:last-child td {
-    border-bottom: none;
+/* celular: a tabela rola na horizontal dentro do próprio card, sem estourar a página */
+@media (max-width: 700px) {
+    .rolagem-tabela {
+        overflow-x: auto;
+    }
+
+    main > table,
+    .tabela-card,
+    .card-secao > table {
+        display: block;
+        overflow-x: auto;
+        position: relative; /* textos ocultos (sr-only) ficam dentro da rolagem */
+    }
+
+    th,
+    td {
+        min-width: 72px;
+    }
 }
 
-tbody tr {
-    transition: background-color 0.15s ease;
-}
-
-tbody tr:hover {
-    background-color: #fdf6ee;
-}
-
-/* coluna de ações: só o espaço dos ícones */
-th:last-child,
-td.acoes {
-    width: 1%;
-    text-align: center;
-    white-space: nowrap;
-}
-
-td.acoes {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-td.acoes a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    color: var(--azul-marca);
-    text-decoration: none;
-    transition:
-        background-color 0.15s ease,
-        color 0.15s ease;
-}
-
-td.acoes a:hover {
-    background-color: var(--cinza-claro);
-    color: var(--laranja-marca);
-}
-
-.status {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.status-ativo {
-    background-color: #e3f6e8;
-    color: #1e824c;
-}
-
-.status-inativo {
-    background-color: #f0f1f3;
-    color: var(--cinza-texto);
-}
-
-.status-em_analise {
-    background-color: #e3eefa;
-    color: var(--azul-marca-claro);
-}
-
-.status-aprovada {
-    background-color: #e3f6e8;
-    color: #1e824c;
-}
-
-.status-atrasada,
-.status-reprovada {
-    background-color: #fdecec;
-    color: #c0392b;
-}
-
-.status-aberto,
-.status-pendente {
-    background-color: #fff1e2;
-    color: var(--laranja-marca-escuro);
-}
-
-.status-cancelada,
-.status-fechado {
-    background-color: #f0f1f3;
-    color: var(--cinza-texto);
-}
-
-/* =========================
-   UTILITÁRIOS
-   ========================= */
-
-th.centro,
-td.centro {
-    text-align: center;
-}
-
-td.maiusculo {
-    text-transform: uppercase;
-}
-
-td.capitalizado {
+.capitalizado-inline {
     text-transform: capitalize;
-}
-
-td.vazio {
-    text-align: center;
-    padding: 24px 10px;
-    color: var(--cinza-texto);
-}
-
-td.prazo-vencido {
-    color: #c0392b;
-    font-weight: 600;
 }

@@ -10,25 +10,26 @@
 </head>
 
 <body>
+    <a href="#conteudo-perfil" class="pular-conteudo">Pular para o conteúdo</a>
     <main>
         {{-- ============ LADO ESQUERDO (igual nas telas do perfil) ============ --}}
         <section id="perfil-esquerda">
             @yield('voltar')
 
             <div class="perfil-identidade">
-                <div class="avatar">{{ $user->iniciais }}</div>
+                <div class="avatar" aria-hidden="true">{{ $user->iniciais }}</div>
                 <h1>{{ $user->name }}</h1>
                 <p class="codigo">{{ $user->codigo_usuario }}</p>
                 <div class="etiquetas">
                     <span class="etiqueta">{{ \App\Models\User::CARGOS[$user->cargo] ?? $user->cargo }}</span>
                     <span class="etiqueta {{ $user->status ? 'ativo' : 'inativo' }}">
-                        <i class="fa-solid fa-circle"></i> {{ $user->status ? 'Ativo' : 'Inativo' }}
+                        <i class="fa-solid fa-circle" aria-hidden="true"></i> {{ $user->status ? 'Ativo' : 'Inativo' }}
                     </span>
                 </div>
 
                 @if ($user->estabelecimento)
                 <div class="vinculo">
-                    <i class="fa-solid fa-shop"></i>
+                    <i class="fa-solid fa-shop" aria-hidden="true"></i>
                     <div>
                         <small>Atribuído ao estabelecimento</small>
                         <strong>{{ $user->estabelecimento->razao_social }}</strong>
@@ -43,13 +44,15 @@
 
         {{-- ============ LADO DIREITO ============ --}}
         <section id="perfil-direita">
+            <span id="conteudo-perfil" tabindex="-1"></span>
             @if (session('success'))
-            <div class="alerta alerta-sucesso"><i class="fa-solid fa-circle-check"></i> {{ session('success') }}</div>
+            <div class="alerta alerta-sucesso" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> {{ session('success') }}</div>
             @endif
 
             @yield('conteudo')
         </section>
     </main>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>

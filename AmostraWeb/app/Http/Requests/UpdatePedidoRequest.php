@@ -4,30 +4,42 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
+/**
+ * Edição do pedido. O status não é editável: é calculado pelas amostras.
+ */
 class UpdatePedidoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * O responsável só pode ser trocado por gestores e administradores (RN004).
+     */
+    public function podeTrocarResponsavel(): bool
+    {
+        return ! $this->user()->isVendedor();
+    }
+
+    /**
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
-        return [
+        $regras = [
             'cliente_id' => ['required', 'integer', 'exists:clientes,id'],
-            'estabelecimento_id' => ['required', 'integer', 'exists:estabelecimentos,id'],
             'observacao' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', 'in:aberto,fechado'],
             'data_emissao' => ['required', 'date'],
         ];
+
+        if ($this->podeTrocarResponsavel()) {
+            $regras['user_id'] = ['required', 'integer', Rule::exists('users', 'id')->where('cargo', 'representante')];
+        }
+
+        return $regras;
     }
+
 }

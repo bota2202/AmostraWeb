@@ -6,11 +6,11 @@ AmostraWeb
 
 ## Versão da documentação
 
-1.0.2
+1.0.4
 
 ## Última atualização
 
-01/08/2026
+25/10/2026
 
 ## Autor
 
@@ -26,3 +26,4 @@ Otávio Saturnino da Silva
 | 1.0.1 | 01/08/2026 | Revisão da modelagem do domínio com separação entre Pedidos e Amostras. Atualização dos documentos 01 ao 07. |
 | 1.0.2 | 01/08/2026 | Criação dos documentos 08 e 09. |
 | 1.0.3 | 23/08/2026 | Atualização dos documentos com inclusão das tables Produtos e Clientes. |
+| 1.0.4 | 25/10/2026 | Criação do documento 10 (Notas de Implementação): grupos de permissões, escopo por perfil, ciclo de vida implementado, auditoria, importação do ERP e acessibilidade. |

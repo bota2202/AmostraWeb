@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditavel;
 use Illuminate\Database\Eloquent\Model;
 
 class Estabelecimento extends Model
 {
+    use Auditavel;
+
+    protected string $moduloAuditoria = 'estabelecimentos';
+
     protected $fillable = [
         'razao_social',
         'cnpj',

@@ -1,0 +1,22 @@
+@import url('../layout/root.css');
+
+/* usuário na lista: avatar com iniciais + nome + código */
+.usuario-linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-lista {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: var(--azul-marca);
+    color: var(--branco);
+    font-size: 0.75rem;
+    font-weight: 700;
+}

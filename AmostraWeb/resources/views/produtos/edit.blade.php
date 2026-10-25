@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Editar Produto - '.config('amostraweb.name'))
+@section('title','Editar produto '.$produto->codigo_produto.' - '.config('amostraweb.name'))
 
 @section('texto','Produtos')
 
@@ -8,52 +8,32 @@
 <link rel="stylesheet" href="{{ asset('css/layout/detalhes.css') }}">
 @endpush
 
-@php
-    $secoes = [
-        ['fa-layer-group', 'Classificação', [
-            'familia' => ['Família', 20],
-            'subfamilia' => ['Subfamília', 20],
-            'grupo' => ['Grupo', 20],
-            'tipo' => ['Tipo', 20],
-        ]],
-        ['fa-file-invoice', 'Fiscal', [
-            'ncm' => ['NCM', 50],
-            'origem_mercadoria' => ['Origem da mercadoria', 20],
-            'controle_verba' => ['Controle de verba', 20],
-            'aplicacao_entrada' => ['Aplicação de entrada', 20],
-            'aplicacao_saida' => ['Aplicação de saída', 20],
-        ]],
-    ];
-@endphp
-
 @section('content')
 <div class="toolbar">
     <h1>
-        <a href="{{ route('produtos.index') }}">Produtos</a> >
-        <a href="{{ route('produtos.show',$produto) }}">{{ $produto->codigo_produto }}</a> >
-        Editar
+        <a href="{{ route('produtos.index') }}">Produtos</a> › <a href="{{ route('produtos.show', $produto) }}">{{ $produto->codigo_produto }}</a> › Editar
     </h1>
     <div class="acoes-toolbar">
-        <a class="botao-toolbar botao-secundario" href="{{ route('produtos.show',$produto) }}">
-            <i class="fa-solid fa-xmark"></i> Cancelar
+        <a class="botao-toolbar botao-secundario" href="{{ route('produtos.show', $produto) }}">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i> Cancelar
         </a>
         <button type="submit" form="form-produto" class="botao-toolbar">
-            <i class="fa-solid fa-check"></i> Salvar Alterações
+            <i class="fa-solid fa-check" aria-hidden="true"></i> Salvar alterações
         </button>
     </div>
 </div>
 
-<form id="form-produto" action="{{ route('produtos.update',$produto) }}" method="POST">
+<form id="form-produto" action="{{ route('produtos.update', $produto) }}" method="POST">
     @csrf
     @method('PUT')
 
     <div class="dados">
-        <section class="card-secao">
-            <h3><i class="fa-solid fa-tag"></i> Identificação</h3>
+        <section class="card-secao" aria-labelledby="titulo-identificacao">
+            <h2 id="titulo-identificacao"><i class="fa-solid fa-tag" aria-hidden="true"></i> Identificação</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="codigo_produto">Código</label>
-                    <input type="text" id="codigo_produto" disabled value="{{ $produto->codigo_produto }}">
+                    <input type="text" id="codigo_produto" readonly value="{{ $produto->codigo_produto }}">
                 </div>
                 <div class="label-input">
                     <label for="marca">Marca</label>
@@ -63,7 +43,7 @@
                     @enderror
                 </div>
                 <span class="badge-status {{ $produto->status ? 'ativo' : 'inativo' }}">
-                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle" aria-hidden="true"></i>
                     {{ $produto->status ? 'Ativo' : 'Inativo' }}
                 </span>
                 <div class="label-input campo-duplo">
@@ -83,14 +63,14 @@
             </div>
         </section>
 
-        @foreach ($secoes as [$icone, $titulo, $campos])
-        <section class="card-secao">
-            <h3><i class="fa-solid {{ $icone }}"></i> {{ $titulo }}</h3>
+        @foreach (\App\Models\Produto::SECOES as $titulo => $secao)
+        <section class="card-secao" aria-labelledby="titulo-{{ \Illuminate\Support\Str::slug($titulo) }}">
+            <h2 id="titulo-{{ \Illuminate\Support\Str::slug($titulo) }}"><i class="fa-solid {{ $secao['icone'] }}" aria-hidden="true"></i> {{ $titulo }}</h2>
             <div class="campos-secao">
-                @foreach ($campos as $campo => [$rotulo, $max])
+                @foreach ($secao['campos'] as $campo => $rotulo)
                 <div class="label-input">
                     <label for="{{ $campo }}">{{ $rotulo }}</label>
-                    <input type="text" id="{{ $campo }}" name="{{ $campo }}" maxlength="{{ $max }}" value="{{ old($campo, $produto->$campo) }}">
+                    <input type="text" id="{{ $campo }}" name="{{ $campo }}" maxlength="255" value="{{ old($campo, $produto->$campo) }}">
                     @error($campo)
                     <span class="erro-campo">{{ $message }}</span>
                     @enderror
@@ -105,7 +85,7 @@
 @include('partials.acoes-registro', [
     'rotaStatus' => route('produtos.status', $produto),
     'ativo' => $produto->status,
-    'rotaExcluir' => route('produtos.destroy', $produto),
+    'rotaExcluir' => auth()->user()->temPermissao('produtos', 'excluir') ? route('produtos.destroy', $produto) : null,
     'descricao' => 'o produto '.$produto->codigo_produto,
 ])
 @endsection

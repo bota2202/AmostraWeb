@@ -6,17 +6,30 @@ use App\Models\Produto;
 use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\StoreProdutoRequest;
 use App\Http\Requests\UpdateProdutoRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista com busca e filtros (RF033).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $produtos = Produto::orderBy('codigo_produto')->paginate(20);
+        $filtros = $request->only(['busca', 'familia', 'status']);
+
+        $produtos = Produto::query()
+            ->busca($filtros['busca'] ?? null)
+            ->when($filtros['familia'] ?? null, fn (Builder $q, $familia) => $q->where('familia', $familia))
+            ->when(isset($filtros['status']) && $filtros['status'] !== '', fn (Builder $q) => $q->where('status', (bool) $filtros['status']))
+            ->orderBy('codigo_produto')
+            ->paginate($this->porPagina())
+            ->withQueryString();
+
         return view('produtos.index', [
             'produtos' => $produtos,
+            'filtros' => $filtros,
+            'familias' => Produto::whereNotNull('familia')->distinct()->orderBy('familia')->pluck('familia'),
         ]);
     }
 
@@ -33,9 +46,9 @@ class ProdutoController extends Controller
      */
     public function store(StoreProdutoRequest $request)
     {
-        Produto::create($request->validated());
+        $produto = Produto::create($request->validated());
 
-        return redirect('/produtos')->with('success', 'Produto cadastrado com sucesso!');
+        return redirect()->route('produtos.show', $produto)->with('success', 'Produto '.$produto->codigo_produto.' cadastrado.');
     }
 
     /**
@@ -44,7 +57,7 @@ class ProdutoController extends Controller
     public function show(Produto $produto)
     {
         return view('produtos.show', [
-            'produto' => $produto,
+            'produto' => $produto->loadCount('amostras'),
         ]);
     }
 
@@ -64,17 +77,17 @@ class ProdutoController extends Controller
     public function update(UpdateProdutoRequest $request, Produto $produto)
     {
         $produto->update($request->validated());
-        return redirect('/produtos')->with('success', 'Produto de código ' . $produto->codigo_produto . ' atualizado com sucesso');
+        return redirect()->route('produtos.show', $produto)->with('success', 'Produto '.$produto->codigo_produto.' atualizado.');
     }
 
     /**
-     * Ativa ou inativa o produto.
+     * Ativa ou inativa o produto (RF034). Inativos não aparecem em novos pedidos.
      */
     public function alterarStatus(ChangeStatusRequest $request, Produto $produto)
     {
         $produto->update($request->validated());
         $texto = $produto->status ? 'ativado' : 'inativado';
-        return redirect()->route('produtos.edit', $produto)->with('success', 'Produto '.$texto.' com sucesso');
+        return redirect()->route('produtos.edit', $produto)->with('success', 'Produto '.$texto.'.');
     }
 
     /**
@@ -89,6 +102,6 @@ class ProdutoController extends Controller
         $codigo = $produto->codigo_produto;
         $produto->delete();
 
-        return redirect('/produtos')->with('success','Produto de código '. $codigo. ' excluído com sucesso');
+        return redirect()->route('produtos.index')->with('success', 'Produto '.$codigo.' excluído.');
     }
 }

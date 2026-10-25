@@ -12,7 +12,7 @@
 <div class="toolbar">
     <h1>Usuários</h1>
     <a href="{{ route('usuarios.create') }}" class="botao-toolbar">
-        <i class="fa-solid fa-plus"></i> Novo Usuário
+        <i class="fa-solid fa-plus" aria-hidden="true"></i> Novo Usuário
     </a>
 </div>
 
@@ -39,8 +39,8 @@
             <td class="centro">{{ \App\Models\User::CARGOS[$user->cargo] ?? $user->cargo }}</td>
             <td class="centro"><span class="status status-{{ $user->status ? 'ativo' : 'inativo' }}">{{ $user->status ? 'Ativo' : 'Inativo' }}</span></td>
             <td class="acoes">
-                <a href="{{ route('usuarios.show',$user) }}" title="Ver detalhes"><i class="fa-solid fa-eye"></i></a>
-                <a href="{{ route('usuarios.edit',$user) }}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                <a href="{{ route('usuarios.show',$user) }}" title="Ver detalhes"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Ver detalhes</span></a>
+                <a href="{{ route('usuarios.edit',$user) }}" title="Editar"><i class="fa-solid fa-pen" aria-hidden="true"></i><span class="sr-only">Editar</span></a>
             </td>
         </tr>
         @empty

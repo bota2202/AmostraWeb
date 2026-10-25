@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="toolbar">
-    <h1><a href="{{ route('clientes.index') }}">Clientes</a> > Novo</h1>
+    <h1><a href="{{ route('clientes.index') }}">Clientes</a> › Novo</h1>
 </div>
 
 <form action="{{ route('clientes.store') }}" method="post" class="form-cadastro">
@@ -34,7 +34,7 @@
 
     <div class="form-grupo">
         <label for="cnpj_cpf">CNPJ / CPF</label>
-        <input type="text" name="cnpj_cpf" required id="cnpj_cpf" maxlength="18" placeholder="00.000.000/0000-00 ou 000.000.000-00" value="{{ old('cnpj_cpf') }}">
+        <input type="text" name="cnpj_cpf" data-mascara="cpf-cnpj" inputmode="numeric" required id="cnpj_cpf" maxlength="18" placeholder="00.000.000/0000-00 ou 000.000.000-00" value="{{ old('cnpj_cpf') }}">
         @error('cnpj_cpf')
         <p class="erro-campo">{{ $message }}</p>
         @enderror
@@ -82,7 +82,7 @@
 
     <div class="form-grupo">
         <label for="telefone">Telefone</label>
-        <input type="text" name="telefone" id="telefone" maxlength="20" placeholder="(00) 00000-0000" value="{{ old('telefone') }}">
+        <input type="text" name="telefone" data-mascara="telefone" inputmode="tel" id="telefone" maxlength="20" placeholder="(00) 00000-0000" value="{{ old('telefone') }}">
         @error('telefone')
         <p class="erro-campo">{{ $message }}</p>
         @enderror

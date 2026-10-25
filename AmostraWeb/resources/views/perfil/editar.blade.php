@@ -4,7 +4,7 @@
 
 @section('voltar')
 <a href="{{ route('perfil') }}" class="link-voltar">
-    <i class="fa-solid fa-arrow-left"></i> Voltar ao perfil
+    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao perfil
 </a>
 @endsection
 
@@ -22,7 +22,7 @@
         @csrf
         @method('PUT')
 
-        <h3><i class="fa-solid fa-user"></i> Informações pessoais</h3>
+        <h3><i class="fa-solid fa-user" aria-hidden="true"></i> Informações pessoais</h3>
         <div class="campos">
             <div class="campo">
                 <label for="name">Nome completo</label>
@@ -41,7 +41,7 @@
         </div>
         <div class="rodape-form">
             <a href="{{ route('perfil') }}" class="botao botao-secundario">Cancelar</a>
-            <button type="submit" class="botao botao-editar"><i class="fa-solid fa-check"></i> Salvar dados</button>
+            <button type="submit" class="botao botao-editar"><i class="fa-solid fa-check" aria-hidden="true"></i> Salvar dados</button>
         </div>
     </form>
 
@@ -50,7 +50,7 @@
         @csrf
         @method('PATCH')
 
-        <h3><i class="fa-solid fa-lock"></i> Alterar senha</h3>
+        <h3><i class="fa-solid fa-lock" aria-hidden="true"></i> Alterar senha</h3>
         <div class="campos campos-3">
             <div class="campo">
                 <label for="senha_atual">Senha atual</label>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="rodape-form">
-            <button type="submit" class="botao botao-editar"><i class="fa-solid fa-key"></i> Alterar senha</button>
+            <button type="submit" class="botao botao-editar"><i class="fa-solid fa-key" aria-hidden="true"></i> Alterar senha</button>
         </div>
     </form>
 </div>

@@ -1,0 +1,136 @@
+@import url('../layout/root.css');
+
+/* =========================
+   PRODUTOS DO PEDIDO (cada linha vira uma amostra)
+   ========================= */
+
+.itens-pedido {
+    margin-top: 8px;
+    padding: 18px 20px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+}
+
+.itens-cabecalho h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 4px;
+    color: var(--azul-marca);
+    font-size: 1rem;
+}
+
+.itens-cabecalho h2 > i {
+    color: var(--laranja-texto);
+}
+
+.itens-cabecalho p {
+    margin: 0 0 14px;
+    color: var(--cinza-texto);
+    font-size: 0.85rem;
+}
+
+.itens-titulos,
+.item-amostra {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(90px, 1fr) minmax(140px, 1fr) 42px;
+    gap: 12px;
+    align-items: start;
+}
+
+.itens-titulos {
+    margin-bottom: 6px;
+    color: var(--azul-marca);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.item-amostra {
+    padding: 8px 0;
+    border-top: 1px dashed var(--cinza-borda);
+}
+
+.item-amostra:first-child {
+    border-top: none;
+}
+
+/* rótulos de cada campo só aparecem na tela estreita (no lugar dos títulos) */
+.rotulo-celular {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.remover-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+    color: var(--cinza-texto);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.remover-item:hover:not(:disabled) {
+    color: var(--vermelho);
+    border-color: #f5c6c0;
+}
+
+.remover-item:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.adicionar-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 9px 16px;
+    border: 1.5px dashed var(--laranja-texto);
+    border-radius: 8px;
+    background-color: var(--alerta-fundo);
+    color: var(--laranja-texto-escuro);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.adicionar-item:hover {
+    background-color: #ffeedd;
+}
+
+.dica-campo {
+    margin: 4px 0 0;
+    color: var(--cinza-texto);
+    font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+    .itens-titulos {
+        display: none;
+    }
+
+    .item-amostra {
+        grid-template-columns: 1fr 1fr 42px;
+    }
+
+    .item-amostra > .form-grupo:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .rotulo-celular {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip: auto;
+    }
+}

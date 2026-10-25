@@ -11,16 +11,14 @@
 @section('content')
 <div class="toolbar">
     <h1>
-        <a href="{{ route('clientes.index') }}">Clientes</a> >
-        <a href="{{ route('clientes.show',$cliente) }}">{{ $cliente->codigo_empresa }}</a> >
-        Editar
+        <a href="{{ route('clientes.index') }}">Clientes</a> › <a href="{{ route('clientes.show',$cliente) }}">{{ $cliente->codigo_empresa }}</a> › Editar
     </h1>
     <div class="acoes-toolbar">
         <a class="botao-toolbar botao-secundario" href="{{ route('clientes.show',$cliente) }}">
-            <i class="fa-solid fa-xmark"></i> Cancelar
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i> Cancelar
         </a>
         <button type="submit" form="form-cliente" class="botao-toolbar">
-            <i class="fa-solid fa-check"></i> Salvar Alterações
+            <i class="fa-solid fa-check" aria-hidden="true"></i> Salvar alterações
         </button>
     </div>
 </div>
@@ -31,18 +29,18 @@
 
     <div class="dados">
         <section class="card-secao">
-            <h3><i class="fa-solid fa-id-card"></i> Identificação</h3>
+            <h2><i class="fa-solid fa-id-card" aria-hidden="true"></i> Identificação</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="codigo_empresa">Código da empresa</label>
-                    <input type="text" id="codigo_empresa" disabled value="{{ $cliente->codigo_empresa }}">
+                    <input type="text" id="codigo_empresa" readonly value="{{ $cliente->codigo_empresa }}">
                 </div>
                 <div class="label-input">
                     <label for="cnpj_cpf">CNPJ / CPF</label>
-                    <input type="text" id="cnpj_cpf" disabled value="{{ $cliente->cnpj_cpf }}">
+                    <input type="text" id="cnpj_cpf" readonly value="{{ $cliente->cnpj_cpf }}">
                 </div>
                 <span class="badge-status {{ $cliente->status ? 'ativo' : 'inativo' }}">
-                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle" aria-hidden="true"></i>
                     {{ $cliente->status ? 'Ativo' : 'Inativo' }}
                 </span>
                 <div class="label-input campo-duplo">
@@ -63,7 +61,7 @@
         </section>
 
         <section class="card-secao">
-            <h3><i class="fa-solid fa-layer-group"></i> Classificação</h3>
+            <h2><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Classificação</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="tipo">Tipo</label>
@@ -97,11 +95,11 @@
         </section>
 
         <section class="card-secao">
-            <h3><i class="fa-solid fa-address-book"></i> Contato</h3>
+            <h2><i class="fa-solid fa-address-book" aria-hidden="true"></i> Contato</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="telefone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" maxlength="20" value="{{ old('telefone', $cliente->telefone) }}">
+                    <input type="text" id="telefone" name="telefone" data-mascara="telefone" inputmode="tel" maxlength="20" value="{{ old('telefone', $cliente->telefone) }}">
                     @error('telefone')
                     <span class="erro-campo">{{ $message }}</span>
                     @enderror
@@ -128,7 +126,7 @@
 @include('partials.acoes-registro', [
     'rotaStatus' => route('clientes.status', $cliente),
     'ativo' => $cliente->status,
-    'rotaExcluir' => route('clientes.destroy', $cliente),
+    'rotaExcluir' => auth()->user()->temPermissao('clientes', 'excluir') ? route('clientes.destroy', $cliente) : null,
     'descricao' => 'o cliente '.$cliente->codigo_empresa,
 ])
 @endsection

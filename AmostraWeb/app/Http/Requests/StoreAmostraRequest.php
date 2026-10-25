@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAmostraRequest extends FormRequest
 {
@@ -23,8 +24,9 @@ class StoreAmostraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pedido_id' => ['nullable', 'integer', 'exists:pedidos,id'],
-            'produto_id' => ['required', 'integer', 'exists:produtos,id'],
+            // toda amostra pertence a um pedido em aberto (RN005)
+            'pedido_id' => ['required', 'integer', Rule::exists('pedidos', 'id')->where('status', 'aberto')],
+            'produto_id' => ['required', 'integer', Rule::exists('produtos', 'id')->where('status', true)],
             'quantidade' => ['required', 'integer', 'min:1'],
             'prazo_avaliacao' => ['required', 'date', 'after_or_equal:today'],
         ];

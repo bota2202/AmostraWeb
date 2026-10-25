@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Editar Amostra - '.config('amostraweb.name'))
+@section('title','Editar amostra '.$amostra->codigo.' - '.config('amostraweb.name'))
 
 @section('texto','Amostras')
 
@@ -11,60 +11,46 @@
 @section('content')
 <div class="toolbar">
     <h1>
-        <a href="{{ route('amostras.index') }}">Amostras</a> >
-        <a href="{{ route('amostras.show',$amostra) }}">{{ $amostra->codigo }}</a> >
+        <a href="{{ route('amostras.index') }}">Amostras</a> ›
+        <a href="{{ route('amostras.show', $amostra) }}">{{ $amostra->codigo }}</a> ›
         Editar
     </h1>
     <div class="acoes-toolbar">
-        <a class="botao-toolbar botao-secundario" href="{{ route('amostras.show',$amostra) }}">
-            <i class="fa-solid fa-xmark"></i> Cancelar
+        <a class="botao-toolbar botao-secundario" href="{{ route('amostras.show', $amostra) }}">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i> Cancelar
         </a>
         <button type="submit" form="form-amostra" class="botao-toolbar">
-            <i class="fa-solid fa-check"></i> Salvar Alterações
+            <i class="fa-solid fa-check" aria-hidden="true"></i> Salvar alterações
         </button>
     </div>
 </div>
 
-<form id="form-amostra" action="{{ route('amostras.update',$amostra) }}" method="POST">
+<div class="alerta alerta-info" role="note">
+    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+    <span>O resultado (aprovada/reprovada) e o cancelamento são registrados na tela da amostra. O prazo muda por solicitação de prazo aprovada.</span>
+</div>
+
+<form id="form-amostra" action="{{ route('amostras.update', $amostra) }}" method="POST">
     @csrf
     @method('PUT')
 
     <div class="dados">
-        <section class="card-secao">
-            <h3><i class="fa-solid fa-flask"></i> Amostra</h3>
+        <section class="card-secao" aria-labelledby="titulo-amostra">
+            <h2 id="titulo-amostra"><i class="fa-solid fa-flask" aria-hidden="true"></i> Amostra</h2>
             <div class="campos-secao">
                 <div class="label-input">
                     <label for="codigo">Código</label>
-                    <input type="text" id="codigo" disabled value="{{ $amostra->codigo }}">
+                    <input type="text" id="codigo" readonly value="{{ $amostra->codigo }}">
                 </div>
                 <div class="label-input">
-                    <label for="quantidade">Quantidade</label>
-                    <input type="number" id="quantidade" name="quantidade" min="1" step="1" required value="{{ old('quantidade', $amostra->quantidade) }}">
-                    @error('quantidade')
-                    <span class="erro-campo">{{ $message }}</span>
-                    @enderror
+                    <label for="pedido">Pedido</label>
+                    {{-- a amostra não pode trocar de pedido (RN024) --}}
+                    <input type="text" id="pedido" readonly value="{{ $amostra->pedido?->codigo ?? "Sem pedido" }} - {{ $amostra->pedido?->cliente?->razao_social ?? "-" }}">
                 </div>
-                <div class="label-input">
-                    <label for="status">Status</label>
-                    <select id="status" name="status" required>
-                        @foreach (\App\Models\Amostra::STATUS as $valor => $nome)
-                        <option value="{{ $valor }}" @selected(old('status', $amostra->status) === $valor)>{{ $nome }}</option>
-                        @endforeach
-                    </select>
-                    @error('status')
-                    <span class="erro-campo">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="label-input">
-                    <label for="prazo_avaliacao">Prazo de avaliação</label>
-                    <input type="text" id="prazo_avaliacao" disabled value="{{ $amostra->prazo_avaliacao->format('d/m/Y') }}" title="Para alterar o prazo, faça uma solicitação de prazo na tela da amostra">
-                </div>
-            </div>
-        </section>
-
-        <section class="card-secao">
-            <h3><i class="fa-solid fa-link"></i> Vínculos</h3>
-            <div class="campos-secao">
+                <span class="badge-status {{ $amostra->status }}">
+                    <i class="fa-solid fa-circle" aria-hidden="true"></i>
+                    {{ $amostra->status_nome }}
+                </span>
                 <div class="label-input campo-duplo">
                     <label for="produto_id">Produto</label>
                     <select id="produto_id" name="produto_id" required>
@@ -80,27 +66,18 @@
                     @enderror
                 </div>
                 <div class="label-input">
-                    <label for="pedido_id">Pedido</label>
-                    <select id="pedido_id" name="pedido_id">
-                        <option value="">Sem pedido</option>
-                        @if ($amostra->pedido && ! $pedidos->contains('id', $amostra->pedido_id))
-                        <option value="{{ $amostra->pedido_id }}" @selected(old('pedido_id', $amostra->pedido_id) == $amostra->pedido_id)>{{ $amostra->pedido->codigo }} (fechado)</option>
-                        @endif
-                        @foreach ($pedidos as $pedido)
-                        <option value="{{ $pedido->id }}" @selected(old('pedido_id', $amostra->pedido_id) == $pedido->id)>{{ $pedido->codigo }} - {{ $pedido->cliente->razao_social }}</option>
-                        @endforeach
-                    </select>
-                    @error('pedido_id')
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade" name="quantidade" min="1" step="1" required value="{{ old('quantidade', $amostra->quantidade) }}">
+                    @error('quantidade')
                     <span class="erro-campo">{{ $message }}</span>
                     @enderror
+                </div>
+                <div class="label-input">
+                    <label for="prazo_avaliacao">Prazo de avaliação</label>
+                    <input type="text" id="prazo_avaliacao" readonly value="{{ $amostra->prazo_avaliacao->format('d/m/Y') }}">
                 </div>
             </div>
         </section>
     </div>
 </form>
-
-@include('partials.acoes-registro', [
-    'rotaExcluir' => route('amostras.destroy', $amostra),
-    'descricao' => 'a amostra '.$amostra->codigo,
-])
 @endsection

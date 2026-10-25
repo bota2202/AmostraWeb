@@ -36,12 +36,12 @@
     height: 42px;
     flex-shrink: 0;
     border-radius: 10px;
-    background-color: #fff1e2;
-    color: var(--laranja-marca);
+    background-color: var(--alerta-fundo);
+    color: var(--alerta-texto);
     font-size: 1.1rem;
 }
 
-.cartao-grupo h3 {
+.cartao-grupo h2 {
     margin: 0;
     color: var(--azul-marca);
     font-size: 1.05rem;
@@ -91,7 +91,7 @@
 
 .cartao-grupo .rodape a:hover {
     background-color: var(--branco);
-    color: var(--laranja-marca);
+    color: var(--alerta-texto);
 }
 
 .sem-grupos {
@@ -111,5 +111,5 @@
 
 .sem-grupos i {
     font-size: 2rem;
-    color: var(--laranja-marca);
+    color: var(--alerta-texto);
 }

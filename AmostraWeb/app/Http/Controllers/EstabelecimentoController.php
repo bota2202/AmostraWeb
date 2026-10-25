@@ -7,17 +7,33 @@ use App\Models\User;
 use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\StoreEstabelecimentoRequest;
 use App\Http\Requests\UpdateEstabelecimentoRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class EstabelecimentoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista com busca e filtro de status.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $estabelecimentos=Estabelecimento::with('gestor')->paginate(10);
+        $filtros = $request->only(['busca', 'status']);
+        $termo = $filtros['busca'] ?? null;
+
+        $estabelecimentos=Estabelecimento::with('gestor')
+            ->withCount('users')
+            ->when($termo, fn (Builder $q) => $q->where(fn (Builder $q) => $q
+                ->where('razao_social', 'like', "%{$termo}%")
+                ->orWhere('cnpj', 'like', "%{$termo}%")
+                ->orWhere('cidade', 'like', "%{$termo}%")))
+            ->when(isset($filtros['status']) && $filtros['status'] !== '', fn (Builder $q) => $q->where('status', (bool) $filtros['status']))
+            ->orderBy('razao_social')
+            ->paginate($this->porPagina())
+            ->withQueryString();
+
         return view('estabelecimentos.index',[
             'estabelecimentos'=>$estabelecimentos,
+            'filtros'=>$filtros,
         ]);
     }
 

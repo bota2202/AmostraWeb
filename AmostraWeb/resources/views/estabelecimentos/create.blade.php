@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="toolbar">
-    <h1><a href="{{ route('estabelecimentos.index') }}">Estabelecimentos</a> > Novo</h1>
+    <h1><a href="{{ route('estabelecimentos.index') }}">Estabelecimentos</a> › Novo</h1>
 </div>
 
 <form action="{{ route('estabelecimentos.store') }}" method="post" class="form-cadastro">
@@ -26,7 +26,7 @@
 
     <div class="form-grupo">
         <label for="cnpj">CNPJ</label>
-        <input type="text" name="cnpj" required id="cnpj" placeholder="00.000.000/0000-00" value="{{ old('cnpj') }}">
+        <input type="text" name="cnpj" data-mascara="cnpj" inputmode="numeric" required id="cnpj" placeholder="00.000.000/0000-00" value="{{ old('cnpj') }}">
         @error('cnpj')
         <p class="erro-campo">{{ $message }}</p>
         @enderror
@@ -47,7 +47,7 @@
 
     <div class="form-grupo">
         <label for="cep">CEP</label>
-        <input type="text" name="cep" id="cep" placeholder="00000-000" value="{{ old('cep') }}">
+        <input type="text" name="cep" data-mascara="cep" inputmode="numeric" id="cep" placeholder="00000-000" value="{{ old('cep') }}">
         @error('cep')
         <p class="erro-campo">{{ $message }}</p>
         @enderror

@@ -6,17 +6,29 @@ use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
+use App\Models\Pedido;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista com busca e filtro de status (RF038).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::orderBy('razao_social')->paginate(20);
+        $filtros = $request->only(['busca', 'status']);
+
+        $clientes = Cliente::query()
+            ->busca($filtros['busca'] ?? null)
+            ->when(isset($filtros['status']) && $filtros['status'] !== '', fn (Builder $q) => $q->where('status', (bool) $filtros['status']))
+            ->orderBy('razao_social')
+            ->paginate($this->porPagina())
+            ->withQueryString();
+
         return view('clientes.index', [
             'clientes' => $clientes,
+            'filtros' => $filtros,
         ]);
     }
 
@@ -33,17 +45,20 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-        Cliente::create($request->validated());
-        return redirect()->route('clientes.index')->with('success', 'Cliente cadastrado com sucesso');
+        $cliente = Cliente::create($request->validated());
+        return redirect()->route('clientes.show', $cliente)->with('success', 'Cliente '.$cliente->razao_social.' cadastrado.');
     }
 
     /**
-     * Display the specified resource.
+     * Detalhes + últimos pedidos que o usuário pode ver.
      */
-    public function show(Cliente $cliente)
+    public function show(Request $request, Cliente $cliente)
     {
-        $pedidos = $cliente->pedidos()
+        $pedidos = Pedido::query()
+            ->visivelPara($request->user())
+            ->where('cliente_id', $cliente->id)
             ->with(['estabelecimento', 'user'])
+            ->withCount('amostras')
             ->latest('data_emissao')
             ->limit(10)
             ->get();
@@ -70,17 +85,17 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $cliente->update($request->validated());
-        return redirect()->route('clientes.index')->with('success', 'Cliente de código '.$cliente->codigo_empresa.' atualizado com sucesso');
+        return redirect()->route('clientes.show', $cliente)->with('success', 'Cliente '.$cliente->razao_social.' atualizado.');
     }
 
     /**
-     * Ativa ou inativa o cliente.
+     * Ativa ou inativa o cliente (RF039). Inativos não aparecem em novos pedidos.
      */
     public function alterarStatus(ChangeStatusRequest $request, Cliente $cliente)
     {
         $cliente->update($request->validated());
         $texto = $cliente->status ? 'ativado' : 'inativado';
-        return redirect()->route('clientes.edit', $cliente)->with('success', 'Cliente '.$texto.' com sucesso');
+        return redirect()->route('clientes.edit', $cliente)->with('success', 'Cliente '.$texto.'.');
     }
 
     /**
@@ -92,8 +107,8 @@ class ClienteController extends Controller
             return back()->with('error', 'Não é possível excluir: o cliente possui pedidos. Inative-o em vez de excluir.');
         }
 
-        $codigo = $cliente->codigo_empresa;
+        $nome = $cliente->razao_social;
         $cliente->delete();
-        return redirect()->route('clientes.index')->with('success', 'Cliente de código '.$codigo.' excluído com sucesso');
+        return redirect()->route('clientes.index')->with('success', 'Cliente '.$nome.' excluído.');
     }
 }

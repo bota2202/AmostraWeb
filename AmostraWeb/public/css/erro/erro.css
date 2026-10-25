@@ -1,0 +1,86 @@
+@import url('../layout/root.css');
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--cinza-claro);
+    color: var(--texto);
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.erro {
+    width: min(560px, 100%);
+    padding: 40px 32px;
+    border-radius: 14px;
+    background-color: var(--branco);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+.erro-logo {
+    height: 44px;
+    margin-bottom: 12px;
+}
+
+.erro-codigo {
+    margin: 0;
+    color: var(--laranja-texto);
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.erro h1 {
+    margin: 12px 0 8px;
+    color: var(--azul-marca);
+    font-size: 1.5rem;
+}
+
+.erro-mensagem {
+    margin: 0 0 24px;
+    color: var(--cinza-texto);
+    line-height: 1.5;
+}
+
+.erro-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.erro-botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    background-color: var(--laranja-marca);
+    color: var(--azul-marca-escuro);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.erro-botao:hover {
+    background-color: var(--laranja-marca-claro);
+}
+
+.erro-botao.secundario {
+    background-color: var(--branco);
+    color: var(--neutro-texto);
+    border: 1.5px solid var(--cinza-borda-forte);
+}
+
+:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}

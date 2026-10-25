@@ -4,7 +4,7 @@ Sistema desenvolvido para gerenciamento do ciclo de vida das amostras enviadas a
 
 ## Documentação
 
-Toda a documentação do projeto encontra-se na pasta `docs`.
+Toda a documentação do projeto encontra-se na pasta `Docs`.
 
 ### Índice
 
@@ -18,3 +18,6 @@ Toda a documentação do projeto encontra-se na pasta `docs`.
 - 07 - Requisitos Não Funcionais
 - 08 - Modelo Conceitual
 - 09 - Modelo Lógico do Banco de Dados
+- 10 - Notas de Implementação
+
+Instruções de instalação e uso do sistema: `AmostraWeb/README.md`.

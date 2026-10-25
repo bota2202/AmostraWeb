@@ -25,9 +25,29 @@ class StoreSolicitacaoPrazoRequest extends FormRequest
      */
     public function rules(): array
     {
+        $prazoAtual = $this->route('amostra')?->prazo_avaliacao;
+
         return [
-            'novo_prazo' => ['required', 'date', 'after:today'],
+            'novo_prazo' => [
+                'required',
+                'date',
+                'after:today',
+                // prorrogação: o novo prazo precisa ser depois do prazo atual
+                function (string $atributo, mixed $valor, \Closure $falhar) use ($prazoAtual) {
+                    if ($prazoAtual && strtotime($valor) <= $prazoAtual->getTimestamp()) {
+                        $falhar('O novo prazo deve ser depois do prazo atual ('.$prazoAtual->format('d/m/Y').').');
+                    }
+                },
+            ],
             'justificativa' => ['required', 'string', 'min:10', 'max:1000'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'novo_prazo.after' => 'O novo prazo deve ser uma data futura.',
+            'justificativa.min' => 'Explique a necessidade com pelo menos 10 caracteres.',
         ];
     }
 }

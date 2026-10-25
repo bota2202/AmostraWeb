@@ -29,4 +29,11 @@ class UpdateSolicitacaoPrazoRequest extends FormRequest
             'motivo_aprovacao_reprovacao' => ['nullable', 'required_if:situacao,reprovada', 'string', 'max:1000'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'motivo_aprovacao_reprovacao.required_if' => 'Informe o motivo para reprovar a solicitação.',
+        ];
+    }
 }

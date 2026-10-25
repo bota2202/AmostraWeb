@@ -18,6 +18,7 @@ class UsuarioExemploSeeder extends Seeder
 
         $usuarios = [
             // nome, código, cargo, estabelecimento, ativo
+            ['Ana Ribeiro', 'ana.ribeiro', 'admin', 1, true],
             ['Carla Mendes', 'carla.mendes', 'gestor', 1, true],
             ['Rafael Souza', 'rafael.souza', 'gestor', 2, true],
             ['Bruno Lima', 'bruno.lima', 'representante', 1, true],

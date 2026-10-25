@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Produtos - '.config('amostraweb.name'))
+@section('title','Produto '.$produto->codigo_produto.' - '.config('amostraweb.name'))
 
 @section('texto','Produtos')
 
@@ -10,83 +10,55 @@
 
 @section('content')
 <div class="toolbar">
-    <h1><a href="{{ route('produtos.index') }}">Produtos </a>> {{ $produto->codigo_produto }}</h1>
-    <a class="botao-toolbar" href="{{ route('produtos.edit',$produto) }}"><i class="fa-solid fa-pen"></i> Editar Produto</a>
+    <h1><a href="{{ route('produtos.index') }}">Produtos</a> › {{ $produto->codigo_produto }}</h1>
+    @permite('produtos', 'editar')
+    <a class="botao-toolbar" href="{{ route('produtos.edit', $produto) }}"><i class="fa-solid fa-pen" aria-hidden="true"></i> Editar produto</a>
+    @endpermite
 </div>
 
 <div class="dados">
-    <section class="card-secao">
-        <h3><i class="fa-solid fa-tag"></i> Identificação</h3>
+    <section class="card-secao" aria-labelledby="titulo-identificacao">
+        <h2 id="titulo-identificacao"><i class="fa-solid fa-tag" aria-hidden="true"></i> Identificação</h2>
         <div class="campos-secao">
             <div class="label-input">
                 <label for="codigo_produto">Código</label>
-                <input type="text" id="codigo_produto" disabled value="{{ $produto->codigo_produto }}">
+                <input type="text" id="codigo_produto" readonly value="{{ $produto->codigo_produto }}">
             </div>
             <div class="label-input">
                 <label for="marca">Marca</label>
-                <input type="text" id="marca" disabled value="{{ $produto->marca ?? '-' }}">
+                <input type="text" id="marca" readonly value="{{ $produto->marca ?? '-' }}">
             </div>
             <span class="badge-status {{ $produto->status ? 'ativo' : 'inativo' }}">
-                <i class="fa-solid fa-circle"></i>
+                <i class="fa-solid fa-circle" aria-hidden="true"></i>
                 {{ $produto->status ? 'Ativo' : 'Inativo' }}
             </span>
-            <div class="label-input campo-full">
+            <div class="label-input campo-duplo">
                 <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" disabled value="{{ $produto->descricao }}">
-            </div>
-        </div>
-    </section>
-
-    <section class="card-secao">
-        <h3><i class="fa-solid fa-layer-group"></i> Classificação</h3>
-        <div class="campos-secao">
-            <div class="label-input">
-                <label for="familia">Família</label>
-                <input type="text" id="familia" disabled value="{{ $produto->familia ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="subfamilia">Subfamília</label>
-                <input type="text" id="subfamilia" disabled value="{{ $produto->subfamilia ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="grupo">Grupo</label>
-                <input type="text" id="grupo" disabled value="{{ $produto->grupo ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="tipo">Tipo</label>
-                <input type="text" id="tipo" disabled value="{{ $produto->tipo ?? '-' }}">
+                <input type="text" id="descricao" readonly value="{{ $produto->descricao }}">
             </div>
             <div class="label-input">
                 <label for="data_revisao">Data de revisão</label>
-                <input type="text" id="data_revisao" disabled value="{{ $produto->data_revisao?->format('d/m/Y') ?? '-' }}">
+                <input type="text" id="data_revisao" readonly value="{{ $produto->data_revisao?->format('d/m/Y') ?? '-' }}">
+            </div>
+            <div class="label-input">
+                <label for="amostras">Amostras enviadas</label>
+                <input type="text" id="amostras" readonly value="{{ $produto->amostras_count }}">
             </div>
         </div>
     </section>
 
-    <section class="card-secao">
-        <h3><i class="fa-solid fa-file-invoice"></i> Fiscal</h3>
+    @foreach (\App\Models\Produto::SECOES as $titulo => $secao)
+    <section class="card-secao" aria-labelledby="titulo-{{ \Illuminate\Support\Str::slug($titulo) }}">
+        <h2 id="titulo-{{ \Illuminate\Support\Str::slug($titulo) }}"><i class="fa-solid {{ $secao['icone'] }}" aria-hidden="true"></i> {{ $titulo }}</h2>
         <div class="campos-secao">
+            @foreach ($secao['campos'] as $campo => $rotulo)
             <div class="label-input">
-                <label for="ncm">NCM</label>
-                <input type="text" id="ncm" disabled value="{{ $produto->ncm ?? '-' }}">
+                <label for="{{ $campo }}">{{ $rotulo }}</label>
+                <input type="text" id="{{ $campo }}" readonly value="{{ $produto->$campo ?? '-' }}">
             </div>
-            <div class="label-input">
-                <label for="origem_mercadoria">Origem da mercadoria</label>
-                <input type="text" id="origem_mercadoria" disabled value="{{ $produto->origem_mercadoria ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="controle_verba">Controle de verba</label>
-                <input type="text" id="controle_verba" disabled value="{{ $produto->controle_verba ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="aplicacao_entrada">Aplicação de entrada</label>
-                <input type="text" id="aplicacao_entrada" disabled value="{{ $produto->aplicacao_entrada ?? '-' }}">
-            </div>
-            <div class="label-input">
-                <label for="aplicacao_saida">Aplicação de saída</label>
-                <input type="text" id="aplicacao_saida" disabled value="{{ $produto->aplicacao_saida ?? '-' }}">
-            </div>
+            @endforeach
         </div>
     </section>
+    @endforeach
 </div>
 @endsection

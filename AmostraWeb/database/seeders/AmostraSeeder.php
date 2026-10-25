@@ -18,20 +18,20 @@ class AmostraSeeder extends Seeder
     {
         $produtos = Produto::where('status', true)->pluck('id');
 
-        // 1 a 3 amostras por pedido
+        // 1 a 4 amostras por pedido (toda amostra pertence a um pedido - RN005)
         foreach (Pedido::all() as $pedido) {
-            for ($i = 0, $total = random_int(1, 3); $i < $total; $i++) {
+            for ($i = 0, $total = random_int(1, 4); $i < $total; $i++) {
                 $this->criar($produtos->random(), $pedido);
             }
-        }
 
-        // algumas amostras sem pedido
-        for ($i = 0; $i < 5; $i++) {
-            $this->criar($produtos->random());
+            // status do pedido calculado pelas amostras (o seeder roda sem eventos de model)
+            $pedido->update([
+                'status' => $pedido->amostras()->emAberto()->exists() ? 'aberto' : 'fechado',
+            ]);
         }
     }
 
-    private function criar(int $produtoId, ?Pedido $pedido = null): void
+    private function criar(int $produtoId, Pedido $pedido): void
     {
         // [status, prazo em dias a partir de hoje]
         $cenario = collect([
@@ -47,7 +47,7 @@ class AmostraSeeder extends Seeder
         ])->random();
 
         // pedido fechado só tem amostras já finalizadas
-        if ($pedido?->status === 'fechado' && in_array($cenario[0], ['em_analise', 'atrasada'])) {
+        if ($pedido->status === 'fechado' && in_array($cenario[0], ['em_analise', 'atrasada'])) {
             $cenario = ['aprovada', -random_int(20, 40)];
         }
 
@@ -56,7 +56,7 @@ class AmostraSeeder extends Seeder
 
         Amostra::create([
             'codigo' => str_pad((string) $this->sequencia, 6, '0', STR_PAD_LEFT),
-            'pedido_id' => $pedido?->id,
+            'pedido_id' => $pedido->id,
             'produto_id' => $produtoId,
             'quantidade' => random_int(1, 10),
             'status' => $cenario[0],

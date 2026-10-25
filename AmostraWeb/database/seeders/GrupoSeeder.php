@@ -9,7 +9,8 @@ use Illuminate\Database\Seeder;
 
 /**
  * Grupos de permissões de exemplo, com membros conforme o cargo.
- * As permissões padrão são criadas pela migration (precisa rodar antes).
+ * As permissões padrão são criadas pelas migrations (precisam rodar antes).
+ * Administradores não precisam de grupo: têm todas as permissões.
  */
 class GrupoSeeder extends Seeder
 {
@@ -19,35 +20,28 @@ class GrupoSeeder extends Seeder
 
         // módulo => ações ('*' = todas as ações do módulo)
         $grupos = [
-            'Administradores' => [
-                'descricao' => 'Acesso total ao sistema.',
-                'cargo' => 'admin',
-                'permissoes' => array_fill_keys(array_keys(config('amostraweb.permissoes_padrao')), '*'),
-            ],
             'Gestores' => [
-                'descricao' => 'Gerenciam os estabelecimentos, aprovam prazos e acompanham a equipe.',
+                'descricao' => 'Acompanham o estabelecimento, decidem solicitações de prazo e mantêm os cadastros.',
                 'cargo' => 'gestor',
                 'permissoes' => [
-                    'dashboard' => '*',
+                    'pedidos' => '*',
                     'amostras' => '*',
                     'solicitacoes_prazo' => '*',
-                    'clientes' => '*',
-                    'pedidos' => '*',
-                    'produtos' => ['visualizar', 'criar', 'editar'],
-                    'estabelecimentos' => ['visualizar', 'editar'],
-                    'usuarios' => ['visualizar', 'criar', 'editar'],
+                    'clientes' => ['visualizar', 'criar', 'editar', 'importar'],
+                    'produtos' => ['visualizar', 'criar', 'editar', 'importar'],
+                    'estabelecimentos' => ['visualizar'],
+                    'usuarios' => ['visualizar'],
                     'logs' => '*',
                 ],
             ],
             'Vendedores' => [
-                'descricao' => 'Representantes: cadastram pedidos e amostras e pedem prazo.',
+                'descricao' => 'Cadastram pedidos e amostras, registram o retorno do cliente e pedem prazo.',
                 'cargo' => 'representante',
                 'permissoes' => [
-                    'dashboard' => '*',
-                    'amostras' => ['visualizar', 'criar', 'editar'],
-                    'solicitacoes_prazo' => ['visualizar', 'criar'],
+                    'pedidos' => '*',
+                    'amostras' => ['visualizar', 'criar', 'editar', 'cancelar'],
+                    'solicitacoes_prazo' => ['visualizar', 'criar', 'excluir'],
                     'clientes' => ['visualizar', 'criar', 'editar'],
-                    'pedidos' => ['visualizar', 'criar', 'editar'],
                     'produtos' => ['visualizar'],
                 ],
             ],
@@ -58,7 +52,7 @@ class GrupoSeeder extends Seeder
 
             $ids = $todas->filter(function (Permissao $p) use ($dados) {
                 $acoes = $dados['permissoes'][$p->modulo] ?? [];
-                return $acoes === '*' || in_array($p->acao, $acoes);
+                return $acoes === '*' || in_array($p->acao, $acoes, true);
             })->pluck('id');
 
             $grupo->permissoes()->sync($ids);

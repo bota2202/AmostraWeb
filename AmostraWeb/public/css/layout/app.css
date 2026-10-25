@@ -1,241 +1,651 @@
 @import url("../layout/root.css");
 
+/* =========================
+   BASE
+   ========================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html,
 body {
     height: 100%;
     width: 100%;
     margin: 0;
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--texto);
 }
 
 body {
     display: grid;
-    grid-template-columns: 18% 1fr;
+    grid-template-columns: 250px minmax(0, 1fr);
     grid-template-rows: auto 1fr;
     gap: 10px;
     padding: 8px;
-    box-sizing: border-box;
     background-color: var(--cinza-claro);
-    height: 100vh;    
-    overflow: hidden;  
+    height: 100vh;
+    overflow: hidden;
+}
+
+::placeholder {
+    color: var(--cinza-placeholder);
+    opacity: 1;
+}
+
+/* foco visível para quem navega pelo teclado */
+:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}
+
+/* conteúdo só para leitores de tela */
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* "Pular para o conteúdo": aparece ao navegar com Tab */
+.pular-conteudo {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    padding: 10px 16px;
+    border-radius: var(--raio);
+    background-color: var(--azul-marca);
+    color: var(--branco);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-150%);
+    transition: transform 0.15s ease;
+}
+
+.pular-conteudo:focus {
+    transform: translateY(0);
 }
 
 /* =========================
-   HEADER
+   TOPO
    ========================= */
 
-header {
-    position: sticky;
+.topo {
     grid-column: 2;
     grid-row: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 24px;
     background-color: var(--branco);
     border-radius: 7px;
     box-shadow: var(--box-shadow);
-    padding: 5px 28px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 }
 
-header > img {
+.logo-topo img {
+    display: block;
     height: 40px;
     width: auto;
 }
 
-header > p {
-    font-size: x-large;
+.titulo-modulo {
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    font-size: 1.35rem;
     color: var(--azul-marca);
     font-weight: 600;
 }
 
+.botao-menu {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    background-color: var(--branco);
+    color: var(--azul-marca);
+    font-size: 1.15rem;
+    cursor: pointer;
+}
+
 /* avatar com as iniciais do usuário (abre o perfil) */
-header > a.avatar-topo {
+.avatar-topo {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border-radius: 50%;
     background-color: var(--laranja-marca);
-    color: var(--branco);
+    color: var(--azul-marca-escuro);
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 0.03em;
     text-decoration: none;
     box-shadow: 0 0 0 3px #ffe3c7;
-    transition:
-        background-color 0.15s ease,
-        box-shadow 0.15s ease,
-        transform 0.15s ease;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
-header > a.avatar-topo:hover {
-    background-color: var(--laranja-marca-escuro);
+.avatar-topo:hover {
+    background-color: var(--laranja-marca-claro);
     box-shadow: 0 0 0 4px #ffd2a6;
     transform: scale(1.05);
 }
 
 /* =========================
-   ASIDE
+   MENU LATERAL
    ========================= */
 
-aside {
+.menu-lateral {
     grid-column: 1;
-    grid-row: 1/3;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     background-color: var(--branco);
     box-shadow: var(--box-shadow);
     border-radius: 7px;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    overflow: hidden;
 }
 
-aside > section {
+.marca-menu {
     display: flex;
-    flex-direction: column;
-}
-
-aside > section:first-child {
-    justify-content: center;
     align-items: center;
-    padding: 28px 0;
+    justify-content: center;
+    padding: 22px 0;
     border-bottom: 1px solid var(--cinza-borda);
 }
 
-aside > section:last-child {
-    padding: 12px 0;
-}
-
-aside > section:first-child > p {
+.marca-menu a {
     color: var(--azul-marca);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin: 0;
+    text-decoration: none;
 }
 
-aside > section:last-child > a {
+.menu-lateral nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0 16px;
+}
+
+/* categorias expansíveis (Operação, Cadastros, Administração) */
+.menu-grupo {
+    margin-top: 6px;
+}
+
+.menu-secao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    color: var(--cinza-texto);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.menu-secao::-webkit-details-marker {
+    display: none;
+}
+
+.menu-secao:hover {
+    background-color: var(--cinza-claro);
+    color: var(--azul-marca);
+}
+
+.seta-grupo {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.menu-grupo[open] > .menu-secao .seta-grupo {
+    transform: rotate(180deg);
+}
+
+/* com a categoria aberta, o contador aparece em cada item (não no título) */
+.menu-grupo[open] > .menu-secao .contador-grupo {
+    display: none;
+}
+
+.menu-secao .contador-menu {
+    margin-left: 0;
+    letter-spacing: 0;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.botao-aside {
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
-    color: var(--azul-marca);
-    font-size: 1rem;
-    padding: 14px 24px;
-    border-radius: 6px;
     margin: 2px 8px;
-    transition:
-        background-color 0.15s ease,
-        color 0.15s ease;
+    padding: 11px 16px;
+    border-radius: 6px;
+    color: var(--azul-marca);
+    font-size: 0.97rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-aside > section:last-child > a > i {
+.botao-aside > i {
     width: 18px;
     text-align: center;
     color: var(--azul-marca-escuro);
-    transition: color 0.15s ease;
 }
 
-aside > section:last-child > a:hover {
+.botao-aside:hover {
     background-color: var(--cinza-claro);
-    color: var(--laranja-marca);
+    color: var(--laranja-texto);
 }
 
-aside > section:last-child > a:hover > i {
-    color: var(--laranja-marca);
+.botao-aside:hover > i {
+    color: var(--laranja-texto);
 }
 
-.section-ativa {
+.botao-aside.section-ativa {
     background-color: var(--laranja-marca);
+    color: var(--azul-marca-escuro);
+    font-weight: 600;
 }
 
-.section-ativa:hover {
-    background-color: var(--azul-marca-escuro) !important;
+.botao-aside.section-ativa:hover {
+    background-color: var(--laranja-marca-claro);
+    color: var(--azul-marca-escuro);
+}
+
+.botao-aside.section-ativa > i,
+.botao-aside.section-ativa:hover > i {
+    color: var(--azul-marca-escuro);
+}
+
+/* contador ao lado do item (ex.: solicitações pendentes) */
+.contador-menu {
+    margin-left: auto;
+    min-width: 22px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.menu-fundo {
+    display: none;
 }
 
 /* =========================
-   MAIN
+   CONTEÚDO
    ========================= */
 
 main {
-    background-color: var(--branco);
-    box-shadow: var(--box-shadow);
     grid-column: 2;
     grid-row: 2;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 24px;
+    background-color: var(--branco);
+    box-shadow: var(--box-shadow);
     border-radius: 7px;
-    overflow-y: auto;  
-    min-height: 0;   
 }
 
-/* ========================
-   TOOLBAR
-   ======================== */
+main:focus {
+    outline: none;
+}
+
+/* =========================
+   TOOLBAR (título da página + ações)
+   ========================= */
 
 .toolbar {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     padding: 20px 24px;
     border-bottom: 1px solid var(--cinza-borda);
 }
 
 .toolbar h1 {
+    margin: 0;
     color: var(--azul-marca);
     font-size: 1.4rem;
-    margin: 0;
     font-weight: 600;
 }
 
+/* caminho (Pedidos > 000001 > Editar) */
 .toolbar h1 a {
     color: var(--cinza-texto);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--cinza-borda-forte);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
 }
 
-.toolbar h1 a:hover {
-    color: var(--laranja-marca);
+.toolbar h1 a:hover,
+.toolbar h1 a:focus-visible {
+    color: var(--laranja-texto);
+    text-decoration: underline;
 }
 
-.botao-toolbar {
+.acoes-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.acoes-toolbar form {
+    margin: 0;
+}
+
+/* =========================
+   BOTÕES
+   ========================= */
+
+.botao-toolbar,
+.botao-salvar {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--laranja-marca);
-    color: #fff;
-    text-decoration: none;
     padding: 10px 18px;
+    border: none;
     border-radius: 6px;
-    font-weight: 600;
+    background-color: var(--laranja-marca);
+    color: var(--azul-marca-escuro);
+    font-family: inherit;
     font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
     transition: background-color 0.15s ease;
 }
 
-.botao-toolbar:hover {
-    background-color: var(--laranja-marca-escuro);
+.botao-toolbar:hover,
+.botao-salvar:hover {
+    background-color: var(--laranja-marca-claro);
 }
 
-/* ========================
+.botao-secundario {
+    background-color: var(--branco);
+    color: var(--neutro-texto);
+    border: 1.5px solid var(--cinza-borda-forte);
+}
+
+.botao-secundario:hover {
+    background-color: var(--cinza-claro);
+}
+
+.botao-azul {
+    background-color: var(--azul-marca);
+    color: var(--branco);
+}
+
+.botao-azul:hover {
+    background-color: var(--azul-marca-escuro);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+/* =========================
    ALERTAS (mensagens de sucesso / erro)
-   ======================== */
+   ========================= */
 
 .alerta {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     margin: 16px 24px 0;
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--raio);
     font-size: 0.95rem;
     font-weight: 500;
 }
 
+.alerta > i {
+    margin-top: 2px;
+}
+
 .alerta-sucesso {
-    background-color: #e5f7ec;
-    color: #1f9254;
+    background-color: var(--verde-fundo);
+    color: var(--verde);
     border: 1px solid #bfe8cf;
 }
 
 .alerta-erro {
-    background-color: #fdecec;
-    color: #c0392b;
+    background-color: var(--vermelho-fundo);
+    color: var(--vermelho);
     border: 1px solid #f5c6c0;
+}
+
+.alerta-info {
+    background-color: var(--azul-info-fundo);
+    color: var(--azul-info);
+    border: 1px solid #c4d9f0;
+}
+
+.alerta-aviso {
+    background-color: var(--alerta-fundo);
+    color: var(--alerta-texto);
+    border: 1px solid #f6d3ad;
+}
+
+/* =========================
+   TELAS PEQUENAS: menu vira gaveta
+   ========================= */
+
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .topo {
+        grid-column: 1;
+        padding: 6px 12px;
+    }
+
+    .titulo-modulo {
+        font-size: 1.1rem;
+    }
+
+    .botao-menu {
+        display: inline-flex;
+    }
+
+    main {
+        grid-column: 1;
+    }
+
+    .menu-lateral {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 50;
+        width: min(280px, 85vw);
+        border-radius: 0 7px 7px 0;
+        transform: translateX(-105%);
+        transition: transform 0.2s ease;
+    }
+
+    body.menu-aberto .menu-lateral {
+        transform: translateX(0);
+    }
+
+    body.menu-aberto .menu-fundo {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background-color: rgba(8, 41, 72, 0.45);
+    }
+
+    .toolbar {
+        padding: 16px;
+    }
+
+    .alerta {
+        margin: 12px 16px 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .logo-topo {
+        display: none;
+    }
+}
+
+/* respeita a preferência "reduzir movimento" do sistema */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* subtítulo abaixo do título da página */
+.subtitulo-pagina {
+    margin: 4px 0 0;
+    color: var(--cinza-texto);
+    font-size: 0.88rem;
+}
+
+/* abas que são links (ex.: Solicitações de prazo) */
+a.aba {
+    text-decoration: none;
+}
+
+/* =========================
+   JANELA DE CONFIRMAÇÃO (popup)
+   ========================= */
+
+.janela-confirmar {
+    width: min(420px, calc(100vw - 32px));
+    padding: 28px 24px 22px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    color: var(--texto);
+    font-family: inherit;
+}
+
+.janela-confirmar::backdrop {
+    background-color: rgba(8, 41, 72, 0.45);
+}
+
+.janela-confirmar[open] {
+    animation: janela-entrar 0.15s ease-out;
+}
+
+@keyframes janela-entrar {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+}
+
+.janela-icone {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    background-color: var(--azul-info-fundo);
+    color: var(--azul-info);
+}
+
+.janela-confirmar[data-tipo="perigo"] .janela-icone {
+    background-color: var(--vermelho-fundo);
+    color: var(--vermelho);
+}
+
+.janela-confirmar[data-tipo="sucesso"] .janela-icone {
+    background-color: var(--verde-fundo);
+    color: var(--verde);
+}
+
+.janela-confirmar h2 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+    color: var(--azul-marca);
+}
+
+.janela-confirmar p {
+    margin: 0 0 22px;
+    color: var(--cinza-texto);
+    line-height: 1.45;
+}
+
+.janela-acoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.janela-acoes button {
+    min-width: 120px;
+    justify-content: center;
+}
+
+.janela-confirmar[data-tipo="perigo"] .janela-confirmar-sim {
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+.janela-confirmar[data-tipo="perigo"] .janela-confirmar-sim:hover {
+    background-color: #8f1c13;
+}
+
+.janela-confirmar[data-tipo="sucesso"] .janela-confirmar-sim {
+    background-color: var(--verde);
+    color: var(--branco);
+}
+
+.janela-confirmar[data-tipo="sucesso"] .janela-confirmar-sim:hover {
+    background-color: #115430;
+}
+
+.janela-acoes button:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .janela-confirmar[open] { animation: none; }
 }

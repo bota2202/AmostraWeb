@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditavel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Grupo extends Model
 {
+    use Auditavel;
+
+    protected string $moduloAuditoria = 'permissoes';
+
     protected $table = 'grupos';
 
     protected $fillable = [

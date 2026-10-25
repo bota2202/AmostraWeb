@@ -71,7 +71,7 @@ main {
     height: 120px;
     border-radius: 50%;
     background-color: var(--laranja-marca);
-    color: var(--branco);
+    color: var(--azul-marca-escuro);
     font-size: 2.6rem;
     font-weight: 700;
     border: 4px solid rgba(255, 255, 255, 0.25);
@@ -187,8 +187,8 @@ main {
 }
 
 .alerta-sucesso {
-    background-color: #e5f7ec;
-    color: #1f9254;
+    background-color: var(--verde-fundo);
+    color: var(--verde);
     border: 1px solid #bfe8cf;
 }
 
@@ -239,11 +239,11 @@ main {
 
 .botao-editar {
     background-color: var(--laranja-marca);
-    color: var(--branco);
+    color: var(--azul-marca-escuro);
 }
 
 .botao-editar:hover {
-    background-color: var(--laranja-marca-escuro);
+    background-color: var(--laranja-marca-claro);
 }
 
 .botao-secundario {
@@ -264,7 +264,7 @@ main {
 
 .botao-sair:hover {
     background-color: #fdecec;
-    color: #c0392b;
+    color: var(--vermelho);
     border-color: #f5c6c0;
 }
 
@@ -306,8 +306,8 @@ main {
     height: 40px;
     flex-shrink: 0;
     border-radius: 10px;
-    background-color: #fff1e2;
-    color: var(--laranja-marca);
+    background-color: var(--alerta-fundo);
+    color: var(--laranja-texto);
 }
 
 .info span {
@@ -343,7 +343,7 @@ main {
     height: 40px;
     flex-shrink: 0;
     border-radius: 10px;
-    background-color: #e3eefa;
+    background-color: var(--azul-info-fundo);
     color: var(--azul-marca-claro);
 }
 
@@ -385,7 +385,7 @@ main {
 }
 
 .cartao-form > h3 > i {
-    color: var(--laranja-marca);
+    color: var(--laranja-texto);
 }
 
 .campos {
@@ -430,7 +430,7 @@ main {
 }
 
 .erro-campo {
-    color: #c0392b;
+    color: var(--vermelho);
     font-size: 0.8rem;
     font-weight: 500;
     margin-top: 6px;
@@ -458,5 +458,44 @@ main {
     .campos,
     .campos-3 {
         grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   ACESSIBILIDADE
+   ========================= */
+
+:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}
+
+.pular-conteudo {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background-color: var(--azul-marca);
+    color: var(--branco);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-150%);
+}
+
+.pular-conteudo:focus {
+    transform: translateY(0);
+}
+
+.campo input[aria-invalid="true"] {
+    border-color: var(--vermelho);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
     }
 }

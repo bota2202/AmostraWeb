@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="toolbar">
-    <h1><a href="{{ route('usuarios.index') }}">Usuários</a> > Novo</h1>
+    <h1><a href="{{ route('usuarios.index') }}">Usuários</a> › Novo</h1>
 </div>
 
 <form action="{{ route('usuarios.store') }}" method="post" class="form-cadastro">
@@ -26,7 +26,7 @@
 
     <div class="form-grupo">
         <label for="codigo_usuario">Código de usuário</label>
-        <input type="text" name="codigo_usuario" required id="codigo_usuario" placeholder="Ex.: nome.sobrenome" value="{{ old('codigo_usuario') }}">
+        <input type="text" name="codigo_usuario" required id="codigo_usuario" autocomplete="off" placeholder="Ex.: nome.sobrenome" value="{{ old('codigo_usuario') }}">
         @error('codigo_usuario')
         <p class="erro-campo">{{ $message }}</p>
         @enderror
@@ -45,7 +45,7 @@
         <select name="estabelecimento_id" id="estabelecimento_id" required>
             <option value="">Selecione</option>
             @foreach ($estabelecimentos as $estab)
-            <option value="{{ $estab->id }}" @selected(old('estabelecimento_id')==$estab->id)>#{{ $estab->id }} - {{ $estab->razao_social }}</option>
+            <option value="{{ $estab->id }}" @selected(old('estabelecimento_id')==$estab->id)>{{ $estab->razao_social }}</option>
             @endforeach
         </select>
         @error('estabelecimento_id')
@@ -55,12 +55,13 @@
 
     <div class="form-grupo">
         <label for="cargo">Cargo</label>
-        <select name="cargo" id="cargo" required>
+        <select name="cargo" id="cargo" required aria-describedby="dica-cargo">
             <option value="">Selecione</option>
             @foreach (\App\Models\User::CARGOS as $valor => $nome)
             <option value="{{ $valor }}" @selected(old('cargo')==$valor)>{{ $nome }}</option>
             @endforeach
         </select>
+        <p class="dica-campo" id="dica-cargo">Vendedor vê os próprios pedidos; gestor, os do estabelecimento; administrador, tudo.</p>
         @error('cargo')
         <p class="erro-campo">{{ $message }}</p>
         @enderror
@@ -68,7 +69,8 @@
 
     <div class="form-grupo">
         <label for="password">Senha</label>
-        <input type="password" name="password" required id="password" placeholder="Mínimo de 6 caracteres">
+        <input type="password" name="password" required id="password" minlength="6" autocomplete="new-password" aria-describedby="dica-senha">
+        <p class="dica-campo" id="dica-senha">Mínimo de 6 caracteres. O usuário pode trocar depois em "Meu perfil".</p>
         @error('password')
         <p class="erro-campo">{{ $message }}</p>
         @enderror

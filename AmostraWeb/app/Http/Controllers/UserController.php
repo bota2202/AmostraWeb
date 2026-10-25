@@ -8,21 +8,36 @@ use App\Http\Requests\ResetPasswordUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Estabelecimento;
-use App\Models\Grupo;
 use App\Models\Permissao;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista com busca e filtros (RF022).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users=User::with('estabelecimento')->orderBy('name')->paginate(100);
+        $filtros = $request->only(['busca', 'cargo', 'status']);
+        $termo = $filtros['busca'] ?? null;
+
+        $users=User::with('estabelecimento')
+            ->when($termo, fn (Builder $q) => $q->where(fn (Builder $q) => $q
+                ->where('name', 'like', "%{$termo}%")
+                ->orWhere('codigo_usuario', 'like', "%{$termo}%")
+                ->orWhere('email', 'like', "%{$termo}%")))
+            ->when($filtros['cargo'] ?? null, fn (Builder $q, $cargo) => $q->where('cargo', $cargo))
+            ->when(isset($filtros['status']) && $filtros['status'] !== '', fn (Builder $q) => $q->where('status', (bool) $filtros['status']))
+            ->orderBy('name')
+            ->paginate($this->porPagina())
+            ->withQueryString();
+
         return view('usuarios.index',[
             'users'=>$users,
+            'filtros'=>$filtros,
         ]);
     }
 
@@ -32,7 +47,7 @@ class UserController extends Controller
     public function create()
     {
         return view('usuarios.create',[
-            'estabelecimentos'=>Estabelecimento::orderBy('razao_social')->get(),
+            'estabelecimentos'=>Estabelecimento::where('status', true)->orderBy('razao_social')->get(),
         ]);
     }
 
@@ -41,8 +56,14 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        User::create($request->validated());
-        return redirect('/usuarios')->with('success','Usuário criado com sucesso');
+        $usuario = User::create($request->validated());
+
+        $mensagem = 'Usuário '.$usuario->codigo_usuario.' criado.';
+        if (! $usuario->isAdmin()) {
+            $mensagem .= ' Para liberar os acessos, adicione-o a um grupo em Grupos de permissões.';
+        }
+
+        return redirect()->route('usuarios.show', $usuario)->with('success', $mensagem);
     }
 
     /**
@@ -66,11 +87,9 @@ class UserController extends Controller
     {
         return view('usuarios.edit',[
             'user'=>$usuario,
-            'estabelecimentos'=>Estabelecimento::orderBy('razao_social')->get(),
-            // aba Permissões: grupos do usuário (permissões herdadas) + permissões extras dele
-            'grupos'=>$usuario->grupos()->with('permissoes:id')->get(),
-            'permissoesPorModulo'=>Permissao::agrupadasPorModulo(),
-            'selecionadas'=>$usuario->permissoes()->pluck('permissoes.id')->all(),
+            'estabelecimentos'=>Estabelecimento::where('status', true)
+                ->orWhere('id', $usuario->estabelecimento_id)
+                ->orderBy('razao_social')->get(),
         ]);
     }
 
@@ -80,7 +99,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $usuario)
     {
         $usuario->update($request->validated());
-        return redirect('/usuarios')->with('success', 'Usuário de código ' . $usuario->codigo_usuario . ' atualizado com sucesso');
+        return redirect()->route('usuarios.show', $usuario)->with('success', 'Usuário '.$usuario->codigo_usuario.' atualizado.');
     }
 
     /**
@@ -127,7 +146,7 @@ class UserController extends Controller
         $codigo=$usuario->codigo_usuario;
 
         DB::transaction(function () use ($usuario) {
-            $usuario->permissoes()->detach();
+            $usuario->grupos()->detach();
             $usuario->delete();
         });
 

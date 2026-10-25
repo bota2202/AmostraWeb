@@ -1,29 +1,103 @@
 @import url('../layout/root.css');
 
 /* =========================
-   FORMULÁRIOS DE SOLICITAÇÃO DE PRAZO
+   FORMULÁRIOS DA TELA DA AMOSTRA
+   (resultado, cancelamento e solicitação de prazo)
    ========================= */
 
 .form-solicitacao {
     padding: 20px 24px;
+}
+
+.card-secao > .form-solicitacao + details,
+.card-secao > table + .form-solicitacao,
+.card-secao > .rolagem-tabela + .form-solicitacao,
+.card-secao > .texto-vazio + .form-solicitacao {
     border-top: 1.5px solid var(--cinza-borda);
 }
 
-.form-solicitacao h4 {
-    margin: 0 0 14px;
+.form-solicitacao h3 {
+    margin: 0 0 6px;
     color: var(--azul-marca);
-    font-size: 0.95rem;
+    font-size: 0.98rem;
+}
+
+.texto-ajuda {
+    margin: 0 0 14px;
+    color: var(--cinza-texto);
+    font-size: 0.88rem;
 }
 
 .campos-solicitacao {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr);
     gap: 15px;
 }
 
 .acoes-form-solicitacao {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 14px;
+}
+
+.obrigatorio {
+    color: var(--vermelho);
+}
+
+.texto-secundario-inline {
+    color: var(--cinza-texto);
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+/* cancelamento escondido atrás de um "abrir" para evitar cliques acidentais */
+.cancelamento {
+    border-top: 1.5px dashed var(--cinza-borda);
+}
+
+.cancelamento > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 24px;
+    color: var(--neutro-texto);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.cancelamento > summary:hover {
+    color: var(--vermelho);
+}
+
+.cancelamento[open] > summary {
+    margin-bottom: 0;
+}
+
+.aviso-solicitacao {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 16px 24px;
+    border-top: 1.5px solid var(--cinza-borda);
+    background-color: var(--alerta-fundo);
+    color: var(--alerta-texto);
+    font-size: 0.9rem;
+}
+
+.alerta-card {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .form-solicitacao {
+        padding: 16px;
+    }
+
+    .campos-solicitacao {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }

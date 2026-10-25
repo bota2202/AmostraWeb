@@ -12,7 +12,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'permissao' => \App\Http\Middleware\VerificarPermissao::class,
+        ]);
+
+        // visitante tentando abrir uma página interna vai para o login
+        $middleware->redirectGuestsTo(fn () => route('showLogin'));
+        // usuário logado abrindo o login vai para o dashboard
+        $middleware->redirectUsersTo(fn () => route('dashboard'));
+
+        // marca amostras com prazo vencido como "Atrasada" (RN009), no máximo a cada 10 min
+        $middleware->web(append: [
+            \App\Http\Middleware\AtualizarAmostrasAtrasadas::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
